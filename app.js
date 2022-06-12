@@ -1,9 +1,10 @@
 var createError = require('http-errors');
-var express = require('express');
+const express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 require('dotenv').config();
 
@@ -25,6 +26,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// test if connect the mongodb successfully
+mongoose.connect(process.env.ATLAS_URI);
+mongoose.connection.once('open', function() {
+  console.log("mongodb connect successfully");
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
