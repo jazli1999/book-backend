@@ -11,6 +11,7 @@ require('dotenv').config();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const gbooksRouter = require('./routes/gbooks');
+const booksRouter = require('./routes/books');
 
 var app = express();
 // var port = process.env.PORT || 5000;
@@ -35,6 +36,7 @@ mongoose.connection.once('open', function() {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/gbooks', gbooksRouter);
+app.use('/books', booksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
