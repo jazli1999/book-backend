@@ -7,13 +7,18 @@ const addressSchema = new mongoose.Schema({
     state: String,
     country: String,
     postcode: String
-});
+}, { _id: false });
 
-const premiumSchema = mongoose.Schema({
+const premiumSchema = new mongoose.Schema({
     isPremium: Boolean,
     startDate: Date, // not sure for this
     endDate: Date
-});
+}, { _id: false });
+
+// const nameSchema = new mongoose.Schema({
+//     firstName: String,
+//     lastName: String
+// }, { _id: false });
 
 // if changing schema has problems, just delete the collections&documents
 const userSchema = new mongoose.Schema({

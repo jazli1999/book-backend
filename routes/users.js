@@ -39,18 +39,23 @@ router.put('/:id', (req, res, next) => {
         if(typeof req.body.user.bio !== 'undefined')
             user.bio = req.body.user.bio;
 
-        // if(typeof req.body.user.address.houseNumber !== 'undefined')
-        //     user.address.houseNumber = req.body.user.address.houseNumber;
-        // if(typeof req.body.user.address.street !== 'undefined')
-        //     user.address.street = req.body.user.address.street;
-        // if(typeof req.body.user.address.city !== 'undefined')
-        //     user.address.city = req.body.user.address.city;
-        // if(typeof req.body.user.address.state !== 'undefined')
-        //     user.address.state = req.body.user.address.state;
-        // if(typeof req.body.user.address.country !== 'undefined')
-        //     user.address.country = req.body.user.address.country;
-        // if(typeof req.body.user.address.postcode !== 'undefined')
-        //     user.address.postcode = req.body.user.address.postcode;
+        // console.log(req.body.user.address.a);
+        
+        if(typeof req.body.user.address !== 'undefined') {
+            user.address = {};
+            if(typeof req.body.user.address.houseNumber !== 'undefined')
+                user.address["houseNumber"] = req.body.user.address.houseNumber;
+            if(typeof req.body.user.address.street !== 'undefined')
+                user.address["street"] = req.body.user.address.street;
+            if(typeof req.body.user.address.city !== 'undefined')
+                user.address["city"] = req.body.user.address.city;
+            if(typeof req.body.user.address.state !== 'undefined')
+                user.address["state"] = req.body.user.address.state;
+            if(typeof req.body.user.address.country !== 'undefined')
+                user.address["country"] = req.body.user.address.country;
+            if(typeof req.body.user.address.postcode !== 'undefined')
+                user.address["postcode"] = req.body.user.address.postcode;
+        }
 
         return user.save().then( () => res.send("update success"));
     }).catch(next);

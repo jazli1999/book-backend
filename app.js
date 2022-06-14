@@ -23,7 +23,7 @@ app.set('view engine', 'jade'); //this is about the template type
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true })); // enable body-parser
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

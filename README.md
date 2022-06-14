@@ -15,7 +15,7 @@ POST /users
 }
 ```
 
-_login test_
+_login test_   
 POST /users/login
 ```Json
 {
@@ -34,7 +34,11 @@ PUT /users/62a789378472dadd433093b4
 {
   "user": {
     "bio": "I like reading",
-    "gender": "female"
+    "gender": "female",
+    "address": {
+      "houseNumber": "456",
+      "postcode": "80803"
+    }
   }
 }
 ```
