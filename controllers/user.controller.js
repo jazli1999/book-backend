@@ -29,6 +29,19 @@ async function updateUser (req, res, next) {
 } // no need for ;
 
 
-module.exports = { createUser, loginUser, updateUser };
+async function getUserInfo (req, res, next) {
+    userService.get(req.params.id).then( user => {
+        res.json(user);
+    }).catch(next);
+}
+
+async function deleteUser (req, res, next) {
+    userService.deleteUser(req.params.id).then( () => {
+        res.send("delete success")
+    }).catch(next);
+}
+
+
+module.exports = { createUser, loginUser, updateUser, getUserInfo, deleteUser };
 
 

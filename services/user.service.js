@@ -68,5 +68,13 @@ async function update (userId, userInfo) {
     });
 }
 
+async function get (userId) {
+    return User.findById(userId);
+}
 
-module.exports = { create, login, update };
+async function deleteUser (userId) {
+    return User.findByIdAndDelete(userId);
+}
+
+
+module.exports = { create, login, update, get, deleteUser };
