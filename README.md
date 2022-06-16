@@ -1,9 +1,19 @@
+# README
 
+## Commands
+- Before anything else   
+  ```npm install```
+- To run the project in dev mode (with auto-reload)   
+  ```npm run dev```
+- To run the project in product mode  
+  ```npm run start```
+- Before you commit, please run ESlint with the command below and fix the errors    
+  ```npm run lint```   
 
-User related operations
-
-_create new user_   
-POST /users
+## API Test Data  
+### User Related Operations
+**_create new user_**  
+`POST /users`
 ```JSON
 {
   "user": {
@@ -15,8 +25,8 @@ POST /users
 }
 ```
 
-_login test_   
-POST /users/login
+**_login test_   **
+`POST /users/login`
 ```Json
 {
   "user": {
@@ -28,8 +38,8 @@ POST /users/login
 if valid, the request will return the objectid of current user   
 
 
-_update user profile_   
-PUT /users/62a789378472dadd433093b4
+**_update user profile_**   
+`PUT /users/62a789378472dadd433093b4`
 ```JSON
 {
   "user": {
@@ -43,7 +53,7 @@ PUT /users/62a789378472dadd433093b4
 }
 ```
 
-_delete user by id_
-DELETE /users/62a789378472dadd433093b4
+**_delete user by id_**  
+`DELETE /users/62a789378472dadd433093b4`
 
 
