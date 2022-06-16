@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 // const User = mongoose.model('User');
-let User = require('../models/user.model')
+let User = require('../models/user.model');
+
+let userController = require('../controllers/user.controller');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
-});
+// router.get('/', function(req, res, next) {
+//     res.send('respond with a resource');
+// });
+
+// router.get('/', users.consoleLog);
 
 
 // function func() {
@@ -89,19 +93,23 @@ router.post('/login', (req, res, next) => {
 
 
 // create new user
-router.post('/', (req, res, next) => {
-    let user = new User();
-    user.firstName = req.body.user.firstName;
-    user.lastName = req.body.user.lastName;
-    user.email = req.body.user.email;
-    // for now
-    user.password = req.body.user.password;
+// router.post('/', (req, res, next) => {
+//     let user = new User();
+//     user.firstName = req.body.user.firstName;
+//     user.lastName = req.body.user.lastName;
+//     user.email = req.body.user.email;
+//     // for now
+//     user.password = req.body.user.password;
 
-    user.save().then( () => {
-        res.send("Save new user success")
-    }).catch(next);
-});
+//     user.save().then( () => {
+//         res.send("Save new user success")
+//     }).catch(next);
+// });
 //the router.post is a promise, if the promise resolved, go to .then, if rejected, go to .catch
+
+router.post('/', userController.createUser);
+
+
 
 
 // delete user according to id
