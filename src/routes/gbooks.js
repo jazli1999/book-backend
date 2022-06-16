@@ -1,35 +1,36 @@
-const express = require('express');
-const router = express.Router();
-const crypto = require('crypto');
+import { Router } from 'express';
+import { createHash } from 'crypto';
+
+const router = Router();
 
 /* GET home page. */
-router.get('/:title/:greeting', function(req, res, next) {
+router.get('/:title/:greeting', (req, res) => {
     // get('/')
     // gbooks?title=free
     // const title = req.query.title; // "title" is from the index.jade
     // res.render('index', { title });
 
     // get('/:title/:greeting')
-    const title = req.params.title;
-    const greeting = req.params.greeting;
-    res.render('index', {title, greeting});
+    const { title } = req.params;
+    const { greeting } = req.params;
+    res.render('index', { title, greeting });
 });
 
 // return json file
-router.get('/time', (req, res, next) => {
+router.get('/time', (req, res) => {
     res.json({
-        time: new Date().toISOString()
+        time: new Date().toISOString(),
     });
 });
 
 // post use talend in chorme extension to test, remember to use http instead of https
-router.post('/hash', (req, res, next) => {
-    const plainText = req.body.plainText;
-    const hash = crypto.createHash('md5').update(plainText).digest('hex');
+router.post('/hash', (req, res) => {
+    const { plainText } = req.body;
+    const hash = createHash('md5').update(plainText).digest('hex');
     res.json({
         plainText,
         hash,
     });
 });
 
-module.exports = router;
+export default router;

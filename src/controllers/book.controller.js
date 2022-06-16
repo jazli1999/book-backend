@@ -1,9 +1,9 @@
-const bookService = require('../services/book.service');
+import BookService from '../services/book.service.js';
 
-async function searchGbooks (req, res, next) {
-    bookService.searchGbooks(req.params.query).then( books => {
+async function searchGbooks(req, res, next) {
+    BookService.searchGbooks(req.params.query).then((books) => {
         res.json(books);
     }).catch(next);
 }
 
-module.exports = { searchGbooks }
+export { searchGbooks };

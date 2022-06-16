@@ -1,11 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+import { Router } from 'express';
+// import mongoose from 'mongoose';
+import { searchGbooks } from '../controllers/book.controller.js';
 
-let bookController = require('../controllers/book.controller');
+const router = Router();
 
 // get data from google
-router.get('/gbooks/:query', bookController.searchGbooks);
+router.get('/gbooks/:query', searchGbooks);
 
-
-module.exports = router;
+export default router;

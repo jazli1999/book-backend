@@ -1,10 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+import { Router } from 'express';
+import {
+    createUser, loginUser, updateUser, getUserInfo, deleteUser,
+} from '../controllers/user.controller.js';
+
+// import mongoose from 'mongoose';
+
+const router = Router();
 // const User = mongoose.model('User');
 // let User = require('../models/user.model');
-
-let userController = require('../controllers/user.controller');
 
 // default start with /users
 
@@ -18,25 +21,23 @@ let userController = require('../controllers/user.controller');
 
 // Simple User Information:
 // create new user
-//the router.post is a promise, if the promise resolved, go to .then, if rejected, go to .catch
-router.post('/', userController.createUser);
+// the router.post is a promise, if the promise resolved, go to .then, if rejected, go to .catch
+router.post('/', createUser);
 
 // user login use email, return id to the frontend
-router.post('/login', userController.loginUser);
+router.post('/login', loginUser);
 
 // update user information
-router.put('/:id', userController.updateUser);
+router.put('/:id', updateUser);
 
 // get user information
-router.get('/:id', userController.getUserInfo);
+router.get('/:id', getUserInfo);
 
 // delete user according to id
-router.delete('/:id', userController.deleteUser);
-
+router.delete('/:id', deleteUser);
 
 // Book realted User API
 // add to user's book list using isbn
 // router.get('')
 
-
-module.exports = router;
+export default router;
