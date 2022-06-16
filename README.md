@@ -27,7 +27,7 @@
 }
 ```
 
-**_login test_   **
+**_login test_**     
 `POST /users/login`
 ```Json
 {
@@ -54,6 +54,9 @@ if valid, the request will return the objectid of current user
   }
 }
 ```
+
+**_get user data by id_**   
+`GET /users/62a789378472dadd433093b4`
 
 **_delete user by id_**  
 `DELETE /users/62a789378472dadd433093b4`
