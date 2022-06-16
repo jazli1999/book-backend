@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www",
-    "lint": "eslint src/**/*.js *.js --quiet --fix"
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
+    "lint": "eslint  *.js src/*.js src/**/*.js --quiet --fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -51,7 +52,10 @@
         "warn"
       ],
       "import/extensions": [
-        "never"
+        "off"
+      ],
+      "import/prefer-default-export": [
+        "off"
       ]
     }
   }

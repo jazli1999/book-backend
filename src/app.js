@@ -1,26 +1,20 @@
 import createError from 'http-errors';
 import express from 'express';
-import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
-import indexRouter from './src/routes/index.js';
-import usersRouter from './src/routes/users.js';
-import gbooksRouter from './src/routes/gbooks.js';
-import booksRouter from './src/routes/books.js';
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
+import gbooksRouter from './routes/gbooks.js';
+import booksRouter from './routes/books.js';
 
 const app = express();
-// var port = process.env.PORT || 3000;
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade'); // this is about the template type
 
 app.use(cors());
-app.use(logger('dev'));
+app.use(logger('dev')); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // enable body-parser
 app.use(cookieParser());
