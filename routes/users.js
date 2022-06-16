@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 // const User = mongoose.model('User');
-let User = require('../models/user.model');
+// let User = require('../models/user.model');
 
 let userController = require('../controllers/user.controller');
 
@@ -16,11 +16,7 @@ let userController = require('../controllers/user.controller');
 
 // }
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//     res.send('respond with a resource');
-// });
-
+// Simple User Information:
 // create new user
 //the router.post is a promise, if the promise resolved, go to .then, if rejected, go to .catch
 router.post('/', userController.createUser);
@@ -36,6 +32,11 @@ router.get('/:id', userController.getUserInfo);
 
 // delete user according to id
 router.delete('/:id', userController.deleteUser);
+
+
+// Book realted User API
+// add to user's book list using isbn
+// router.get('')
 
 
 module.exports = router;
