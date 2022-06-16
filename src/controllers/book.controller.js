@@ -6,4 +6,4 @@ async function searchGbooks(req, res, next) {
     }).catch(next);
 }
 
-export { searchGbooks };
+export default { searchGbooks };

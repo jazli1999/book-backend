@@ -1,10 +1,10 @@
 import { Router } from 'express';
 // import mongoose from 'mongoose';
-import { searchGbooks } from '../controllers/book.controller.js';
+import BookController from '../controllers/book.controller.js';
 
 const router = Router();
 
 // get data from google
-router.get('/gbooks/:query', searchGbooks);
+router.get('/gbooks/:query', BookController.searchGbooks);
 
 export default router;

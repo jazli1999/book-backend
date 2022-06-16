@@ -37,6 +37,6 @@ async function deleteUser(req, res, next) {
     }).catch(next);
 }
 
-export {
+export default {
     createUser, loginUser, updateUser, getUserInfo, deleteUser,
 };

@@ -1,4 +1,6 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
+
+const { Schema, model } = mongoose;
 
 const bookSchema = new Schema({
     // we only consider the ISBN 13 now, if the book only have isbn 10, then convert to 13
@@ -13,4 +15,4 @@ const bookSchema = new Schema({
     wantedByUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 }, { timestamps: true });
 
-model('Book', bookSchema);
+export default model('Book', bookSchema);
