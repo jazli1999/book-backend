@@ -3,6 +3,8 @@
 ## Commands
 - Before anything else   
   ```npm install```
+- Add MongoDB URI to `.env`  
+  ```ATLAS_URI=mongodb+srv://{username}:{password}@cluster0.yros1ft.mongodb.net/?retryWrites=true&w=majority```  
 - To run the project in dev mode (with auto-reload)   
   ```npm run dev```
 - To run the project in product mode  
