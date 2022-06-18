@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from '../controllers/user.controller.js';
+import Middlewares from '../middlewares.js';
 
 // import mongoose from 'mongoose';
 
@@ -29,7 +30,7 @@ router.post('/login', UserController.loginUser);
 router.put('/:id', UserController.updateUser);
 
 // get user information
-router.get('/:id', UserController.getUserInfo);
+router.get('/:id', Middlewares.checkAuthentication, UserController.getUserInfo);
 
 // delete user according to id
 router.delete('/:id', UserController.deleteUser);
