@@ -1,0 +1,342 @@
+{
+  "kind": "books#volumes",
+  "totalItems": 995,
+  "items": [
+    {
+      "kind": "books#volume",
+      "id": "Im4KmwEACAAJ",
+      "etag": "sUD59Gn1vRw",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/Im4KmwEACAAJ",
+      "volumeInfo": {
+        "title": "Der kleine Hobbit",
+        "subtitle": "Blindendr. d. Dt. Blindenstudienanst",
+        "authors": [
+          "John R. R. Tolkien"
+        ],
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:74729671"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=Im4KmwEACAAJ&dq=Lord+of+The+Rings&hl=&cd=1&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=Im4KmwEACAAJ&dq=Lord+of+The+Rings&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Der_kleine_Hobbit.html?hl=&id=Im4KmwEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "DE",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=Im4KmwEACAAJ&hl=&printsec=frontcover&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "GuLZAAAAMAAJ",
+      "etag": "ImIIj1r+c6M",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/GuLZAAAAMAAJ",
+      "volumeInfo": {
+        "title": "The Lord of the Rings",
+        "authors": [
+          "John Ronald Reuel Tolkien"
+        ],
+        "publisher": "William Morrow",
+        "publishedDate": "2004",
+        "description": "An epic depicting the Great War of the Ring, a struggle between good and evil in Middle-Earth, in which the tiny Hobbits play a key role.",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "PSU:000062491532"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 1157,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "averageRating": 4.5,
+        "ratingsCount": 51,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "3.1.2.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=GuLZAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=GuLZAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=GuLZAAAAMAAJ&q=Lord+of+The+Rings&dq=Lord+of+The+Rings&hl=&cd=2&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=GuLZAAAAMAAJ&dq=Lord+of+The+Rings&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Lord_of_the_Rings.html?hl=&id=GuLZAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "DE",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=GuLZAAAAMAAJ&hl=&printsec=frontcover&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "An epic depicting the Great War of the Ring, a struggle between good and evil in Middle-Earth, in which the tiny Hobbits play a key role."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "NXYFQwAACAAJ",
+      "etag": "hvwQuWQs03w",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/NXYFQwAACAAJ",
+      "volumeInfo": {
+        "title": "The Lord of the Rings",
+        "authors": [
+          "J. R. R. Tolkien"
+        ],
+        "publisher": "Lord of the Rings",
+        "publishedDate": "2004",
+        "description": "This deluxe slipcased volume contains the definitive version of the text, featuring for the very first time full-colour facsimiles of pages from the Book of Mazarbul, illustrations by Tolkien that he intended for inclusion in the 'Bridge of Khazad-dum' chapter. Also appearing are previously unpublished family trees and two full-size fold-out maps. Since it was first published in 1954, The Lord of the Rings has been a book people have treasured. Steeped in unrivalled magic and otherworldliness, its sweeping fantasy and epic adventure has touched the hearts of young and old alike. Over 100 million copies of its many editions have been sold around the world, and occasional collectors' editions become prized and valuable items of publishing. This deluxe cased volume contains the complete text, fully corrected and reset, and features for the very first time the pages from the Book of Mazarbul, illustrations done by Tolkien and intended for inclusion in the famous 'Bridge of Khazad-dum' chapter. Also appearing are previously unpublished family trees and two, full-size fold-out maps. Sympathetically packaged to reflect the classic look of the original, this brand new volume will prove irresistible to collectors and new fans alike.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0007182368"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780007182367"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 1184,
+        "printType": "BOOK",
+        "categories": [
+          "Fantasy fiction, English"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=NXYFQwAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=NXYFQwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=NXYFQwAACAAJ&dq=Lord+of+The+Rings&hl=&cd=3&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=NXYFQwAACAAJ&dq=Lord+of+The+Rings&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Lord_of_the_Rings.html?hl=&id=NXYFQwAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "DE",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=NXYFQwAACAAJ&hl=&printsec=frontcover&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "This deluxe slipcased volume contains the definitive version of the text, featuring for the very first time full-colour facsimiles of pages from the Book of Mazarbul, illustrations by Tolkien that he intended for inclusion in the &#39;Bridge of ..."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "yxdMouMgowMC",
+      "etag": "p+dUtVLsihQ",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/yxdMouMgowMC",
+      "volumeInfo": {
+        "title": "Die Strasse gleitet fort und fort",
+        "subtitle": "die Karte von Tolkiens Mittelerde",
+        "authors": [
+          "Brian Sibley"
+        ],
+        "publisher": "Klett-Cotta",
+        "publishedDate": "2009",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "3608937617"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783608937619"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 61,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.0.2.0.preview.1",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=yxdMouMgowMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=yxdMouMgowMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=yxdMouMgowMC&printsec=frontcover&dq=Lord+of+The+Rings&hl=&cd=4&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=yxdMouMgowMC&dq=Lord+of+The+Rings&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Die_Strasse_gleitet_fort_und_fort.html?hl=&id=yxdMouMgowMC"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "DE",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=yxdMouMgowMC&hl=&printsec=frontcover&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "iHJbAAAAMAAJ",
+      "etag": "691y/n1Wzms",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/iHJbAAAAMAAJ",
+      "volumeInfo": {
+        "title": "The Lord of the Rings and Philosophy",
+        "subtitle": "One Book to Rule Them All",
+        "authors": [
+          "Gregory Bassham",
+          "Eric Bronson"
+        ],
+        "publisher": "Open Court Publishing",
+        "publishedDate": "2003",
+        "description": "Culls dozens of life lessons from the pages of J.R.R. Tolkien's epic tale, examining the author's treatment of such issues as happiness, morality, and the search for ultimate truth.",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "UOM:39015059164106"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 240,
+        "printType": "BOOK",
+        "categories": [
+          "Literary Criticism"
+        ],
+        "averageRating": 4,
+        "ratingsCount": 2,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.2.2.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=iHJbAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=iHJbAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=iHJbAAAAMAAJ&q=Lord+of+The+Rings&dq=Lord+of+The+Rings&hl=&cd=5&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=iHJbAAAAMAAJ&dq=Lord+of+The+Rings&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Lord_of_the_Rings_and_Philosophy.html?hl=&id=iHJbAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "DE",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=iHJbAAAAMAAJ&hl=&printsec=frontcover&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Will nature rise in revolt against technology? Would we find everlasting life a bore and a burden? These are among the disturbing questions raised by Tolkien&#39;s enthralling epic of adventure, The Lord of the Rings."
+      }
+    }
+  ]
+}
