@@ -43,6 +43,7 @@ const userSchema = new Schema({
     image: String, // user avatar
     address: addressSchema,
     premium: premiumSchema,
+    birthday: Date,
     bookCollection: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
     wishList: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
     bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }],

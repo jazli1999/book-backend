@@ -27,7 +27,7 @@ router.post('/', UserController.createUser);
 router.post('/login', UserController.loginUser);
 
 // update user information
-router.put('/:id', UserController.updateUser);
+router.put('/', Middlewares.checkAuthentication, UserController.updateUser);
 
 // get user information
 router.get('/', Middlewares.checkAuthentication, UserController.getUserInfo);

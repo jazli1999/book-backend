@@ -11,19 +11,20 @@ async function createUser(req, res, next) {
     UserService.create(req.body).then(() => {
         res.send('save new user success');
     }).catch(next);
-} // no need for ;
+}
 
 async function loginUser(req, res, next) {
     UserService.login(req.body).then((value) => {
         res.send(value);
     }).catch(next);
-} // no need for ;
+}
 
 async function updateUser(req, res, next) {
-    UserService.update(req.params.id, req.body).then((value) => {
+    console.log(req.body);
+    UserService.update(req.userId, req.body).then((value) => {
         res.send(value);
     }).catch(next);
-} // no need for ;
+}
 
 async function getUserInfo(req, res, next) {
     // TODO for third-party query, do not return everything
