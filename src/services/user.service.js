@@ -11,30 +11,6 @@ async function create(userToCreate) {
     return user.save(); // .save is asyn will return a promise
 }
 
-async function login(userToLogin, res) {
-    if (!userToLogin.user.email) {
-        // 422 unprocessable entity
-        return res.status(422).json({ error: { email: "can't be blank" } });
-    }
-    if (!userToLogin.user.password) {
-        return res.status(422).json({ error: { password: "can't be blank" } });
-    }
-
-    return User.find({ email: userToLogin.user.email }).then((user) => {
-        // res.send(typeof user); // object
-        // if(Array.isArray(user)) res.send("array"); // is a array
-        if (user.length === 0) return 'email not exist';
-        if (user[0].password === userToLogin.user.password) {
-            // frontend should use this id for further functions
-            return `${user[0]._id} approved`;
-        }
-
-        return 'declined';
-
-        // res.json(user[0])
-    });
-}
-
 async function update(userId, userInfo) {
     return User.findById(userId).then((user) => {
         // need test
@@ -85,5 +61,5 @@ async function deleteUser(userId) {
 }
 
 export default {
-    create, login, update, get, deleteUser,
+    create, update, get, deleteUser,
 };

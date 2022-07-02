@@ -30,6 +30,7 @@ router.post('/login', UserController.loginUser);
 router.put('/:id', UserController.updateUser);
 
 // get user information
+router.get('/', Middlewares.checkAuthentication, UserController.getUserInfo);
 router.get('/:id', Middlewares.checkAuthentication, UserController.getUserInfo);
 
 // delete user according to id

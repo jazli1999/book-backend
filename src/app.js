@@ -49,4 +49,6 @@ app.use((err, req, res) => {
     res.render('error');
 });
 
+app.disable('etag');
+
 export default app;

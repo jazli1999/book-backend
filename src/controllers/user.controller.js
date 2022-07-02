@@ -26,7 +26,9 @@ async function updateUser(req, res, next) {
 } // no need for ;
 
 async function getUserInfo(req, res, next) {
-    UserService.get(req.params.id).then((user) => {
+    // TODO for third-party query, do not return everything
+    const queryId = req.params.id ? req.params.id : req.userId;
+    UserService.get(queryId).then((user) => {
         res.json(user);
     }).catch(next);
 }
