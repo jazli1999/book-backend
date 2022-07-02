@@ -19,11 +19,8 @@ async function loginUser(req, res, next) {
     }).catch(next);
 }
 
-async function updateUser(req, res, next) {
-    console.log(req.body);
-    UserService.update(req.userId, req.body).then((value) => {
-        res.send(value);
-    }).catch(next);
+async function updateUser(req, res) {
+    UserService.update(req.userId, req.body).then((value) => res.status(200).send(value));
 }
 
 async function getUserInfo(req, res, next) {

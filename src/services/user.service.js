@@ -27,6 +27,9 @@ async function update(userId, userInfo) {
         if (typeof userInfo.user.bio !== 'undefined') {
             user.bio = userInfo.user.bio;
         }
+        if (typeof userInfo.user.birthday !== 'undefined') {
+            user.birthday = userInfo.user.birthday;
+        }
         if (typeof userInfo.user.address !== 'undefined') {
             user.address = {};
             if (typeof userInfo.user.address.houseNumber !== 'undefined') {
