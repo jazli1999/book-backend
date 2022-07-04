@@ -48,8 +48,10 @@ async function modifyInput(json) {
             }                   
         }
         // Adds the current book json to result array
-        if (Object.keys(currentJson) !== 0 && Object.prototype.hasOwnProperty.call(currentJson, 'ISBN')) {
-            books.search_result.push(currentJson);
+        if (Object.keys(currentJson) !== 0){
+            if(Object.prototype.hasOwnProperty.call(currentJson, 'image') && Object.prototype.hasOwnProperty.call(currentJson, 'ISBN')) {
+                books.search_result.push(currentJson);
+            }
         }
     }
     // console.log(books)
@@ -65,14 +67,19 @@ async function searchGbooks(query) {
 
 
     // Rename Parameters
-    input_json.intitle = input_json.title
-    input_json.inauthor = input_json.author
-    input_json.inpublisher = input_json.publisher
-
-    // Delete useless parameters
-    delete input_json.title
-    delete input_json.author
-    delete input_json.publisher
+    if (Object.prototype.hasOwnProperty.call(input_json, 'author')) {
+        input_json.inauthor = input_json.author
+        delete input_json.author
+    }
+    if (Object.prototype.hasOwnProperty.call(input_json, 'title')) {
+        input_json.intitle = input_json.title
+        delete input_json.title
+    }
+    if (Object.prototype.hasOwnProperty.call(input_json, 'publisher')) {
+        input_json.inpublisher = input_json.publisher
+        delete input_json.publisher
+    }
+    
     Object.keys(input_json).forEach(key => input_json[key] === undefined || input_json[key] === null && delete input_json[key])
 
 
@@ -83,13 +90,15 @@ async function searchGbooks(query) {
             temp_query.push(encodeURIComponent(p) + ":" + encodeURIComponent(input_json[p]));
         }
     temp_query = temp_query.join("+")
+    console.log(temp_query)
 
     // Send request to google books api with implemented query string
     var r = await request
-        .get("https://www.googleapis.com/books/v1/volumes")
-        .query( { q : temp_query, maxResults: 30} ) // For now I set max results to 30
+        .get("https://www.googleapis.com/books/v1/volumes?q="+temp_query)
+         // For now I set max results to 30
         .then((data) => {
             // return the results
+            console.log(data)
             books_json = JSON.parse(data.text)
             books_json = books_json.items
 
@@ -97,6 +106,7 @@ async function searchGbooks(query) {
     // modifies the input json so that we can access our model
     // parameters much easierPromise.resolve('Success').then( modifyInput(books_json))
     // I couldn't solve async issue without using await back to back      
+    
     return modifyInput(books_json)
 }
 
