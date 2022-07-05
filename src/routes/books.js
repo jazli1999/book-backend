@@ -10,8 +10,9 @@ const router = Router();
 // get data from google
 router.get('/gbooks/:query', BookController.searchGbooks);
 
-// frontend send the books list to backend to store
-// router.put('/add', Middlewares.checkAuthentication, BookController.addBooks);
+// frontend send the books list to backend to store, only add new books
+router.post('/bcadd', Middlewares.checkAuthentication, BookController.addBCBooks);
+router.post('/wsadd', Middlewares.checkAuthentication, BookController.addWSBooks)
 
 
 // no delete for our books database

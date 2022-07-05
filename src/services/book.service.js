@@ -1,5 +1,5 @@
-// const mongoose = require('mongoose');
-// const Book = require('../models/book.model');
+import User from '../models/user.model.js';
+import Book from '../models/book.model.js';
 import request from 'superagent'
 
 async function modifyInput(json) {
@@ -110,5 +110,33 @@ async function searchGbooks(query) {
     return modifyInput(books_json)
 }
 
+async function addBooks(userId, newBookList, listName) {
+    const user = await User.findById(userId);
+    if (user === null) return 'no such user';
+    for (const book of newBookList) {
+        const foundBook = await Book.findOne({ISBN: book.ISBN});
+        if (foundBook !== null) return 'book already exists';
+        const newBook = new Book(); // every loop need a newBook
+        newBook.ISBN = book.ISBN;
+        newBook.title = book.title;
+        newBook.subtitle = book.subtitle;
+        // List object
+        newBook.authors = book.authors;
+        newBook.categories = book.categories;
+        newBook.image = book.image;
+        newBook.description = book.description;
+        // accourding to listName update to different lists
+        if (listName === 'BC') {
+            // mark exchangeable problem
+            newBook.ownedByUsers.push(userId);
+        }
+        if (listName === 'WS') {
+            newBook.wantedByUsers.push(userId);
+        }
+        await newBook.save();
+    }
+    return 'book list update success';
+}
 
-export default { searchGbooks };
+
+export default { searchGbooks, addBooks };
