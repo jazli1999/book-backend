@@ -6,13 +6,7 @@ import Middlewares from '../middlewares.js';
 
 const router = Router();
 
-// router.get('/gbooks', (req, res) => {
-//     console.log(req.body);
-//     res.send(200);
-// });
-
 //default route "/books"
-
 // get data from google
 router.get('/gbooks/:query', BookController.searchGbooks);
 
@@ -21,5 +15,4 @@ router.get('/gbooks/:query', BookController.searchGbooks);
 
 
 // no delete for our books database
-
 export default router;

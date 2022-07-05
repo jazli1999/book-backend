@@ -59,15 +59,32 @@ async function update(userId, userInfo) {
 async function updateBookList(userId, newBookList, listName) {
     return User.findById(userId).then((user) => {
         if (user === null) return 'no such user';
+        
         for (const book of newBookList) {
-            console.log(book.title);
             Book.findOne({ISBN: book.ISBN}).then((foundBook) => {
-                if (foundBook !== null) return 'book already exists';
-                return 'no such book';
+                const newBook = new Book(); // every loop need a newBook
+                newBook.ISBN = book.ISBN;
+                newBook.title = book.title;
+                newBook.subtitle = book.subtitle;
+                // List object
+                newBook.authors = book.authors;
+                newBook.categories = book.categories;
+                newBook.image = book.image;
+                newBook.description = book.description;
+                // accourding to listName update to different lists
+                if (listName === 'BC') {
+                    // mark exchangeable problem
+                    newBook.ownedByUsers.push(userId);
+                }
+                if (listName === 'WS') {
+                    newBook.wantedByUsers.push(userId);
+                }
+                newBook.save();
+                // return 'no such book';
                 // add new book part
-
             });
         }
+        return 'all books update success';
     });
 }
 

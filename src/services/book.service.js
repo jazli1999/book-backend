@@ -90,7 +90,7 @@ async function searchGbooks(query) {
             temp_query.push(encodeURIComponent(p) + ":" + encodeURIComponent(input_json[p]));
         }
     temp_query = temp_query.join("+")
-    console.log(temp_query)
+    // console.log(temp_query)
 
     // Send request to google books api with implemented query string
     var r = await request
@@ -98,7 +98,7 @@ async function searchGbooks(query) {
          // For now I set max results to 30
         .then((data) => {
             // return the results
-            console.log(data)
+            // console.log(data)
             books_json = JSON.parse(data.text)
             books_json = books_json.items
 

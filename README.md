@@ -5,6 +5,8 @@
   ```npm install```
 - Add MongoDB URI to `.env`  
   ```ATLAS_URI=mongodb+srv://{username}:{password}@cluster0.yros1ft.mongodb.net/?retryWrites=true&w=majority```  
+- Add JWT_SECRET to `.env`  
+  ```JWT_SECRET=TopSecret```
 - To run the project in dev mode (with auto-reload)   
   ```npm run dev```
 - To run the project in product mode  
@@ -17,36 +19,31 @@
 ## API Test Data  
 ### User Related Operations
 **_create new user_**  
-`POST /users`
+`POST /auth/register`
 ```JSON
 {
-  "user": {
-    "firstName": "ke",
-    "lastName": "chen",
-    "email": "ke.chen@tum.de", //email should be unique
-    "password": "ke_pw"
-  }
+  "email": "ke.samantha.chen@tum.de", //email should be unique
+  "password": "ke_pw"
 }
 ```
 
 **_login test_**     
-`POST /users/login`
+`POST /auth/login`
 ```Json
 {
-  "user": {
-    "email": "ke.chen@tum.de",
-    "password": "ke_pw"
-  }
+  "email": "ke.chen@tum.de",
+  "password": "ke_pw"
 }
 ```
-if valid, the request will return the objectid of current user   
-
+if valid, will reply a token, which should be added to header `Authorization: token` for the following apis:   
 
 **_update user profile_**   
 `PUT /users`   
 ```JSON
 {
   "user": {
+    "firstName": "Ke",
+    "lastName": "Chen",
     "bio": "I like reading",
     "gender": "female",
     "address": {
@@ -99,7 +96,28 @@ if valid, the request will return the objectid of current user
 ```
 **_update wish list_**  
 `PUT /users/wslist`   
-Pretty the same as `PUT /users/bclist`
+```JSON
+[
+  {
+    "ISBN": "9783638586337",
+    "title": "Die NAFTA. North American Free Trade Agreement",
+    "authors":["Oliver Thomas"],
+    "categories":["Political Science"],
+    "image": "http://books.google.com/books/content?id=oa0-I7llC9wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Studienarbeit aus dem Jahr 2006 im Fachbereich Politik - Internationale Politik - Thema: Globalisierung, pol. Ökonomie, Note: 1,7, Fachhochschule Münster, Veranstaltung: Regionalwissenschaften Lateinamerika, 8 Quellen im Literaturverzeichnis, Sprache: Deutsch, Abstract: Das Nordamerikanische Freihandelsabkommen NAFTA (North American Free Trade Agreement) ist ein zum 01.01.1994 gegründeter Wirtschaftsverbund zwischen den Vereinigten Staaten, Kanada und Mexiko. Das NAFTA-Abkommen löste das bis dato existierende Kanadisch-Amerikanische Freihandelsabkommen mit dem Ziel ab, die Zölle im bilateralen Handel innerhalb eines bestimmten Zeitraums zu eliminieren. Gemessen an der Bevölkerung ist mit dem NAFTA-Abkommen ein Wirtschaftsblock entstanden, der mit rd. 380 Mio. Einwohnern größer als der der Europäischen Union ist. Mit einem kumulierten BIP von 6.000 Milliarden US-Dollar gehört die NAFTA außerdem zu den größten Freihandelszonen der Welt. In den folgenden Kapiteln sollen das Zustandekommen und der Inhalt des Abkommens, die nationalen Interessen der beteiligten Staaten und die derzeitige Situation näher erläutert werden sowie ein kurzer Ausblick über Chancen und Perspektiven der NAFTA gegeben werden."
+  },
+  {
+    "ISBN": "9783755740018",
+    "title": "Free",
+    "subtitle": "Die Welt gehört uns wenn du bei mir bist",
+    "authors":["Elke Wollinski"],
+    "categories":["Young Adult Fiction"],
+    "image": "http://books.google.com/books/content?id=aINhEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Lauren wächst wohlbehütet bei ihren Eltern auf. Nichts hasst sie mehr, als das langweilige Leben auf dem Land. Es stört sie, dass ihre Eltern ihr Leben diktieren wollen. Lauren liebt das Abenteuer und hält nichts davon, ein braves Mädchen zu sein. Eines Tages lernt sie den jungen Aussteiger Randy kennen. Dieser zeltet, begleitet von seinem Hund Earl und dem zahmen Frettchen Speedy, auf dem Grundstück ihres Nachbarn. Randy verkörpert für Lauren alles, was sie mit Abenteuer verbindet. Sie freundet sich mit ihm an und seine Lebensweise fasziniert sie immer mehr. Und nicht nur das. Sie verliebt sich hoffnungslos in ihn und brennt mit ihm durch. Randy ist der Sohn eines Dachdeckers. Er hasst nichts mehr, als sich den Vorschriften der Gesellschaft zu fügen. Deshalb steigt er aus und lebt seinen Traum, zu Fuß die gesamten USA zu durchqueren. Alles was ihm wichtig ist, nimmt er auf seine Reise mit. Seine Tiere und ein Zelt. Mehr nicht. Ohne Geld durch die Welt, lautet sein Motto. Als er Lauren begegnet verändert sich alles. Die beiden verlieben sich hoffnungslos ineinander. Gemeinsam mit ihr setzt er seine Reise fort. Was zunächst als harmloses Abenteuer beginnt, endet in Flucht und dem Kampf ums pure Überleben, als Randy eines versuchten Mordes bezichtigt wird."
+  }
+]
+
+```
 
 ---
 
