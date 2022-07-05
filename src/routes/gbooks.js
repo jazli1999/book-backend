@@ -1,3 +1,6 @@
+// This file is no use for the project, just is a "syntax reference for me"
+// Will be delete in the future
+
 import { Router } from 'express';
 import { createHash } from 'crypto';
 

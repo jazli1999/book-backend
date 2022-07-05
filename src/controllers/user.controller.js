@@ -37,6 +37,15 @@ async function deleteUser(req, res, next) {
     }).catch(next);
 }
 
+// bclist & wslist using the same service function
+async function updateBCList(req, res, next) {
+    UserService.updateBookList(req.userId, req.body, 'BC').then((value) => res.status(200).send(value));
+}
+
+async function updateWSList(req, res, next) {
+    UserService.updateBookList(req.userId, req.body, 'WS').then((value) => res.status(200).send(value));
+}
+
 export default {
-    createUser, loginUser, updateUser, getUserInfo, deleteUser,
+    createUser, loginUser, updateUser, getUserInfo, deleteUser, updateBCList, updateWSList
 };

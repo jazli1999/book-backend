@@ -1,5 +1,6 @@
 // import mongoose from 'mongoose';
 import User from '../models/user.model.js';
+import Book from '../models/book.model.js';
 
 async function create(userToCreate) {
     const user = new User(); // contructor always be sync
@@ -55,6 +56,21 @@ async function update(userId, userInfo) {
     });
 }
 
+async function updateBookList(userId, newBookList, listName) {
+    return User.findById(userId).then((user) => {
+        if (user === null) return 'no such user';
+        for (const book of newBookList) {
+            console.log(book.title);
+            Book.findOne({ISBN: book.ISBN}).then((foundBook) => {
+                if (foundBook !== null) return 'book already exists';
+                return 'no such book';
+                // add new book part
+
+            });
+        }
+    });
+}
+
 async function get(userId) {
     return User.findById(userId);
 }
@@ -64,5 +80,5 @@ async function deleteUser(userId) {
 }
 
 export default {
-    create, update, get, deleteUser,
+    create, update, get, deleteUser, updateBookList
 };
