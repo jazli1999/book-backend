@@ -22,7 +22,15 @@ async function updatePayment(req, res) {
 
 async function updateTrackingCode(req, res) {
   const { isReq, trackingCode } = req.body;
-  OrderService.updateTrackingCode(req.params.id, isReq, req.userId, trackingCode). then((status) => {
+  OrderService.updateTrackingCode(req.params.id, isReq, req.userId, trackingCode).then((status) => {
+    res.setHeader('content-type', 'text/plain');
+    res.status(status).send('ok');
+  });
+}
+
+async function confirmReceipt(req, res) {
+  const { isReq } = req.body;
+  OrderService.confirmReceipt(req.params.id, isReq, req.userId).then((status) => {
     res.setHeader('content-type', 'text/plain');
     res.status(status).send('ok');
   });
@@ -32,4 +40,5 @@ export default {
   getOrder,
   updatePayment,
   updateTrackingCode,
+  confirmReceipt,
 }

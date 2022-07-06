@@ -43,8 +43,22 @@ const updateTrackingCode = async (orderId, isReq, reqId, trackingCode) => {
   return 200;
 }
 
+const confirmReceipt = async (orderId, isReq, reqId) => {
+  const order = await Order.findById(orderId);
+  if (isReq) {
+    if (order.requester.userId.toString() !== reqId) return 401;
+    order.requester.status ++;
+  } else {
+    if (order.responder.userId.toString() !== reqId) return 401;
+    order.responder.status ++;
+  }
+  await order.save();
+  return 200;
+}
+
 export default {
   read,
   updatePayment,
   updateTrackingCode,
+  confirmReceipt,
 };
