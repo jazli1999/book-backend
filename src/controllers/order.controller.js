@@ -13,6 +13,15 @@ const getOrder = (req, res) => {
   });
 }
 
+async function updatePayment(req, res) {
+  const { isReq, payment } = req.body;
+  OrderService.updatePayment(req.params.id, isReq, req.userId, payment).then((status) => {
+    res.setHeader('content-type', 'text/plain');
+    res.status(status).send('ok');
+  });
+}
+
 export default {
   getOrder,
+  updatePayment,
 }
