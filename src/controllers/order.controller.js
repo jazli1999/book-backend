@@ -5,7 +5,6 @@ const getOrder = (req, res) => {
     if (order) {
       const response = JSON.parse(JSON.stringify(order))
       response.reqId = req.userId;
-      console.log(response);
       res.status(200).json(response);
     } else {
       res.status(404).send('Resource not found');
@@ -21,7 +20,16 @@ async function updatePayment(req, res) {
   });
 }
 
+async function updateTrackingCode(req, res) {
+  const { isReq, trackingCode } = req.body;
+  OrderService.updateTrackingCode(req.params.id, isReq, req.userId, trackingCode). then((status) => {
+    res.setHeader('content-type', 'text/plain');
+    res.status(status).send('ok');
+  });
+}
+
 export default {
   getOrder,
   updatePayment,
+  updateTrackingCode,
 }
