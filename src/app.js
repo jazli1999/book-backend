@@ -8,10 +8,11 @@ import 'dotenv/config';
 
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
-import gbooksRouter from './routes/gbooks.js';
+// import gbooksRouter from './routes/gbooks.js';
 import booksRouter from './routes/books.js';
 import authRouter from './routes/auth.js';
 import orderRouter from './routes/orders.js';
+import bookmateRouter from './routes/bookmates.js';
 
 const app = express();
 
@@ -30,10 +31,14 @@ mongoose.connection.once('open', () => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/gbooks', gbooksRouter);
+// app.use('/gbooks', gbooksRouter);
 app.use('/books', booksRouter);
 app.use('/auth', authRouter);
+<<<<<<< HEAD
 app.use('/orders', orderRouter);
+=======
+app.use('/bookmates', bookmateRouter);
+>>>>>>> 3f2f6386aa1e6dbd683f02bfcf7c87f6ce8d61fb
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
