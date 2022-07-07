@@ -1,9 +1,15 @@
 import OrderService from '../services/order.service.js';
+import UserService from '../services/user.service.js';
 
-const getUserOrders = (req, res) => {
-    OrderService.readUserOrders(req.userId).then((orders) => {
-        res.status(200).json(orders);
-    });
+const getUserOrders = async (req, res) => {
+    const user = await UserService.get(req.userId);
+    const orderIds = user.orders;
+    const orders = [];
+    for (const id of orderIds) {
+      const order = await OrderService.read(id);
+      orders.push(order);
+    }
+    res.status(200).json(orders);
 };
 
 const getOrder = (req, res) => {

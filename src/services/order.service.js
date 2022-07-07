@@ -11,14 +11,6 @@ const read = async (orderId) => {
     }
 };
 
-const readUserOrders = async (userId) => {
-    const orders = await Order.find({ userId })
-        .populate('requester')
-        .populate('responder')
-        .exec();
-    return orders;
-};
-
 const updatePayment = async (orderId, isReq, reqId, payment) => {
     const order = await Order.findById(orderId);
     if (isReq) {
@@ -69,7 +61,6 @@ const confirmReceipt = async (orderId, isReq, reqId) => {
 };
 
 export default {
-    readUserOrders,
     read,
     updatePayment,
     updateTrackingCode,
