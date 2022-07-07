@@ -14,4 +14,5 @@ async function addWSBooks(req, res, next) {
     BookService.addBooks(req.userId, req.body, 'WS').then((value) => res.status(200).send(value));
 }
 
+
 export default { searchGbooks, addBCBooks, addWSBooks };

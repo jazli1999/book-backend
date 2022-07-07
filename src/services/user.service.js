@@ -58,19 +58,34 @@ async function update(userId, userInfo) {
 }
 
 async function updateBookList(userId, newBookList, listName) {
+    
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     await BookService.addBooks(userId, newBookList, listName);
-    if (listName === 'BC') user.bookCollection = [];
+    if (listName === 'BC'){
+         user.bookCollection = [];
+         user.exchangeableCollection = [];
+    }
     if (listName === 'WS') user.wishList = [];
     for (const book of newBookList) {
         const foundBook = await Book.findOne({ISBN: book.ISBN});
         if (foundBook === null) return book.ISBN;
-        if (listName === 'BC') user.bookCollection.push(foundBook._id);
+        if (listName === 'BC'){
+            user.bookCollection.push(foundBook._id);
+            book.exchangeable === 0 ? user.exchangeableCollection.push(0) : user.exchangeableCollection.push(1);
+        }
         if (listName === 'WS') user.wishList.push(foundBook._id);
     }
     await user.save();
     return 'user list update success';
+}
+
+async function readBookList(userId,  listName){
+    console.log("bre")
+    const user = await User.findById(userId);
+    if (user === null) return 'no such user';
+    if (listName === 'BC') return { "list": user.bookCollection, "exchangeable": user.exchangeableCollection}
+    if (listName === 'WS') return { "list": user.wishList, "exchangeable": [] }
 }
 
 async function get(userId) {
@@ -82,5 +97,5 @@ async function deleteUser(userId) {
 }
 
 export default {
-    create, update, get, deleteUser, updateBookList
+    create, update, get, deleteUser, updateBookList, readBookList
 };

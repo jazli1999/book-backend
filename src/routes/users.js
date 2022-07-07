@@ -36,6 +36,9 @@ router.delete('/:id', UserController.deleteUser);
 router.put('/bclist', Middlewares.checkAuthentication, UserController.updateBCList);
 router.put('/wslist', Middlewares.checkAuthentication, UserController.updateWSList);
 
+router.get('/readlist/bc', Middlewares.checkAuthentication, UserController.readBCList);
+router.get('/readlist/ws', Middlewares.checkAuthentication, UserController.readWSList);
+
 // Book realted User API
 // add to user's book list using isbn
 // router.get('')
