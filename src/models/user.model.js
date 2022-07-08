@@ -45,6 +45,7 @@ const userSchema = new Schema({
     premium: premiumSchema,
     birthday: String,
     bookCollection: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+    exchangeableCollection: [{type: Boolean, default: true}],
     wishList: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
     bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }], // store the bookmates result
 }, { timestamps: true });

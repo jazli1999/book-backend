@@ -46,6 +46,19 @@ async function updateWSList(req, res, next) {
     UserService.updateBookList(req.userId, req.body, 'WS').then((value) => res.status(200).send(value));
 }
 
+// bclist & wslist using the same service function
+async function readBCList(req, res, next) {
+    console.log(req)
+    UserService.readBookList(req.userId, 'BC').then((value) => res.status(200).send(value));
+}
+
+async function readWSList(req, res, next) {
+    UserService.readBookList(req.userId, 'WS').then((value) => {
+        console.log("hle")
+        res.status(200).send(value)}
+    );
+}
+
 export default {
-    createUser, loginUser, updateUser, getUserInfo, deleteUser, updateBCList, updateWSList
+    createUser, loginUser, updateUser, getUserInfo, deleteUser, updateBCList, updateWSList, readBCList, readWSList
 };
