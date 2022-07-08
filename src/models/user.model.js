@@ -46,8 +46,9 @@ const userSchema = new Schema({
     birthday: String,
     orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     bookCollection: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+    exchangeableCollection: [{type: Boolean, default: true}],
     wishList: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
-    bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }], // store the bookmates result
 }, { timestamps: true });
 
 // userSchema.methods.toAuthJSON = function() {
