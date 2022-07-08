@@ -63,6 +63,12 @@
       ],
       "consistent-return": [
         "off"
+      ],
+      "no-await-in-loop": [
+        "off"
+      ],
+      "no-restricted-syntax": [
+        "off"
       ]
     }
   }

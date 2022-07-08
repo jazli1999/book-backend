@@ -44,6 +44,7 @@ const userSchema = new Schema({
     address: addressSchema,
     premium: premiumSchema,
     birthday: String,
+    orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     bookCollection: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
     wishList: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
     bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }],
