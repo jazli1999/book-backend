@@ -26,7 +26,7 @@
 
 ```JSON
 {
-  "email": "ke.samantha.chen@tum.de", //email should be unique
+  "email": "ke.samantha.chen.test@tum.de", //email should be unique
   "password": "ke_pw"
 }
 ```
@@ -36,7 +36,7 @@
 
 ```Json
 {
-  "email": "ke.chen@tum.de",
+  "email": "ke.samantha.chen.test@tum.de",
   "password": "ke_pw"
 }
 ```
