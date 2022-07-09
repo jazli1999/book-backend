@@ -3,9 +3,9 @@ import Order from '../models/order.model.js';
 const read = async (orderId) => {
     try {
         const order = await Order.findById(orderId)
-                        .populate("requester.wishList")
-                        .populate("responder.wishList")
-                        .exec();
+            .populate('requester.wishList')
+            .populate('responder.wishList')
+            .exec();
         return order;
     }
     catch (err) {
@@ -25,10 +25,10 @@ const updatePayment = async (orderId, isReq, reqId, payment) => {
     }
     else {
         if (order.responder.userId.toString() !== reqId) return 401;
-        order.requester.payment = {
+        order.responder.payment = {
             ...payment,
         };
-        order.requester.status += 1;
+        order.responder.status += 1;
     }
     await order.save();
     return 200;
@@ -63,8 +63,25 @@ const confirmReceipt = async (orderId, isReq, reqId) => {
     return 200;
 };
 
+const pickBooks = async (orderId, isReq, reqId, bookList) => {
+    const order = await Order.findById(orderId);
+    if (isReq) {
+        if (order.requester.userId.toString() !== reqId) return 401;
+        order.requester.wishList = bookList;
+    }
+    else {
+        if (order.responder.userId.toString() !== reqId) return 401;
+        order.responder.wishList = bookList;
+    }
+    order.requester.status += 1;
+    order.responder.status += 1;
+    await order.save();
+    return 200;
+};
+
 export default {
     read,
+    pickBooks,
     updatePayment,
     updateTrackingCode,
     confirmReceipt,

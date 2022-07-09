@@ -1,10 +1,10 @@
+import request from 'superagent';
 import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
-import request from 'superagent'
 
 async function modifyInput(json) {
-    const books = { search_result: [] };
-    for (const x in json) {
+    const books = { searchResult: [] };
+    for (const x of json) {
         const currentJson = {};  
         
         // GET Parameters
@@ -48,9 +48,9 @@ async function modifyInput(json) {
             }                   
         }
         // Adds the current book json to result array
-        if (Object.keys(currentJson) !== 0){
-            if(Object.prototype.hasOwnProperty.call(currentJson, 'image') && Object.prototype.hasOwnProperty.call(currentJson, 'ISBN')) {
-                books.search_result.push(currentJson);
+        if (Object.keys(currentJson) !== 0) {
+            if (Object.prototype.hasOwnProperty.call(currentJson, 'image') && Object.prototype.hasOwnProperty.call(currentJson, 'ISBN')) {
+                books.searchResult.push(currentJson);
             }
         }
     }
@@ -62,59 +62,59 @@ async function modifyInput(json) {
 // fix size of 20 or 50
 async function searchGbooks(query) {
     // google books api
-    var books_json;
-    var input_json = JSON.parse(query)
-
+    let booksJson;
+    const inputJson = JSON.parse(query);
 
     // Rename Parameters
-    if (Object.prototype.hasOwnProperty.call(input_json, 'author')) {
-        input_json.inauthor = input_json.author
-        delete input_json.author
+    if (Object.prototype.hasOwnProperty.call(inputJson, 'author')) {
+        inputJson.inauthor = inputJson.author;
+        delete inputJson.author;
     }
-    if (Object.prototype.hasOwnProperty.call(input_json, 'title')) {
-        input_json.intitle = input_json.title
-        delete input_json.title
+    if (Object.prototype.hasOwnProperty.call(inputJson, 'title')) {
+        inputJson.intitle = inputJson.title;
+        delete inputJson.title;
     }
-    if (Object.prototype.hasOwnProperty.call(input_json, 'publisher')) {
-        input_json.inpublisher = input_json.publisher
-        delete input_json.publisher
+    if (Object.prototype.hasOwnProperty.call(inputJson, 'publisher')) {
+        inputJson.inpublisher = inputJson.publisher;
+        delete inputJson.publisher;
     }
     
-    Object.keys(input_json).forEach(key => input_json[key] === undefined || input_json[key] === null && delete input_json[key])
-
+    Object.keys(inputJson).forEach((key) => {
+        return (inputJson[key] === undefined) || ((inputJson[key] === null) && (delete inputJson[key]));
+    });
 
     // Create temp query string in googlebooks format
-    var temp_query = [];
-    for (var p in input_json)
-        if (input_json.hasOwnProperty(p)) {
-            temp_query.push(encodeURIComponent(p) + ":" + encodeURIComponent(input_json[p]));
+    let tempQuery = [];
+    for (const p in inputJson) {
+        if (Object.prototype.hasOwnProperty.call(inputJson, p)) {
+            tempQuery.push(`${encodeURIComponent(p)}:${encodeURIComponent(inputJson[p])}`);
         }
-    temp_query = temp_query.join("+")
+    }
+    tempQuery = tempQuery.join('+');
     // console.log(temp_query)
 
     // Send request to google books api with implemented query string
-    var r = await request
-        .get("https://www.googleapis.com/books/v1/volumes?q="+temp_query)
-         // For now I set max results to 30
+    const r = await request
+        .get(`https://www.googleapis.com/books/v1/volumes?q=${tempQuery}`)
+    // For now I set max results to 30
         .then((data) => {
             // return the results
             // console.log(data)
-            books_json = JSON.parse(data.text)
-            books_json = books_json.items
-
-        })
+            booksJson = JSON.parse(data.text);
+            booksJson = booksJson.items;
+        });
     // modifies the input json so that we can access our model
     // parameters much easierPromise.resolve('Success').then( modifyInput(books_json))
     // I couldn't solve async issue without using await back to back      
     
-    return modifyInput(books_json)
+    return modifyInput(booksJson);
 }
 
 async function addBooks(userId, newBookList, listName) {
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     for (const book of newBookList) {
-        const foundBook = await Book.findOne({ISBN: book.ISBN});
+        const foundBook = await Book.findOne({ ISBN: book.ISBN });
         if (foundBook !== null) return 'book already exists';
         const newBook = new Book(); // every loop need a newBook
         newBook.ISBN = book.ISBN;
@@ -137,6 +137,5 @@ async function addBooks(userId, newBookList, listName) {
     }
     return 'book list update success';
 }
-
 
 export default { searchGbooks, addBooks };

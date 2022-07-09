@@ -3,17 +3,15 @@ import { Router } from 'express';
 import BookController from '../controllers/book.controller.js';
 import Middlewares from '../middlewares.js';
 
-
 const router = Router();
 
-//default route "/books"
+// default route "/books"
 // get data from google
 router.get('/gbooks/:query', BookController.searchGbooks);
 
 // frontend send the books list to backend to store, only add new books
 router.post('/bcadd', Middlewares.checkAuthentication, BookController.addBCBooks);
-router.post('/wsadd', Middlewares.checkAuthentication, BookController.addWSBooks)
-
+router.post('/wsadd', Middlewares.checkAuthentication, BookController.addWSBooks);
 
 // no delete for our books database
 export default router;

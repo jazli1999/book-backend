@@ -2,12 +2,6 @@ import UserService from '../services/user.service.js';
 // const userServiceInstance = new userService();
 
 async function createUser(req, res, next) {
-    // try {
-    //     const createdUser = await userService.create(req.body);
-    //     return res.send(createdUser);
-    // } catch (err) {
-    //     res.status(500).send(err);
-    // }
     UserService.create(req.body).then(() => {
         res.send('save new user success');
     }).catch(next);
@@ -24,9 +18,19 @@ async function updateUser(req, res) {
 }
 
 async function getUserInfo(req, res, next) {
-    // TODO for third-party query, do not return everything
     const queryId = req.params.id ? req.params.id : req.userId;
     UserService.get(queryId).then((user) => {
+        if (req.params.id !== req.userId) {
+            const response = JSON.parse(JSON.stringify(user));
+            delete response.password;
+            delete response.address;
+            delete response.birthday;
+            delete response.email;
+            delete response.orders;   
+            delete response.bookmates; 
+            res.json(response);
+            return;
+        }
         res.json(user);
     }).catch(next);
 }
@@ -48,17 +52,25 @@ async function updateWSList(req, res, next) {
 
 // bclist & wslist using the same service function
 async function readBCList(req, res, next) {
-    console.log(req)
+    console.log(req);
     UserService.readBookList(req.userId, 'BC').then((value) => res.status(200).send(value));
 }
 
 async function readWSList(req, res, next) {
     UserService.readBookList(req.userId, 'WS').then((value) => {
-        console.log("hle")
-        res.status(200).send(value)}
-    );
+        console.log('hle');
+        res.status(200).send(value);
+    });
 }
 
 export default {
-    createUser, loginUser, updateUser, getUserInfo, deleteUser, updateBCList, updateWSList, readBCList, readWSList
+    createUser, 
+    loginUser, 
+    updateUser, 
+    getUserInfo, 
+    deleteUser, 
+    updateBCList, 
+    updateWSList, 
+    readBCList, 
+    readWSList,
 };

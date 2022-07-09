@@ -25,8 +25,8 @@ router.post('/login', UserController.loginUser);
 router.put('/', Middlewares.checkAuthentication, UserController.updateUser);
 
 // get user information
-router.get('/', Middlewares.checkAuthentication, UserController.getUserInfo); //get current user info
-router.get('/:id', Middlewares.checkAuthentication, UserController.getUserInfo); //get user info according to id
+router.get('/', Middlewares.checkAuthentication, UserController.getUserInfo); // get current user info
+router.get('/:id', Middlewares.checkAuthentication, UserController.getUserInfo); // get user info according to id
 
 // delete user according to id (need to be modified in the future, security issue)
 router.delete('/:id', UserController.deleteUser);

@@ -1,7 +1,7 @@
 // import mongoose from 'mongoose';
 import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
-import BookService from '../services/book.service.js';
+import BookService from './book.service.js';
 
 async function create(userToCreate) {
     const user = new User(); // contructor always be sync
@@ -58,21 +58,25 @@ async function update(userId, userInfo) {
 }
 
 async function updateBookList(userId, newBookList, listName) {
-    
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     await BookService.addBooks(userId, newBookList, listName);
-    if (listName === 'BC'){
-         user.bookCollection = [];
-         user.exchangeableCollection = [];
+    if (listName === 'BC') {
+        user.bookCollection = [];
+        user.exchangeableCollection = [];
     }
     if (listName === 'WS') user.wishList = [];
     for (const book of newBookList) {
-        const foundBook = await Book.findOne({ISBN: book.ISBN});
+        const foundBook = await Book.findOne({ ISBN: book.ISBN });
         if (foundBook === null) return book.ISBN;
-        if (listName === 'BC'){
+        if (listName === 'BC') {
             user.bookCollection.push(foundBook._id);
-            book.exchangeable === 0 ? user.exchangeableCollection.push(0) : user.exchangeableCollection.push(1);
+            if (book.exchangeable === 0) {
+                user.exchangeableCollection.push(0);
+            }
+            else {
+                user.exchangeableCollection.push(1);
+            }
         }
         if (listName === 'WS') user.wishList.push(foundBook._id);
     }
@@ -80,12 +84,12 @@ async function updateBookList(userId, newBookList, listName) {
     return 'user list update success';
 }
 
-async function readBookList(userId,  listName){
-    console.log("bre")
+async function readBookList(userId, listName) {
+    console.log('bre');
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
-    if (listName === 'BC') return { "list": user.bookCollection, "exchangeable": user.exchangeableCollection}
-    if (listName === 'WS') return { "list": user.wishList, "exchangeable": [] }
+    if (listName === 'BC') return { list: user.bookCollection, exchangeable: user.exchangeableCollection };
+    if (listName === 'WS') return { list: user.wishList, exchangeable: [] };
 }
 
 async function get(userId) {
@@ -97,5 +101,5 @@ async function deleteUser(userId) {
 }
 
 export default {
-    create, update, get, deleteUser, updateBookList, readBookList
+    create, update, get, deleteUser, updateBookList, readBookList,
 };

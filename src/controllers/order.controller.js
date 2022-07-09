@@ -75,9 +75,18 @@ async function confirmReceipt(req, res) {
     });
 }
 
+async function pickBooks(req, res) {
+    const { isReq, bookList } = req.body;
+    OrderService.pickBooks(req.params.id, isReq, req.userId, bookList).then((status) => {
+        res.setHeader('content-type', 'text/plain');
+        res.status(status).send('ok');
+    }); 
+}
+
 export default {
     getUserOrders,
     getOrder,
+    pickBooks,
     updatePayment,
     updateTrackingCode,
     confirmReceipt,
