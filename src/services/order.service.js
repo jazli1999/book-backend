@@ -2,7 +2,10 @@ import Order from '../models/order.model.js';
 
 const read = async (orderId) => {
     try {
-        const order = await Order.findById(orderId).exec();
+        const order = await Order.findById(orderId)
+                        .populate("requester.wishList")
+                        .populate("responder.wishList")
+                        .exec();
         return order;
     }
     catch (err) {

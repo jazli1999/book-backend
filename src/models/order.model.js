@@ -6,7 +6,7 @@ const paymentSchema = new Schema({
     orderId: String,
     payerId: String,
     amount: Number,
-}, { _id: false });
+});
 
 const userOrderSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User' },

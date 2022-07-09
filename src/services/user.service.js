@@ -89,7 +89,7 @@ async function readBookList(userId,  listName){
 }
 
 async function get(userId) {
-    return User.findById(userId);
+    return User.findById(userId).populate('wishList').populate('bookCollection');
 }
 
 async function deleteUser(userId) {
