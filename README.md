@@ -143,6 +143,23 @@ The exchangeable list is left empty for wish list.
 
 ---
 
+### Subcription Related Operations
+
+To Create new subscription use this function. Two options are present for subscription model: monthly and yearly
+`PUT /subscription/start/:subscriptionModel`
+
+Montly Subscription
+`PUT /subscription/start/monthly`
+
+Read status of your subscription  
+`GET /subscription`
+
+Update subscription status:
+`PUT /subscription/update/:subscriptionModel`
+
+Cancel subsription
+`GET /subscription/cancel`
+
 ### Book Related Operations
 
 **_get data from google books api_**  

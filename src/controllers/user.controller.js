@@ -58,7 +58,6 @@ async function readBCList(req, res, next) {
 
 async function readWSList(req, res, next) {
     UserService.readBookList(req.userId, 'WS').then((value) => {
-        console.log('hle');
         res.status(200).send(value);
     });
 }
