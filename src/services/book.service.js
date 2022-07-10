@@ -3,48 +3,49 @@ import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
 
 async function modifyInput(json) {
+    
     const books = { searchResult: [] };
     for (const x of json) {
+        console.log(x)
         const currentJson = {};  
         
         // GET Parameters
         // In Google Books API the properties of our model
         // are stored in Volume Info 
-        if (Object.prototype.hasOwnProperty.call(json[x], 'volumeInfo')) {
-            const { volumeInfo } = json[x];
+        if (Object.prototype.hasOwnProperty.call(x, 'volumeInfo')) {
             // ISBN
-            if (Object.prototype.hasOwnProperty.call(volumeInfo, 'industryIdentifiers')) {
-                for (const y in volumeInfo.industryIdentifiers) {
-                    if (volumeInfo.industryIdentifiers[y].type === 'ISBN_13') {
-                        currentJson.ISBN = volumeInfo.industryIdentifiers[y].identifier;
+            if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'industryIdentifiers')) {
+                for (const y of x.volumeInfo.industryIdentifiers) {
+                    if (y.type === 'ISBN_13') {
+                        currentJson.ISBN = y.identifier;
                     }
                 }
             }
             // Title
-            if (Object.prototype.hasOwnProperty.call(volumeInfo, 'title')) {
-                currentJson.title = json[x].volumeInfo.title;
+            if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'title')) {
+                currentJson.title = x.volumeInfo.title;
             }
             // Subtitle
-            if (Object.prototype.hasOwnProperty.call(volumeInfo, 'subtitle')) {
-                currentJson.subtitle = json[x].volumeInfo.subtitle;
+            if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'subtitle')) {
+                currentJson.subtitle = x.volumeInfo.subtitle;
             }
             // Authors
-            if (Object.prototype.hasOwnProperty.call(volumeInfo, 'authors')) {
-                currentJson.authors = json[x].volumeInfo.authors;
+            if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'authors')) {
+                currentJson.authors = x.volumeInfo.authors;
             }
             // Categories
-            if (Object.prototype.hasOwnProperty.call(volumeInfo, 'categories')) {
-                currentJson.categories = json[x].volumeInfo.categories;
+            if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'categories')) {
+                currentJson.categories = x.volumeInfo.categories;
             }
             // Image URL
-            if (Object.prototype.hasOwnProperty.call(volumeInfo, 'imageLinks')) {
-                if (Object.prototype.hasOwnProperty.call(volumeInfo.imageLinks, 'thumbnail')) {
-                    currentJson.image = json[x].volumeInfo.imageLinks.thumbnail;
+            if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'imageLinks')) {
+                if (Object.prototype.hasOwnProperty.call(x.volumeInfo.imageLinks, 'thumbnail')) {
+                    currentJson.image = x.volumeInfo.imageLinks.thumbnail;
                 }
             }
             // Description
-            if (Object.prototype.hasOwnProperty.call(volumeInfo, 'description')) {
-                currentJson.description = json[x].volumeInfo.description;
+            if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'description')) {
+                currentJson.description = x.volumeInfo.description;
             }                   
         }
         // Adds the current book json to result array
@@ -80,7 +81,7 @@ async function searchGbooks(query) {
     }
     
     Object.keys(inputJson).forEach((key) => {
-        return (inputJson[key] === undefined) || ((inputJson[key] === null) && (delete inputJson[key]));
+        return ((inputJson[key] === undefined || inputJson[key] === null) && (delete inputJson[key]));
     });
 
     // Create temp query string in googlebooks format
