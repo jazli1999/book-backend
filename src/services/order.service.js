@@ -1,4 +1,5 @@
 import Order from '../models/order.model.js';
+import User from '../models/user.model.js';
 
 const read = async (orderId) => {
     try {
@@ -13,6 +14,22 @@ const read = async (orderId) => {
         return null;
     }
 };
+
+const create = async (newOrder, reqId) => {
+    const order = new Order(newOrder);
+    order.requester.userId = reqId;
+    order.requester.status = 2;
+    order.responder.status = 2;
+    await order.save();
+    
+    const requester = await User.findById(reqId);
+    requester.orders.push(order._id.toString());
+    const responder = await User.findById(order.responder.userId);
+    responder.orders.push(order._id.toString());
+    await requester.save();
+    await responder.save();
+    return order;
+}
 
 const updatePayment = async (orderId, isReq, reqId, payment) => {
     const order = await Order.findById(orderId);
@@ -43,6 +60,7 @@ const updateTrackingCode = async (orderId, isReq, reqId, trackingCode) => {
     }
     else {
         if (order.responder.userId.toString() !== reqId) return 401;
+        order.responder.trackingCode = trackingCode;
         order.responder.status += 1;
     }
     await order.save();
@@ -80,6 +98,7 @@ const pickBooks = async (orderId, isReq, reqId, bookList) => {
 };
 
 export default {
+    create,
     read,
     pickBooks,
     updatePayment,

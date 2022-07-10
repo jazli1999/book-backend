@@ -3,6 +3,12 @@ import UserService from '../services/user.service.js';
 
 import Book from '../models/book.model.js';
 
+const createOrder = async (req, res) => {
+    OrderService.create(req.body.order, req.userId).then((order) => {
+        res.status(200).json(order);
+    });
+}
+
 const getUserOrders = async (req, res) => {
     const user = await UserService.get(req.userId);
     const orderIds = user.orders;
@@ -84,6 +90,7 @@ async function pickBooks(req, res) {
 }
 
 export default {
+    createOrder,
     getUserOrders,
     getOrder,
     pickBooks,

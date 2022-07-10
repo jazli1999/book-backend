@@ -4,6 +4,7 @@ import OrderController from '../controllers/order.controller.js';
 
 const router = Router();
 
+router.post('/', Middlewares.checkAuthentication, OrderController.createOrder);
 router.get('/', Middlewares.checkAuthentication, OrderController.getUserOrders);
 router.get('/:id', Middlewares.checkAuthentication, OrderController.getOrder);
 router.put('/books/:id', Middlewares.checkAuthentication, OrderController.pickBooks);
