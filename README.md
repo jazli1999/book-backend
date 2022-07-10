@@ -64,14 +64,14 @@ if valid, will reply a token, which should be added to header `Authorization: to
 **_get user data by id_**  
 `GET /users/62a789378472dadd433093b4`
 
-**\_get current user data**  
+**_get current user data_**  
 `GET /users`
 
 **_delete user by id_**  
 `DELETE /users/62a789378472dadd433093b4`
 
 **_update book collection list_**  
-Contains general categories for book model and exchangeable for book exchange service
+Contains general categories for book model and exchangeable for book exchange service  
 `PUT /users/bclist`
 
 ```JSON
@@ -134,11 +134,11 @@ Contains general categories for book model and exchangeable for book exchange se
 ```
 
 **_get book collection_**
-Read operations for both of the list returns two parameters a list containing book ids and a list containing exchangeable state
+Read operations for both of the list returns two parameters a list containing book ids and a list containing exchangeable state  
 `GET /users/readlist/bc`
 
 **_get wish list_**
-The exchangeable list is left empty for wish list.
+The exchangeable list is left empty for wish list.  
 `GET /users/readlist/ws`
 
 ---
