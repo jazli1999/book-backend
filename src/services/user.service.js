@@ -84,12 +84,12 @@ async function updateBookList(userId, newBookList, listName) {
     return 'user list update success';
 }
 
-async function readBookList(userId, listName) {
-    console.log('bre');
+async function readBookList(userId,  listName){
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
-    if (listName === 'BC') return { list: user.bookCollection, exchangeable: user.exchangeableCollection };
-    if (listName === 'WS') return { list: user.wishList, exchangeable: [] };
+    // Changed it to model.find() to get object info
+    if (listName === 'BC') return { "list": await Book.find({'_id': { $in: user.bookCollection}}), "exchangeable": user.exchangeableCollection}
+    if (listName === 'WS') return { "list": await Book.find({'_id': { $in: user.WishList}}), "exchangeable": user.exchangeableCollection}
 }
 
 async function get(userId) {
