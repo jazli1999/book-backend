@@ -20,7 +20,7 @@ async function updateUser(req, res) {
 async function getUserInfo(req, res, next) {
     const queryId = req.params.id ? req.params.id : req.userId;
     UserService.get(queryId).then((user) => {
-        if (req.params.id !== req.userId) {
+        if (queryId !== req.userId) {
             const response = JSON.parse(JSON.stringify(user));
             delete response.password;
             delete response.address;
