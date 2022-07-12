@@ -14,6 +14,7 @@ import authRouter from './routes/auth.js';
 import orderRouter from './routes/orders.js';
 import bookmateRouter from './routes/bookmates.js';
 
+import messageRouter from '../routes/message.js'
 const app = express();
 
 app.use(cors());
@@ -36,6 +37,10 @@ app.use('/books', booksRouter);
 app.use('/auth', authRouter);
 app.use('/orders', orderRouter);
 app.use('/bookmates', bookmateRouter);
+
+
+app.use('/messages', messageRouter);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
