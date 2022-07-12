@@ -3,9 +3,8 @@ import MessageController from '../controllers/message.controller.js';
 import Middlewares from '../middlewares.js';
 
 
-dotenv.config();
+//dotenv.config();
 
-import mongoMessages from '../models/message.model.js'
 
 
 var router = Router()

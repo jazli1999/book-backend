@@ -1,4 +1,4 @@
-import MessageService from '../services/meesage.service.js';
+import MessageService from '../services/message.service.js';
 async function getMessages(req, res, next){
     MessageService.get(req.body)
 }

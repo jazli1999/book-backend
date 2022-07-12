@@ -1,4 +1,4 @@
-import Message from '../models/messages.model.js';
+import Message from '../models/message.model.js';
 
 async function get(params ) {
     // just for testing framework

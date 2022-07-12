@@ -14,7 +14,7 @@ import authRouter from './routes/auth.js';
 import orderRouter from './routes/orders.js';
 import bookmateRouter from './routes/bookmates.js';
 
-import messageRouter from '../routes/message.js'
+import messageRouter from './routes/message.js'
 const app = express();
 
 app.use(cors());
