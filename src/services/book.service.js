@@ -155,4 +155,31 @@ async function addBooks(userId, newBookList, listName) {
     return 'book list update success';
 }
 
-export default { searchGbooks, addBooks, getBookDetails };
+
+
+async function getBookFromDatabase(isbn){
+    const foundBook = await Book.findOne({ISBN: isbn});
+    if (foundBook === null){
+        return null;
+    } 
+    return foundBook;
+}
+
+
+//returns the list of users(id and name) which owns specified book and want to exchange it 
+async function getBookOwners(isbn){
+    const foundBook = await getBookFromDatabase(isbn)
+    if (foundBook === null){ //if book isn't in database then it's not in any book collection
+        console.log('owners not found')
+        return null;
+    } 
+
+    //check exchangable situation
+
+    console.log('book');
+    console.log(foundBook);
+    return foundBook.ownedByUsers;
+
+}
+
+export default { searchGbooks, addBooks, getBookDetails, getBookOwners };

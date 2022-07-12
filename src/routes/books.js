@@ -11,6 +11,8 @@ router.get('/gbooks/details/:isbn',Middlewares.checkAuthentication,  BookControl
 // get data from google
 router.get('/gbooks/:query', BookController.searchGbooks);
 
+router.get('/gbooks/owners/:isbn', BookController.getBookOwners);
+
 // frontend send the books list to backend to store, only add new books
 router.post('/bcadd', Middlewares.checkAuthentication, BookController.addBCBooks);
 router.post('/wsadd', Middlewares.checkAuthentication, BookController.addWSBooks);

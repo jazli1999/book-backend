@@ -19,6 +19,13 @@ const getBookDetails = (req, res) => {
     });
 };
 
+const getBookOwners = (req, res) => {
+    BookService.getBookOwners(req.params.isbn).then((userList) => {   
+            res.status(200).json(userList);
+    
+    });
+};
+
 
 async function addBCBooks(req, res, next) {
     BookService.addBooks(req.userId, req.body, 'BC').then((value) => res.status(200).send(value));
@@ -28,4 +35,4 @@ async function addWSBooks(req, res, next) {
     BookService.addBooks(req.userId, req.body, 'WS').then((value) => res.status(200).send(value));
 }
 
-export default { searchGbooks, addBCBooks, addWSBooks, getBookDetails };
+export default { searchGbooks, addBCBooks, addWSBooks, getBookDetails, getBookOwners };
