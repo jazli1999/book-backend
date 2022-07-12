@@ -21,8 +21,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // enable body-parser
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
 // test if connect the mongodb successfully
 mongoose.connect(process.env.ATLAS_URI);
 mongoose.connection.once('open', () => {
