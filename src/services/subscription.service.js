@@ -62,6 +62,7 @@ async function cancel(userId) {
     user.premium.isPremium = false;
     user.premium.startDate = null;
     user.premium.startDate = null;
+    user.save();
     return 'subscription cancelled';
 }
 
