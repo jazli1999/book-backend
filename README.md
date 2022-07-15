@@ -212,7 +212,10 @@ same json as wslist update:
 }
 ```
 
-**_get current bookmates_**  
+**_get bookmates recommendation list for current user_**  
+`GET /bookmates`  
+
+**_get current user's bookmates list_**  
 `GET /bookmates/current`
 
 
@@ -243,4 +246,196 @@ WARNING: no duplication detection!
   "userId": "target user object id"
 }
 ```
+
+Bookmates test case:  
+```JSON
+// USER
+{
+  "email": "ke@tum.de", 
+  "password": "ke_pw"
+}
+```
+```JSON
+// BOOK COLLECTION
+[
+  {
+    "ISBN": "9780060926083",
+    "title": "The Book of Laughter and Forgetting",
+    "authors":["Milan Kundera"],
+    "categories":["Czech Republic"],
+    "image": "http://books.google.com/books/content?id=myi_ZI-XyPgC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "Analyzes and examines various aspects of human existence through seven integrated stories."
+  },
+  {
+    "ISBN": "9780226525839",
+    "title": "They Thought They Were Free",
+    "subtitle": "The Germans, 1933–45",
+    "authors":["Milton Mayer"],
+    "categories":["History"],
+    "image": "http://books.google.com/books/content?id=axNDDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Interviews with ten former Nazis comprise the core of this penetrating study of the psychological causes of Nazism and their implications for modern Germany."
+  },
+  {
+    "ISBN": "9780141393964",
+    "title": "Things Fall Apart",
+    "authors":["Chinua Achebe"],
+    "categories":["Fiction"],
+    "image": "http://books.google.com/books/content?id=tSbWMu_-D5AC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Okonkwo is the greatest warrior alive, famous throughout West Africa. But when he accidentally kills a clansman, things begin to fall apart. Then Okonkwo returns from exile to find missionaries and colonial governors have arrived in the village. With his world thrown radically off-balance he can only hurtle towards tragedy. Chinua Achebe's stark novel reshaped both African and world literature. This arresting parable of a proud but powerless man witnessing the ruin of his people begins Achebe's landmark trilogy of works chronicling the fate of one African community, continued in Arrow of God and No Longer at Ease."
+  },
+  {
+    "ISBN": "9780748133444",
+    "title": "Slammerkin",
+    "authors":["Emma Donoghue"],
+    "categories":["Fiction"],
+    "image": "http://books.google.com/books/content?id=pYcTFK8UySMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Set in London and Monmouth in the late 1700s, this is an extraordinary novel about Mary Saunders, the young daughter of a poor seamstress. Mary hungers greedily for fine clothes and ribbons, as people of her class do for food and warmth. It's a hunger that lures her into prostitution at the age of thirteen. Mary is thrown out by her distraught mother when she gets pregnant and almost dies on the dangerous streets of London. Her saviour is Doll - a prostitute. Mary roams London freely with Doll, selling her body to all manner of 'cullies', dressed whorishly in colourful, gaudy dresses with a painted red smile. Faced with bad debts and threats upon her life she eventually flees to Monmouth, her mother's hometown, where she attempts to start a new life as a maid in Mrs Jones's house. But Mary soon discovers that she can't escape her past and just how dearly people like her pay for yearnings not fitting to their class in society..."
+  },
+  {
+    "ISBN": "9780679444657",
+    "title": "One Hundred Years of Solitude",
+    "authors":["Gabriel García Márquez"],
+    "categories":["Fiction"],
+    "image": "http://books.google.com/books/content?id=w0-zUL-87uAC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "The evolution and eventual decadence of a small South American town is mirrored in the family history of the Buendias."
+  },
+  {
+    "ISBN": "9780307417138",
+    "title": "The Hitchhiker's Guide to the Galaxy: The Illustrated Edition",
+    "authors":["Douglas Adams"],
+    "categories":["Fiction"],
+    "image": "http://books.google.com/books/content?id=j24GMN0OtS8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "This beautifully illustrated edition of the New York Times bestselling classic celebrates the 42nd anniversary of the original publication—with all-new art by award-winning illustrator Chris Riddell. SOON TO BE A HULU SERIES • “An astonishing comic writer.”—Neil Gaiman Nominated as one of America’s best-loved novels by PBS’s The Great American Read It’s an ordinary Thursday morning for Arthur Dent . . . until his house gets demolished. The Earth follows shortly after to make way for a new hyperspace express route, and Arthur’s best friend has just announced that he’s an alien. After that, things get much, much worse. With just a towel, a small yellow fish, and a book, Arthur has to navigate through a very hostile universe in the company of a gang of unreliable aliens. Luckily the fish is quite good at languages. And the book is The Hitchhiker’s Guide to the Galaxy . . . which helpfully has the words DON’T PANIC inscribed in large, friendly letters on its cover. Douglas Adams’s mega-selling pop-culture classic sends logic into orbit, plays havoc with both time and physics, offers up pithy commentary on such things as ballpoint pens, potted plants, and digital watches . . . and, most important, reveals the ultimate answer to life, the universe, and everything. Now, if you could only figure out the question. . . ."
+  },{
+    "ISBN": "9780134498034",
+    "title": "Programming Pearls",
+    "authors":["Jon Bentley"],
+    "categories":["Computers"],
+    "image": "http://books.google.com/books/content?id=4gX0CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "When programmers list their favorite books, Jon Bentley’s collection of programming pearls is commonly included among the classics. Just as natural pearls grow from grains of sand that irritate oysters, programming pearls have grown from real problems that have irritated real programmers. With origins beyond solid engineering, in the realm of insight and creativity, Bentley’s pearls offer unique and clever solutions to those nagging problems. Illustrated by programs designed as much for fun as for instruction, the book is filled with lucid and witty descriptions of practical programming techniques and fundamental design principles. It is not at all surprising that Programming Pearls has been so highly valued by programmers at every level of experience. In this revision, the first in 14 years, Bentley has substantially updated his essays to reflect current programming methods and environments. In addition, there are three new essays on testing, debugging, and timing set representations string problems All the original programs have been rewritten, and an equal amount of new code has been generated. Implementations of all the programs, in C or C++, are now available on the Web. What remains the same in this new edition is Bentley’s focus on the hard core of programming problems and his delivery of workable solutions to those problems. Whether you are new to Bentley’s classic or are revisiting his work for some fresh insight, the book is sure to make your own list of favorites."
+}
+]
+``` 
+```JSON
+// WISH LIST
+[
+  {
+  "ISBN": "9780393609295",
+  "title": "Guns, Germs, and Steel: The Fates of Human Societies (20th Anniversary Edition)",
+  "authors":["Jared Diamond"],
+  "categories":["History"],
+  "image": "http://books.google.com/books/content?id=XLo9DgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+  "description": "\"Fascinating.... Lays a foundation for understanding human history.\"—Bill Gates In this \"artful, informative, and delightful\" (William H. McNeill, New York Review of Books) book, Jared Diamond convincingly argues that geographical and environmental factors shaped the modern world. Societies that had had a head start in food production advanced beyond the hunter-gatherer stage, and then developed religion --as well as nasty germs and potent weapons of war --and adventured on sea and land to conquer and decimate preliterate cultures. A major advance in our understanding of human societies, Guns, Germs, and Steel chronicles the way that the modern world came to be and stunningly dismantles racially based theories of human history. Winner of the Pulitzer Prize, the Phi Beta Kappa Award in Science, the Rhone-Poulenc Prize, and the Commonwealth club of California's Gold Medal."
+  },
+  {
+  "ISBN": "9780393071344",
+  "title": "The Elegant Universe: Superstrings, Hidden Dimensions, and the Quest for the Ultimate Theory",
+  "authors":["Brian Greene"],
+  "categories":["Science"],
+  "image": "http://books.google.com/books/content?id=okv_O0Xhl9gC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+  "description": "A new edition of the New York Times bestseller—now a three-part Nova special: a fascinating and thought-provoking journey through the mysteries of space, time, and matter. Now with a new preface (not in any other edition) that will review the enormous public reception of the relatively obscure string theory—made possible by this book and an increased number of adherents amongst physicists—The Elegant Universe \"sets a standard that will be hard to beat\" (New York Times Book Review). Brian Greene, one of the world's leading string theorists, peels away the layers of mystery surrounding string theory to reveal a universe that consists of eleven dimensions, where the fabric of space tears and repairs itself, and all matter—from the smallest quarks to the most gargantuan supernovas—is generated by the vibrations of microscopically tiny loops of energy. Today physicists and mathematicians throughout the world are feverishly working on one of the most ambitious theories ever proposed: superstring theory. String theory, as it is often called, is the key to the Unified Field Theory that eluded Einstein for more than thirty years. Finally, the century-old antagonism between the large and the small-General Relativity and Quantum Theory-is resolved. String theory proclaims that all of the wondrous happenings in the universe, from the frantic dancing of subatomic quarks to the majestic swirling of heavenly galaxies, are reflections of one grand physical principle and manifestations of one single entity: microscopically tiny vibrating loops of energy, a billionth of a billionth the size of an atom. In this brilliantly articulated and refreshingly clear book, Greene relates the scientific story and the human struggle behind twentieth-century physics' search for a theory of everything. Through the masterful use of metaphor and analogy, The Elegant Universe makes some of the most sophisticated concepts ever contemplated viscerally accessible and thoroughly entertaining, bringing us closer than ever to understanding how the universe works."
+  },
+  {
+    "ISBN": "9780465024933",
+    "title": "The Feynman Lectures on Physics",
+    "subtitle": "Mainly Mechanics, Radiation, and Heat",
+    "authors":["Richard Phillips Feynman", "Robert B. Leighton", "Matthew Linzee Sands"],
+    "categories":["Science"],
+    "image": "http://books.google.com/books/content?id=bDF-uoUmttUC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "\"The whole thing was basically an experiment,” Richard Feynman said late in his career, looking back on the origins of his lectures. The experiment turned out to be hugely successful, spawning publications that have remained definitive and introductory to physics for decades. Ranging from the basic principles of Newtonian physics through such formidable theories as general relativity and quantum mechanics, Feynman's lectures stand as a monument of clear exposition and deep insight. Timeless and collectible, the lectures are essential reading, not just for students of physics but for anyone seeking an introduction to the field from the inimitable Feynman."
+  }
+]
+```
+
+```JSON
+// USER
+{
+  "email": "samantha@tum.de", 
+  "password": "samantha_pw"
+}
+```
+```JSON
+// BOOK COLLECTION
+[
+  {
+    "ISBN": "9780134498034",
+    "title": "Programming Pearls",
+    "authors":["Jon Bentley"],
+    "categories":["Computers"],
+    "image": "http://books.google.com/books/content?id=4gX0CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "When programmers list their favorite books, Jon Bentley’s collection of programming pearls is commonly included among the classics. Just as natural pearls grow from grains of sand that irritate oysters, programming pearls have grown from real problems that have irritated real programmers. With origins beyond solid engineering, in the realm of insight and creativity, Bentley’s pearls offer unique and clever solutions to those nagging problems. Illustrated by programs designed as much for fun as for instruction, the book is filled with lucid and witty descriptions of practical programming techniques and fundamental design principles. It is not at all surprising that Programming Pearls has been so highly valued by programmers at every level of experience. In this revision, the first in 14 years, Bentley has substantially updated his essays to reflect current programming methods and environments. In addition, there are three new essays on testing, debugging, and timing set representations string problems All the original programs have been rewritten, and an equal amount of new code has been generated. Implementations of all the programs, in C or C++, are now available on the Web. What remains the same in this new edition is Bentley’s focus on the hard core of programming problems and his delivery of workable solutions to those problems. Whether you are new to Bentley’s classic or are revisiting his work for some fresh insight, the book is sure to make your own list of favorites."
+  },
+  {
+    "ISBN": "9780857501004",
+    "title": "A Brief History of Time",
+    "subtitle": "From the Big Bang to Black Holes",
+    "authors":["Stephen Hawking"],
+    "categories":["Science"],
+    "image": "http://books.google.com/books/content?id=xCvztgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "Was there a beginning of time? Could time run backwards? Is the universe infinite or does it have boundaries? These are just some of the questions considered in an internationally acclaimed masterpiece by one of the world's greatest thinkers. It begins by reviewing the great theories of the cosmos from Newton to Einstein, before delving into the secrets which still lie at the heart of space and time, from the Big Bang to black holes, via spiral galaxies and strong theory. To this day A Brief History of Time remains a staple of the scientific canon, and its succinct and clear language continues to introduce millions to the universe and its wonders."
+  },
+  {
+    "ISBN": "9780385319461",
+    "title": "Fermat's Last Theorem",
+    "subtitle": "Unlocking the Secret of an Ancient Mathematical Problem",
+    "authors":["Amir D. Aczel"],
+    "categories":["Mathematics"],
+    "image": "http://books.google.com/books/content?id=wsMoeHSP-ZQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "Provides a study of seventeenth-century French scholar Pierre de Fermat, the centuries-long effort to prove his theorem, and the work of Andrew Wiles, a Princeton researcher who ultimately came up with the solution"
+  },
+  {
+    "ISBN": "9780307417138",
+    "title": "The Hitchhiker's Guide to the Galaxy: The Illustrated Edition",
+    "authors":["Douglas Adams"],
+    "categories":["Fiction"],
+    "image": "http://books.google.com/books/content?id=j24GMN0OtS8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "This beautifully illustrated edition of the New York Times bestselling classic celebrates the 42nd anniversary of the original publication—with all-new art by award-winning illustrator Chris Riddell. SOON TO BE A HULU SERIES • “An astonishing comic writer.”—Neil Gaiman Nominated as one of America’s best-loved novels by PBS’s The Great American Read It’s an ordinary Thursday morning for Arthur Dent . . . until his house gets demolished. The Earth follows shortly after to make way for a new hyperspace express route, and Arthur’s best friend has just announced that he’s an alien. After that, things get much, much worse. With just a towel, a small yellow fish, and a book, Arthur has to navigate through a very hostile universe in the company of a gang of unreliable aliens. Luckily the fish is quite good at languages. And the book is The Hitchhiker’s Guide to the Galaxy . . . which helpfully has the words DON’T PANIC inscribed in large, friendly letters on its cover. Douglas Adams’s mega-selling pop-culture classic sends logic into orbit, plays havoc with both time and physics, offers up pithy commentary on such things as ballpoint pens, potted plants, and digital watches . . . and, most important, reveals the ultimate answer to life, the universe, and everything. Now, if you could only figure out the question. . . ."
+  },
+  {
+    "ISBN": "9780226525839",
+    "title": "They Thought They Were Free",
+    "subtitle": "The Germans, 1933–45",
+    "authors":["Milton Mayer"],
+    "categories":["History"],
+    "image": "http://books.google.com/books/content?id=axNDDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Interviews with ten former Nazis comprise the core of this penetrating study of the psychological causes of Nazism and their implications for modern Germany."
+  },
+  {
+    "ISBN": "9780748133444",
+    "title": "Slammerkin",
+    "authors":["Emma Donoghue"],
+    "categories":["Fiction"],
+    "image": "http://books.google.com/books/content?id=pYcTFK8UySMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Set in London and Monmouth in the late 1700s, this is an extraordinary novel about Mary Saunders, the young daughter of a poor seamstress. Mary hungers greedily for fine clothes and ribbons, as people of her class do for food and warmth. It's a hunger that lures her into prostitution at the age of thirteen. Mary is thrown out by her distraught mother when she gets pregnant and almost dies on the dangerous streets of London. Her saviour is Doll - a prostitute. Mary roams London freely with Doll, selling her body to all manner of 'cullies', dressed whorishly in colourful, gaudy dresses with a painted red smile. Faced with bad debts and threats upon her life she eventually flees to Monmouth, her mother's hometown, where she attempts to start a new life as a maid in Mrs Jones's house. But Mary soon discovers that she can't escape her past and just how dearly people like her pay for yearnings not fitting to their class in society..."
+  }
+]
+
+
+```
+```JSON
+// WISH LIST
+[
+  {
+    "ISBN": "9780060926083",
+    "title": "The Book of Laughter and Forgetting",
+    "authors":["Milan Kundera"],
+    "categories":["Czech Republic"],
+    "image": "http://books.google.com/books/content?id=myi_ZI-XyPgC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "Analyzes and examines various aspects of human existence through seven integrated stories."
+  },
+  {
+    "ISBN": "9780141393964",
+    "title": "Things Fall Apart",
+    "authors":["Chinua Achebe"],
+    "categories":["Fiction"],
+    "image": "http://books.google.com/books/content?id=tSbWMu_-D5AC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "description": "Okonkwo is the greatest warrior alive, famous throughout West Africa. But when he accidentally kills a clansman, things begin to fall apart. Then Okonkwo returns from exile to find missionaries and colonial governors have arrived in the village. With his world thrown radically off-balance he can only hurtle towards tragedy. Chinua Achebe's stark novel reshaped both African and world literature. This arresting parable of a proud but powerless man witnessing the ruin of his people begins Achebe's landmark trilogy of works chronicling the fate of one African community, continued in Arrow of God and No Longer at Ease."
+  }
+]
+```
+
+
+
+
+
 

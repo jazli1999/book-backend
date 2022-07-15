@@ -1,8 +1,47 @@
 import User from '../models/user.model.js';
+import Book from '../models/book.model.js';
 
 async function match(userId) {
     // just for testing framework
-    User.findById(userId);
+    // for the match, the current user should have a search string
+    // const matchString = '';
+    const user = await User.findById(userId);
+    if (user === null) return 'no such user';
+
+    // const books = await Book.find(
+    //     { $text : { $search : "Book" } }, 
+    //     { score : { $meta: "textScore" } }
+    // )
+    // .limit(10)
+    // .sort({ score : { $meta : 'textScore' } });
+
+    const users = await User.aggregate([        
+        {
+            $search: {
+                index: 'bm_index',
+                'text': {
+                    'query': user.matchString,
+                    'path': {
+                        'wildcard': '*'
+                    }
+                }
+            }
+        },
+        {
+            '$project': {
+                // will have _id field by default
+                firstName: 1,
+                lastName: 1,
+                bio: 1,
+                bookCollection: 1,
+                wishList: 1,
+                exchangeableCollection: 1,
+                score: { $meta: "searchScore" }
+            }
+        }
+        ]).limit(5);
+
+    return users;
 }
 
 async function currentBookmates(userId) {
