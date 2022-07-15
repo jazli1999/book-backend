@@ -89,6 +89,13 @@ async function pickBooks(req, res) {
     }); 
 }
 
+async function declineOrder(req, res) {
+    OrderService.declineOrder(req.params.id, req.userId).then((status) => {
+        res.setHeader('content-type', 'text/plain');
+        res.status(status).send('ok');
+    });
+}
+
 export default {
     createOrder,
     getUserOrders,
@@ -97,4 +104,5 @@ export default {
     updatePayment,
     updateTrackingCode,
     confirmReceipt,
+    declineOrder,
 };

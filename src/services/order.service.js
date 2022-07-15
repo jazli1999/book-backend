@@ -20,6 +20,7 @@ const create = async (newOrder, reqId) => {
     order.requester.userId = reqId;
     order.requester.status = 2;
     order.responder.status = 2;
+    order.orderStatus = 'Created';
     await order.save();
     
     const requester = await User.findById(reqId);
@@ -97,6 +98,14 @@ const pickBooks = async (orderId, isReq, reqId, bookList) => {
     return 200;
 };
 
+const declineOrder = async (orderId, reqId) => {
+    const order = await Order.findById(orderId);
+    if (order.responder.userId.toString() !== reqId) return 401;
+    order.orderStatus = 'Declined';
+    await order.save();
+    return 200;
+};
+
 export default {
     create,
     read,
@@ -104,4 +113,5 @@ export default {
     updatePayment,
     updateTrackingCode,
     confirmReceipt,
+    declineOrder,
 };
