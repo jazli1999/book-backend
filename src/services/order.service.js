@@ -20,6 +20,7 @@ const create = async (newOrder, reqId) => {
     order.requester.userId = reqId;
     order.requester.status = 2;
     order.responder.status = 2;
+    order.orderStatus = 'Created';
     await order.save();
     
     const requester = await User.findById(reqId);
