@@ -6,7 +6,6 @@ async function modifyInput(json) {
     
     const books = { searchResult: [] };
     for (const x of json) {
-        console.log(x)
         const currentJson = {};  
         
         // GET Parameters
@@ -46,7 +45,8 @@ async function modifyInput(json) {
             // Description
             if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'description')) {
                 currentJson.description = x.volumeInfo.description;
-            }                   
+            }
+            console.log(currentJson)                   
         }
         // Adds the current book json to result array
         if (Object.keys(currentJson) !== 0) {
@@ -84,6 +84,7 @@ async function searchGbooks(query) {
         return ((inputJson[key] === undefined || inputJson[key] === null) && (delete inputJson[key]));
     });
 
+
     // Create temp query string in googlebooks format
     let tempQuery = [];
     for (const p in inputJson) {
@@ -92,7 +93,6 @@ async function searchGbooks(query) {
         }
     }
     tempQuery = tempQuery.join('+');
-    // console.log(temp_query)
 
     // Send request to google books api with implemented query string
     const r = await request
@@ -110,6 +110,22 @@ async function searchGbooks(query) {
     
     return modifyInput(booksJson);
 }
+
+
+async function getBookDetails(isbn) {
+    console.log('func is on ')
+      let booksJson;
+      const r = await request
+          .get(`https://www.googleapis.com/books/v1/volumes?q=${isbn}`)
+          .then((data) => {
+              booksJson = JSON.parse(data.text);
+              booksJson = booksJson.items;
+          });
+          
+          let results =  modifyInput(booksJson);
+          return (await results).searchResult[0];
+}
+
 
 async function addBooks(userId, newBookList, listName) {
     const user = await User.findById(userId);
@@ -139,4 +155,36 @@ async function addBooks(userId, newBookList, listName) {
     return 'book list update success';
 }
 
-export default { searchGbooks, addBooks };
+
+
+async function getBookFromDatabase(isbn){
+    const foundBook = await Book.findOne({ISBN: isbn});
+    if (foundBook === null){
+        return null;
+    } 
+    return foundBook;
+}
+
+
+//returns the list of users(id and name) which owns specified book and want to exchange it 
+async function getBookOwners(isbn){
+    const foundBook = await getBookFromDatabase(isbn)
+    if (foundBook === null){ //if book isn't in database then it's not in any book collection
+        return [];
+    } 
+    let bookIndex;
+    let exchangeableBookOwners = []
+    for(let ownerId of foundBook.ownedByUsers){
+        const user = await User.findById(ownerId);
+        bookIndex = user.bookCollection.indexOf(foundBook._id);
+
+        if(user.exchangeableCollection[bookIndex]===true){
+            exchangeableBookOwners.push({userId:user._id, firstName:user.firstName?user.firstName : null , lastName:user.lastName?user.lastName:null, imageUrl: user.image?user.image:null})
+        }
+    }
+
+    return exchangeableBookOwners;
+
+}
+
+export default { searchGbooks, addBooks, getBookDetails, getBookOwners };
