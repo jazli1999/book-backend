@@ -77,10 +77,19 @@ async function updateBookList(userId, newBookList, listName) {
             if (typeof foundBook.subtitle !== 'undefined') {
                 user.bmTitles.push(`${foundBook.title} ${foundBook.subtitle}`);
                 user.matchString = `${user.matchString} ${foundBook.title} ${foundBook.subtitle},`;
-            }
-            else {
+            } else {
                 user.bmTitles.push(foundBook.title);
                 user.matchString = `${user.matchString} ${foundBook.title},`;
+            }
+            user.bmAuthors = user.bmAuthors.concat(foundBook.authors);
+            user.bmCategories = user.bmCategories.concat(foundBook.categories);
+
+            user.bookCollection.push(foundBook._id);
+
+            if (book.exchangeable === 0) {
+                user.exchangeableCollection.push(0);
+            } else {
+                user.exchangeableCollection.push(1);
             }
             user.bmAuthors = user.bmAuthors.concat(foundBook.authors);
             user.bmCategories = user.bmCategories.concat(foundBook.categories);
