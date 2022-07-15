@@ -19,6 +19,7 @@ const userOrderSchema = new Schema({
 const orderSchema = new Schema({
     requester: userOrderSchema,
     responder: userOrderSchema,
+    orderStatus: String,
 });
 
 export default model('Order', orderSchema);
