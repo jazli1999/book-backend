@@ -17,6 +17,12 @@ async function getSubscription(req, res, next) {
     }).catch(next);
 }
 
+async function getSubscriptionDetails(req, res, next) {
+    SubscriptionService.getDetails(req.userId).then((value) => {
+        res.status(200).send(value);
+    }).catch(next);
+}
+
 async function cancelSubscription(req, res, next) {
     SubscriptionService.cancel(req.userId).then(() => {
         res.status(200).send('delete success');
@@ -27,6 +33,7 @@ async function cancelSubscription(req, res, next) {
 export default {
     createSubscription, 
     cancelSubscription, 
-    getSubscription, 
+    getSubscription,
+    getSubscriptionDetails, 
     updateSubscription, 
 };

@@ -57,14 +57,17 @@ async function update(userId, subsModel) {
 async function getDetails(userId) {
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
-    if (user.premium !== undefined || !user.premimum.isPremium) {
-        today = new Date();
-        if (today >  user.premium.stopDate){
+    if (user.premium !== undefined) {
+        const today = new Date();
+        if (today >  user.premium.endDate){
             await cancel(userId);
         }
         return user.premium;
     }
-    return {"Status" : "Free Member"}
+    else{
+        create(userId, 'free');
+    }
+    return user.premium;
 }
 
 async function get(userId) {
@@ -72,7 +75,7 @@ async function get(userId) {
     if (user === null) return 'no such user';
     if (user.premium !== undefined) {
         const today = new Date();
-        if (today >  user.premium.stopDate){
+        if (today >  user.premium.endDate){
             await cancel(userId);
         }
     }
@@ -86,7 +89,7 @@ async function cancel(userId) {
     const user = await User.findById(userId);
     user.premium.isPremium = false;
     user.premium.startDate = null;
-    user.premium.stopDate = null;
+    user.premium.endDate = null;
     user.save();
     return 'subscription cancelled';
 }

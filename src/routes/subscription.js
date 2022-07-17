@@ -10,5 +10,6 @@ router.put('/start/', Middlewares.checkAuthentication, SubscriptionController.cr
 router.put('/update/', Middlewares.checkAuthentication, SubscriptionController.updateSubscription);
 router.get('/cancel/:userId', Middlewares.checkAuthentication, SubscriptionController.cancelSubscription);
 router.get('/status/:userId', Middlewares.checkAuthentication, SubscriptionController.getSubscription);
+router.get('/details/:userId', Middlewares.checkAuthentication, SubscriptionController.getSubscriptionDetails);
 
 export default router;
