@@ -5,8 +5,8 @@ async function create(userId, subsModel) {
     const user = await User.findById(userId);
     // need test
     if (user === null) return 'no such user';
-    if (user.premium === undefined || !user.premimum.isPremium) {
-        user.premimum = {};
+    if (user.premium === undefined || !user.premium.isPremium) {
+        user.premium = {};
         const start = new Date();
         const end = new Date(start);
         if( subsModel !== undefined){
@@ -67,17 +67,17 @@ async function getDetails(userId) {
     return {"Status" : "Free Member"}
 }
 
-async function get(userID) {
+async function get(userId) {
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     if (user.premium !== undefined) {
-        today = new Date();
+        const today = new Date();
         if (today >  user.premium.stopDate){
-            await cancel(userID);
+            await cancel(userId);
         }
     }
     else{
-        create(userID, 'free');
+        create(userId, 'free');
     }
     return user.premium.isPremium;
 }

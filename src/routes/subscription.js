@@ -6,9 +6,9 @@ const router = Router();
 
 // Premium Features
 
-router.put('/start/:subscriptionModel', Middlewares.checkAuthentication, SubscriptionController.createSubscription);
-router.put('/update/:subscriptionModel', Middlewares.checkAuthentication, SubscriptionController.updateSubscription);
-router.get('/cancel', Middlewares.checkAuthentication, SubscriptionController.cancelSubscription);
-router.get('/status', Middlewares.checkAuthentication, SubscriptionController.getSubscription);
+router.put('/start/', Middlewares.checkAuthentication, SubscriptionController.createSubscription);
+router.put('/update/', Middlewares.checkAuthentication, SubscriptionController.updateSubscription);
+router.get('/cancel/:userId', Middlewares.checkAuthentication, SubscriptionController.cancelSubscription);
+router.get('/status/:userId', Middlewares.checkAuthentication, SubscriptionController.getSubscription);
 
 export default router;
