@@ -1,14 +1,14 @@
 import SubscriptionService from '../services/subscription.service.js';
 
 async function createSubscription(req, res, next) {
-    SubscriptionService.create(req.body.userId, req.body.subscriptionModel).then(() => {
+    SubscriptionService.create(req.userId, req.params.subscriptionModel).then(() => {
         res.status(200).send('saved subscription details');
     }).catch(next);
 }
 
 
 async function updateSubscription(req, res) {
-    SubscriptionService.update(req.body.userId, req.body.subscriptionModel).then((value) => res.status(200).send(value));
+    SubscriptionService.update(req.userId, req.params.subscriptionModel).then((value) => res.status(200).send(value));
 }
 
 async function getSubscription(req, res, next) {

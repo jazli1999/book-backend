@@ -146,30 +146,19 @@ The exchangeable list is left empty for wish list.
 ### Subcription Related Operations
 
 To Create new subscription use this function. Two options are present for subscription model: monthly and yearly
-`PUT /subscription/start/`
-
-```JSON
-{
-  "userId": "insert your user id", //email should be unique
-  "subscriptionModel": "monthly"
-}
-```
+`PUT /subscription/start/:subscriptionModel`
 
 Read status of your subscription  
-`GET /subscription/status/{userId}`
+`GET /subscription/status/`
+
+Read description of your subscription  
+`GET /subscription/details/`
 
 Update subscription status:
-`PUT /subscription/update/`
-
-```JSON
-{
-  "userId": "insert your user id", //email should be unique
-  "subscriptionModel": "yearly"
-}
-```
+`PUT /subscription/update/:subscriptionModel`
 
 Cancel subsription
-`GET /subscription/cancel/{userId}`
+`GET /subscription/cancel/`
 
 ### Book Related Operations
 
