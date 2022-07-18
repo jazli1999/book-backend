@@ -20,10 +20,12 @@ async function updateUser(req, res) {
 async function getUserInfo(req, res, next) {
     const queryId = req.params.id ? req.params.id : req.userId;
     UserService.get(queryId).then((user) => {
-        if (req.params.id !== req.userId) {
+        if (queryId !== req.userId) {
             const response = JSON.parse(JSON.stringify(user));
             delete response.password;
-            delete response.address;
+            delete response.address.street;
+            delete response.address.houseNumber;
+            delete response.address.postcode;
             delete response.birthday;
             delete response.email;
             delete response.orders;   
