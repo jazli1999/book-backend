@@ -128,11 +128,14 @@ async function getBookDetails(isbn) {
 
 
 async function addBooks(userId, newBookList, listName) {
+    console.log('add books is on', newBookList)
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     for (const book of newBookList) {
+        console.log('book loop')
+
         const foundBook = await Book.findOne({ ISBN: book.ISBN });
-        if (foundBook !== null) return 'book already exists';
+        if (foundBook === null) {
         const newBook = new Book(); // every loop need a newBook
         newBook.ISBN = book.ISBN;
         newBook.title = book.title;
@@ -151,6 +154,7 @@ async function addBooks(userId, newBookList, listName) {
             newBook.wantedByUsers.push(userId);
         }
         await newBook.save();
+    }
     }
     return 'book list update success';
 }
