@@ -116,7 +116,7 @@ async function getBookDetails(isbn) {
             booksJson = JSON.parse(data.text);
             booksJson = booksJson.items;
         });
-          
+        
     const results = modifyInput(booksJson);
     return (await results).searchResult[0];
 }
