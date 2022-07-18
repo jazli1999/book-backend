@@ -30,7 +30,7 @@ const create = async (newOrder, reqId) => {
     await requester.save();
     await responder.save();
     return order;
-}
+};
 
 const updatePayment = async (orderId, isReq, reqId, payment) => {
     const order = await Order.findById(orderId);

@@ -7,7 +7,7 @@ const createOrder = async (req, res) => {
     OrderService.create(req.body.order, req.userId).then((order) => {
         res.status(200).json(order);
     });
-}
+};
 
 const getUserOrders = async (req, res) => {
     const user = await UserService.get(req.userId);
