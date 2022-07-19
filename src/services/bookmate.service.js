@@ -34,6 +34,7 @@ async function match(userId) {
                 lastName: 1,
                 bio: 1,
                 bookCollection: 1,
+                bmTitles: 1,
                 wishList: 1,
                 exchangeableCollection: 1,
                 score: { $meta: "searchScore" }
@@ -118,6 +119,30 @@ async function declineRequest(userId, targetId) {
     return 'decline bookmate request success';
 }
 
+async function updateBookmates() {
+    // ME.find({ pictures: { $exists: true, $ne: [] } })
+    const users = await User.find({bookCollection: {$exists: true, $ne: []}}).select({'bookCollection': 1}).populate('bookCollection');
+    for (let user of users) {
+        user.bmTitles = [];
+        user.bmAuthors = [];
+        user.bmCategories = [];
+        user.matchString = '';
+        for (const book of user.bookCollection) {
+            if (typeof book.subtitle !== 'undefined') {
+                user.bmTitles.push(`${book.title} ${book.subtitle}`);
+                user.matchString = `${user.matchString} ${book.title} ${book.subtitle}^`;
+            } else {
+                user.bmTitles.push(book.title);
+                user.matchString = `${user.matchString} ${book.title}^`;
+            }
+            user.bmAuthors = user.bmAuthors.concat(book.authors);
+            user.bmCategories = user.bmCategories.concat(book.categories);
+        }
+        user.save();
+    }
+    return "bookmates matching field update success";
+}
+
 export default {
-    match, currentBookmates, sendRequest, acceptRequest, declineRequest,
+    match, currentBookmates, sendRequest, acceptRequest, declineRequest, updateBookmates,
 };
