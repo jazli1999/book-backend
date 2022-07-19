@@ -133,11 +133,11 @@ Contains general categories for book model and exchangeable for book exchange se
 ]
 ```
 
-**_get book collection_**
+**_get book collection_**  
 Read operations for both of the list returns two parameters a list containing book ids and a list containing exchangeable state  
 `GET /users/readlist/bc`
 
-**_get wish list_**
+**_get wish list_**  
 The exchangeable list is left empty for wish list.  
 `GET /users/readlist/ws`
 
@@ -145,7 +145,7 @@ The exchangeable list is left empty for wish list.
 
 ### Subcription Related Operations
 
-To Create new subscription use this function. Two options are present for subscription model: monthly and yearly
+To Create new subscription use this function. Two options are present for subscription model: monthly or yearly  
 `PUT /subscription/start/:subscriptionModel`
 
 Read status of your subscription  
@@ -154,11 +154,13 @@ Read status of your subscription
 Read description of your subscription  
 `GET /subscription/details/`
 
-Update subscription status:
+Update subscription status:  
 `PUT /subscription/update/:subscriptionModel`
 
-Cancel subsription
+Cancel subsription  
 `GET /subscription/cancel/`
+
+---
 
 ### Book Related Operations
 
@@ -190,3 +192,55 @@ same json as wslist update:
   }
 ]
 ```
+
+---
+
+### Bookmates Related Operations
+
+**_two test cases:_**  
+```JSON
+{
+  "email": "bookmate_a@tum.de", 
+  "password": "bookmate_a_pw"
+}
+```
+
+```JSON
+{
+  "email": "bookmate_b@tum.de", 
+  "password": "bookmate_b_pw"
+}
+```
+
+**_get current bookmates_**  
+`GET /bookmates/current`
+
+
+WARNING: no duplication detection!  
+**_send request to certain user_**  
+`POST /bookmates/send`
+
+```Json
+{
+  "userId": "target user object id"
+}
+```
+
+**_accept request from certain user_**  
+`POST /bookmates/accept`
+
+```Json
+{
+  "userId": "target user object id"
+}
+```
+
+**_decline request from certain user_**  
+`POST /bookmates/decline`
+
+```Json
+{
+  "userId": "target user object id"
+}
+```
+

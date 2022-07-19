@@ -9,80 +9,45 @@ async function create(userId, subsModel) {
         user.premium = {};
         const start = new Date();
         const end = new Date(start);
-        if( subsModel !== undefined){
-            if( subsModel !== 'free'){
-                if(subsModel === 'monthly'){
-                    end.setMonth(end.getMonth() + 1)
+        if (subsModel !== undefined) {
+            if (subsModel !== 'free') {
+                if (subsModel === 'monthly') {
+                    end.setMonth(end.getMonth() + 1);
                 }
-                else if(subsModel === 'yearly'){
-                    end.setFullYear(end.getFullYear() + 1)
+                else if (subsModel === 'yearly') {
+                    end.setFullYear(end.getFullYear() + 1);
                 }
-                user.premium = { "isPremium": true, "startDate" : start, "endDate" : end };
+                user.premium = { isPremium: true, startDate: start, endDate: end };
             }
             else {
-                user.premium = { "isPremium": false, "startDate" : start, "endDate" : end };
+                user.premium = { isPremium: false, startDate: start, endDate: end };
             }
         }
-        
     }
     user.save();
     return user.premium;
 }
 
-
 async function update(userId, subsModel) {
     return User.findById(userId).then((user) => {
         // need test
         if (user === null) return 'no such user';
-        if (user.premium !== undefined || !user.premimum.isPremium ) {
+        if (user.premium !== undefined || !user.premimum.isPremium) {
             user.premium.endDate = new Date();
-            if( subsModel != undefined){
-                if(subsModel === 'monthly'){
-                    user.premium.endDate.setMonth(user.premium.endDate.getMonth() + 1)
+            if (subsModel !== undefined) {
+                if (subsModel === 'monthly') {
+                    user.premium.endDate.setMonth(user.premium.endDate.getMonth() + 1);
                 }
-                else if(subsModel === 'yearly'){
-                    user.premium.endDate.setFullYear(user.premium.endDate.getFullYear() + 1)
+                else if (subsModel === 'yearly') {
+                    user.premium.endDate.setFullYear(user.premium.endDate.getFullYear() + 1);
                 }
             }
             user.save();
             return user.premium;
         }
-        else{
-            return 'must be a member first';
-        }
+        
+        return 'must be a member first';
     });
-}
-
-
-async function getDetails(userId) {
-    const user = await User.findById(userId);
-    if (user === null) return 'no such user';
-    if (user.premium !== undefined) {
-        const today = new Date();
-        if (today >  user.premium.endDate){
-            await cancel(userId);
-        }
-        return user.premium;
-    }
-    else{
-        create(userId, 'free');
-    }
-    return user.premium;
-}
-
-async function get(userId) {
-    const user = await User.findById(userId);
-    if (user === null) return 'no such user';
-    if (user.premium !== undefined) {
-        const today = new Date();
-        if (today >  user.premium.endDate){
-            await cancel(userId);
-        }
-    }
-    else{
-        create(userId, 'free');
-    }
-    return user.premium.isPremium;
 }
 
 async function cancel(userId) {
@@ -94,6 +59,37 @@ async function cancel(userId) {
     return 'subscription cancelled';
 }
 
+async function getDetails(userId) {
+    const user = await User.findById(userId);
+    if (user === null) return 'no such user';
+    if (user.premium !== undefined) {
+        const today = new Date();
+        if (today > user.premium.endDate) {
+            await cancel(userId);
+        }
+        return user.premium;
+    }
+    
+    create(userId, 'free');
+    
+    return user.premium;
+}
+
+async function get(userId) {
+    const user = await User.findById(userId);
+    if (user === null) return 'no such user';
+    if (user.premium !== undefined) {
+        const today = new Date();
+        if (today > user.premium.endDate) {
+            await cancel(userId);
+        }
+    }
+    else {
+        create(userId, 'free');
+    }
+    return user.premium.isPremium;
+}
+
 export default {
-    create, update, get, getDetails, cancel
+    create, update, get, getDetails, cancel,
 };

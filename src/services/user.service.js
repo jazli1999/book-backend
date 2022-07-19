@@ -88,8 +88,8 @@ async function readBookList(userId, listName) {
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     // Changed it to model.find() to get object info
-    if (listName === 'BC') return { "list": await Book.find({'_id': { $in: user.bookCollection}}), "exchangeable": user.exchangeableCollection}
-    if (listName === 'WS') return { "list": await Book.find({'_id': { $in: user.WishList}}), "exchangeable": []}
+    if (listName === 'BC') return { list: await Book.find({ _id: { $in: user.bookCollection } }), exchangeable: user.exchangeableCollection };
+    if (listName === 'WS') return { list: await Book.find({ _id: { $in: user.WishList } }), exchangeable: [] };
 }
 
 async function get(userId) {
