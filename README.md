@@ -212,9 +212,6 @@ same json as wslist update:
 }
 ```
 
-**_get bookmates recommendation list for current user_**  
-`GET /bookmates`  
-
 **_get current user's bookmates list_**  
 `GET /bookmates/current`
 
@@ -246,8 +243,11 @@ WARNING: no duplication detection!
   "userId": "target user object id"
 }
 ```
+ 
+**_get bookmates recommendation list for current user_**  
+`GET /bookmates`  
 
-Bookmates test case:  
+Test cases:  
 ```JSON
 // USER
 {
