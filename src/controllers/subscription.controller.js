@@ -6,14 +6,13 @@ async function createSubscription(req, res, next) {
     }).catch(next);
 }
 
-
 async function updateSubscription(req, res) {
     SubscriptionService.update(req.userId, req.params.subscriptionModel).then((value) => res.status(200).send(value));
 }
 
 async function getSubscription(req, res, next) {
     SubscriptionService.get(req.userId).then((value) => {
-        res.status(200).send(({"isPremium":value}));
+        res.status(200).send(({ isPremium: value }));
     }).catch(next);
 }
 
@@ -28,7 +27,6 @@ async function cancelSubscription(req, res, next) {
         res.status(200).send('delete success');
     }).catch(next);
 }
-
 
 export default {
     createSubscription, 

@@ -25,5 +25,5 @@ async function declineRequest(req, res, next) {
 }
 
 export default {
-    matchBookmates, currentBookmates, sendRequest, acceptRequest, declineRequest
+    matchBookmates, currentBookmates, sendRequest, acceptRequest, declineRequest,
 };

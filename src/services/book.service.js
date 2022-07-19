@@ -122,33 +122,33 @@ async function getBookDetails(isbn) {
 }
 
 async function addBooks(userId, newBookList, listName) {
-    console.log('add books is on', newBookList)
+    console.log('add books is on', newBookList);
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     for (const book of newBookList) {
-        console.log('book loop')
+        console.log('book loop');
 
         const foundBook = await Book.findOne({ ISBN: book.ISBN });
         if (foundBook === null) {
-        const newBook = new Book(); // every loop need a newBook
-        newBook.ISBN = book.ISBN;
-        newBook.title = book.title;
-        newBook.subtitle = book.subtitle;
-        // List object
-        newBook.authors = book.authors;
-        newBook.categories = book.categories;
-        newBook.image = book.image;
-        newBook.description = book.description;
-        // accourding to listName update to different lists
-        if (listName === 'BC') {
+            const newBook = new Book(); // every loop need a newBook
+            newBook.ISBN = book.ISBN;
+            newBook.title = book.title;
+            newBook.subtitle = book.subtitle;
+            // List object
+            newBook.authors = book.authors;
+            newBook.categories = book.categories;
+            newBook.image = book.image;
+            newBook.description = book.description;
+            // accourding to listName update to different lists
+            if (listName === 'BC') {
             // mark exchangeable problem
-            newBook.ownedByUsers.push(userId);
+                newBook.ownedByUsers.push(userId);
+            }
+            if (listName === 'WS') {
+                newBook.wantedByUsers.push(userId);
+            }
+            await newBook.save();
         }
-        if (listName === 'WS') {
-            newBook.wantedByUsers.push(userId);
-        }
-        await newBook.save();
-    }
     }
     return 'book list update success';
 }
