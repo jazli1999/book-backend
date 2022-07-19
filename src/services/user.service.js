@@ -67,6 +67,8 @@ async function updateBookList(userId, newBookList, listName) {
         user.bmTitles = [];
         user.bmAuthors = [];
         user.bmCategories = [];
+        user.bcCover = [];
+        user.wsCover = [];
         user.matchString = '';
     }
     if (listName === 'WS') user.wishList = [];
@@ -86,6 +88,7 @@ async function updateBookList(userId, newBookList, listName) {
             user.bmCategories = user.bmCategories.concat(foundBook.categories);
 
             user.bookCollection.push(foundBook._id);
+            user.bcCover.push(foundBook.image);
 
             if (book.exchangeable === 0) {
                 user.exchangeableCollection.push(0);
@@ -99,7 +102,10 @@ async function updateBookList(userId, newBookList, listName) {
             user.bookCollection.push(foundBook._id);
             user.exchangeableCollection.push(book.exchangeable);
         }
-        if (listName === 'WS') user.wishList.push(foundBook._id);
+        if (listName === 'WS') {
+            user.wishList.push(foundBook._id);
+            user.wsCover.push(foundBook.image);
+        }
     }
     await user.save();
     return 'user list update success';

@@ -37,12 +37,42 @@ async function match(userId) {
                 bmTitles: 1,
                 wishList: 1,
                 exchangeableCollection: 1,
+                bcCover: 1,
+                wsCover: 1,
                 score: { $meta: 'searchScore' },
             },
         },
     ]).limit(5);
 
-    return users.slice(1);
+    // to do list: deleting the current user from recommendation
+
+    // calculate the intersection here
+    for (const bmUser of users) {
+        bmUser.bcMark = [];
+        bmUser.wsMark = [];
+        for (const bookId of bmUser.bookCollection) {
+            const index = user.wishList.indexOf(bookId);
+            if (index !== -1) { // if current user's wish list have this books
+                bmUser.bcMark.push('isFavorite');
+            }
+            else {
+                bmUser.bcMark.push(null);
+            }
+        }
+
+        for (const wsBookId of bmUser.wishList) {
+            const wsIndex = user.bookCollection.indexOf(wsBookId);
+            // console.log(wsBookId);
+            if (wsIndex !== -1) {
+                bmUser.wsMark.push('isAvailable');
+            }
+            else {
+                bmUser.wsMark.push(null);
+            }
+        }
+    }
+
+    return users; // restrict the first one is not enough   
 }
 
 async function currentBookmates(userId) {
@@ -126,6 +156,8 @@ async function updateBookmates() {
         user.bmTitles = [];
         user.bmAuthors = [];
         user.bmCategories = [];
+        user.bcCover = [];
+        user.wsCover = [];
         user.matchString = '';
         for (const book of user.bookCollection) {
             if (typeof book.subtitle !== 'undefined') {
@@ -138,9 +170,20 @@ async function updateBookmates() {
             }
             user.bmAuthors = user.bmAuthors.concat(book.authors);
             user.bmCategories = user.bmCategories.concat(book.categories);
+            user.bcCover.push(book.image);
         }
         user.save();
     }
+
+    const wsUsers = await User.find({ wishList: { $exists: true, $ne: [] } }).select({ wishList: 1 }).populate('wishList');
+    for (const wsUser of wsUsers) {
+        wsUser.wsCover = [];
+        for (const book of wsUser.wishList) {
+            wsUser.wsCover.push(book.image);
+        }
+        wsUser.save();
+    }
+
     return 'bookmates matching field update success';
 }
 

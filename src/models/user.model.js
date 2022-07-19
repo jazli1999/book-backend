@@ -38,7 +38,9 @@ const userSchema = new Schema({
     bmCategories: [String],
     matchString: String,
     exchangeableCollection: [{ type: Boolean, default: true }],
+    bcCover: [{ type: String }],
     wishList: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+    wsCover: [{ type: String }],
     bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }], // store the bookmates result, force unique here
     bmSent: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     bmReceived: [{ type: Schema.Types.ObjectId, ref: 'User' }],
