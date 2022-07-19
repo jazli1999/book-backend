@@ -77,7 +77,8 @@ async function updateBookList(userId, newBookList, listName) {
             if (typeof foundBook.subtitle !== 'undefined') {
                 user.bmTitles.push(`${foundBook.title} ${foundBook.subtitle}`);
                 user.matchString = `${user.matchString} ${foundBook.title} ${foundBook.subtitle},`;
-            } else {
+            }
+            else {
                 user.bmTitles.push(foundBook.title);
                 user.matchString = `${user.matchString} ${foundBook.title},`;
             }

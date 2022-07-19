@@ -30,5 +30,5 @@ async function updateBooks(req, res, next) {
 }
 
 export default {
-    matchBookmates, currentBookmates, sendRequest, acceptRequest, declineRequest, updateBooks
+    matchBookmates, currentBookmates, sendRequest, acceptRequest, declineRequest, updateBooks,
 };

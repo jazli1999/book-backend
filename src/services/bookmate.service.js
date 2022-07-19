@@ -19,16 +19,16 @@ async function match(userId) {
         {
             $search: {
                 index: 'bm_index',
-                'text': {
-                    'query': user.matchString,
-                    'path': {
-                        'wildcard': '*'
-                    }
-                }
-            }
+                text: {
+                    query: user.matchString,
+                    path: {
+                        wildcard: '*',
+                    },
+                },
+            },
         },
         {
-            '$project': {
+            $project: {
                 // will have _id field by default
                 firstName: 1,
                 lastName: 1,
@@ -37,10 +37,10 @@ async function match(userId) {
                 bmTitles: 1,
                 wishList: 1,
                 exchangeableCollection: 1,
-                score: { $meta: "searchScore" }
-            }
-        }
-        ]).limit(5);
+                score: { $meta: 'searchScore' },
+            },
+        },
+    ]).limit(5);
 
     return users;
 }
@@ -121,8 +121,8 @@ async function declineRequest(userId, targetId) {
 
 async function updateBookmates() {
     // ME.find({ pictures: { $exists: true, $ne: [] } })
-    const users = await User.find({bookCollection: {$exists: true, $ne: []}}).select({'bookCollection': 1}).populate('bookCollection');
-    for (let user of users) {
+    const users = await User.find({ bookCollection: { $exists: true, $ne: [] } }).select({ bookCollection: 1 }).populate('bookCollection');
+    for (const user of users) {
         user.bmTitles = [];
         user.bmAuthors = [];
         user.bmCategories = [];
@@ -131,7 +131,8 @@ async function updateBookmates() {
             if (typeof book.subtitle !== 'undefined') {
                 user.bmTitles.push(`${book.title} ${book.subtitle}`);
                 user.matchString = `${user.matchString} ${book.title} ${book.subtitle}^`;
-            } else {
+            }
+            else {
                 user.bmTitles.push(book.title);
                 user.matchString = `${user.matchString} ${book.title}^`;
             }
@@ -140,7 +141,7 @@ async function updateBookmates() {
         }
         user.save();
     }
-    return "bookmates matching field update success";
+    return 'bookmates matching field update success';
 }
 
 export default {
