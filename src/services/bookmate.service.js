@@ -42,7 +42,7 @@ async function match(userId) {
         },
     ]).limit(5);
 
-    return users;
+    return users.slice(1);
 }
 
 async function currentBookmates(userId) {
