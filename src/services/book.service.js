@@ -4,6 +4,9 @@ import Book from '../models/book.model.js';
 
 async function modifyInput(json) {
     const books = { searchResult: [] };
+    if( json === null || json === [] || json === undefined){
+        return books;
+    }
     for (const x of json) {
         const currentJson = {};  
         
@@ -79,7 +82,7 @@ async function searchGbooks(query) {
         delete inputJson.publisher;
     }
     
-    Object.keys(inputJson).forEach((key) => ((inputJson[key] === undefined || inputJson[key] === null) && (delete inputJson[key])));
+    Object.keys(inputJson).forEach((key) => ((inputJson[key] === "" ||inputJson[key] === undefined || inputJson[key] === null) && (delete inputJson[key])));
 
     // Create temp query string in googlebooks format
     let tempQuery = [];
