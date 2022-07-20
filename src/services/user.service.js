@@ -91,18 +91,10 @@ async function updateBookList(userId, newBookList, listName) {
 
             user.bookCollection.push(foundBook._id);
             user.bcCover.push(foundBook.image);
-
-            if (book.exchangeable === 0) {
-                user.exchangeableCollection.push(0);
-            }
-            else {
-                user.exchangeableCollection.push(1);
-            }
+            user.exchangeableCollection.push(book.exchangeable);
+            
             user.bmAuthors = user.bmAuthors.concat(foundBook.authors);
             user.bmCategories = user.bmCategories.concat(foundBook.categories);
-
-            user.bookCollection.push(foundBook._id);
-            user.exchangeableCollection.push(book.exchangeable);
         }
         if (listName === 'WS') {
             user.wishList.push(foundBook._id);
