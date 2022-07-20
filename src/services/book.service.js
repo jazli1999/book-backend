@@ -45,7 +45,7 @@ async function modifyInput(json) {
             if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'description')) {
                 currentJson.description = x.volumeInfo.description;
             }
-            console.log(currentJson);                   
+            // console.log(currentJson);   // commented out because it filles the console           
         }
         // Adds the current book json to result array
         if (Object.keys(currentJson) !== 0) {
@@ -126,7 +126,6 @@ async function addBooks(userId, newBookList, listName) {
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     for (const book of newBookList) {
-        console.log('book loop');
 
         const foundBook = await Book.findOne({ ISBN: book.ISBN });
         if (foundBook === null) {

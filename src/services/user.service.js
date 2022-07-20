@@ -71,12 +71,7 @@ async function updateBookList(userId, newBookList, listName) {
         if (foundBook === null) return book.ISBN;
         if (listName === 'BC') {
             user.bookCollection.push(foundBook._id);
-            if (book.exchangeable === 0) {
-                user.exchangeableCollection.push(0);
-            }
-            else {
-                user.exchangeableCollection.push(1);
-            }
+            user.exchangeableCollection.push(book.exchangeable);
         }
         if (listName === 'WS') user.wishList.push(foundBook._id);
     }
