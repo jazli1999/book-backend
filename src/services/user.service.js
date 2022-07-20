@@ -68,10 +68,12 @@ async function updateBookList(userId, newBookList, listName) {
         user.bmAuthors = [];
         user.bmCategories = [];
         user.bcCover = [];
-        user.wsCover = [];
         user.matchString = '';
     }
-    if (listName === 'WS') user.wishList = [];
+    if (listName === 'WS') {
+        user.wishList = [];
+        user.wsCover = [];
+    }
     for (const book of newBookList) {
         const foundBook = await Book.findOne({ ISBN: book.ISBN });
         if (foundBook === null) return book.ISBN;
