@@ -42,12 +42,15 @@ async function match(userId) {
                 score: { $meta: 'searchScore' },
             },
         },
-    ]).limit(5);
-
-    // to do list: deleting the current user from recommendation
+    ]).limit(10);
 
     // calculate the intersection here
-    for (const bmUser of users) {
+    let userIndex;
+    for (const [deleteIndex, bmUser] of users.entries()) {
+        if (bmUser._id.toString() === userId) {
+            userIndex = deleteIndex;
+            continue;
+        }
         bmUser.bcMark = [];
         bmUser.wsMark = [];
         for (const bookId of bmUser.bookCollection) {
@@ -71,8 +74,9 @@ async function match(userId) {
             }
         }
     }
+    users.splice(userIndex, 1);
 
-    return users; // restrict the first one is not enough   
+    return users;
 }
 
 async function currentBookmates(userId) {
