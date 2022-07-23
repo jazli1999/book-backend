@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 
-const messageSchema = mongoose.Schema({
-    recevierID: String,
-    senderID: String, // change to userIDS for rec and senderID
-    message: String,
-    timestamp: String,
-});
+const { Schema, model } = mongoose;
 
+const messageSchema = new Schema({
+    message: { type: String, index: true },
+    receiver: { type: Schema.Types.ObjectId, ref: 'User' },
+    sender: { type: Schema.Types.ObjectId, ref: 'User' },
+    isRead: Boolean
+}, { timestamps: true });
 
-export default mongoose.model('messages', messageSchema);
+export default model('Message', messageSchema);

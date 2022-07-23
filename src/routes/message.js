@@ -8,7 +8,9 @@ import Middlewares from '../middlewares.js';
 
 
 var router = Router()
-router.get('/sync', Middlewares.checkAuthentication, MessageController.getMessages);
-router.post('/send', Middlewares.checkAuthentication, MessageController.sendMessages);
+router.get('/get', Middlewares.checkAuthentication, MessageController.getMessages);
+router.get('/get/all', Middlewares.checkAuthentication, MessageController.getAllMessagesOfCurrentUser);
+
+router.post('/send', Middlewares.checkAuthentication, MessageController.sendMessage);
 
 export default router;

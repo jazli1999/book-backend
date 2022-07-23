@@ -1,10 +1,15 @@
 import MessageService from '../services/message.service.js';
 async function getMessages(req, res, next){
-    MessageService.get(req.body)
+    MessageService.get(req.body).then((value) => value?res.status(200).send(value):res.status(400).send('bad request.Check the credentials'));
 }
 
-async function sendMessages(req, res, next){
-    MessageService.send(req.body)
+async function getAllMessagesOfCurrentUser(req, res){
+    console.log('use idddd ',userId)
+    MessageService.getAllMessagesOfCurrentUser(req.userId).then((value) =>res.status(200).send(value));
 }
 
-export default {getMessages, sendMessages}
+async function sendMessage(req, res, next){
+    MessageService.send(req.body).then((value) => value?res.status(200).send(value):res.status(400).send('error occured please validate your message credentials'));
+}
+
+export default {getMessages, sendMessage,getAllMessagesOfCurrentUser}
