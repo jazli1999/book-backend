@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
-    "lint": "eslint  *.js src/*.js src/**/*.js --quiet --fix"
+    "lint": "eslint  */**/*.js --quiet --fix"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "eslint": "^8.17.0",
-    "eslint-config-airbnb-base": "^15.0.0"
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
@@ -71,6 +72,9 @@
         "off"
       ],
       "max-len": [
+        "off"
+      ],
+      "no-continue": [
         "off"
       ]
     }

@@ -17,25 +17,12 @@ const premiumSchema = new Schema({
     endDate: Date,
 }, { _id: false });
 
-// const nameSchema = new mongoose.Schema({
-//     firstName: String,
-//     lastName: String
-// }, { _id: false });
-
 // if changing schema has problems, just delete the collections&documents
 const userSchema = new Schema({
-    // username: {
-    //     type: String,
-    //     lowercase: true,
-    //     unique: true,
-    //     required: [true, "can't be blank"],
-    //     match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
-    //     index: true,
-    // },
     firstName: String,
     lastName: String,
     email: {
-        type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true,
+        type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'],
     },
     password: String, // just for now
     gender: String,
@@ -46,16 +33,22 @@ const userSchema = new Schema({
     birthday: String,
     orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     bookCollection: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+    bmTitles: [String],
+    bmAuthors: [String],
+    bmCategories: [String],
+    matchString: String,
     exchangeableCollection: [{ type: Boolean, default: true }],
+    bcCover: [{ type: String }],
     wishList: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
-    bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }], // store the bookmates result
+    wsCover: [{ type: String }],
+    bookmates: [{ type: Schema.Types.ObjectId, ref: 'User' }], // store the bookmates result, force unique here
+    bmSent: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    bmReceived: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 }, { timestamps: true });
 
-// userSchema.methods.toAuthJSON = function() {
-//     return {
-//         username: this.username,
-//         email: this.email,
-//     }
-// }
+// https://stackoverflow.com/questions/24714166/full-text-search-with-weight-in-mongoose
+// userSchema.index({bmTitles: 'text', bmAuthors: 'text', bmCategories: 'text'}, {name: 'Bookmates matching index', weights: {bmTitles: 20, bmAuthors: 5, bmCategories: 1}});
+// Disable in production
+// userSchema.set('autoIndex', false);
 
 export default model('User', userSchema);

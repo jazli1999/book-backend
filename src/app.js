@@ -13,6 +13,7 @@ import booksRouter from './routes/books.js';
 import authRouter from './routes/auth.js';
 import orderRouter from './routes/orders.js';
 import bookmateRouter from './routes/bookmates.js';
+import subscriptionRouter from './routes/subscription.js';
 
 import messageRouter from './routes/message.js'
 const app = express();
@@ -22,8 +23,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // enable body-parser
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
 // test if connect the mongodb successfully
 mongoose.connect(process.env.ATLAS_URI);
 mongoose.connection.once('open', () => {
@@ -37,8 +36,10 @@ app.use('/books', booksRouter);
 app.use('/auth', authRouter);
 app.use('/orders', orderRouter);
 app.use('/bookmates', bookmateRouter);
+
 app.use('/messages', messageRouter);
 
+app.use('/subscription', subscriptionRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

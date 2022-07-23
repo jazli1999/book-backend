@@ -5,9 +5,12 @@ import Middlewares from '../middlewares.js';
 
 const router = Router();
 
+router.get('/gbooks/details/:isbn', Middlewares.checkAuthentication, BookController.getBookDetails);
 // default route "/books"
 // get data from google
 router.get('/gbooks/:query', BookController.searchGbooks);
+
+router.get('/gbooks/owners/:isbn', BookController.getBookOwners);
 
 // frontend send the books list to backend to store, only add new books
 router.post('/bcadd', Middlewares.checkAuthentication, BookController.addBCBooks);

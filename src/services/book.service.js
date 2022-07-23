@@ -3,10 +3,11 @@ import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
 
 async function modifyInput(json) {
-    
     const books = { searchResult: [] };
+    if( json === null || json === [] || json === undefined){
+        return books;
+    }
     for (const x of json) {
-        console.log(x)
         const currentJson = {};  
         
         // GET Parameters
@@ -46,7 +47,8 @@ async function modifyInput(json) {
             // Description
             if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'description')) {
                 currentJson.description = x.volumeInfo.description;
-            }                   
+            }
+            // console.log(currentJson);   // commented out because it filles the console           
         }
         // Adds the current book json to result array
         if (Object.keys(currentJson) !== 0) {
@@ -80,9 +82,7 @@ async function searchGbooks(query) {
         delete inputJson.publisher;
     }
     
-    Object.keys(inputJson).forEach((key) => {
-        return ((inputJson[key] === undefined || inputJson[key] === null) && (delete inputJson[key]));
-    });
+    Object.keys(inputJson).forEach((key) => ((inputJson[key] === "" ||inputJson[key] === undefined || inputJson[key] === null) && (delete inputJson[key])));
 
     // Create temp query string in googlebooks format
     let tempQuery = [];
@@ -92,7 +92,6 @@ async function searchGbooks(query) {
         }
     }
     tempQuery = tempQuery.join('+');
-    // console.log(temp_query)
 
     // Send request to google books api with implemented query string
     const r = await request
@@ -111,32 +110,81 @@ async function searchGbooks(query) {
     return modifyInput(booksJson);
 }
 
+async function getBookDetails(isbn) {
+    console.log('func is on ');
+    let booksJson;
+    const r = await request
+        .get(`https://www.googleapis.com/books/v1/volumes?q=${isbn}`)
+        .then((data) => {
+            booksJson = JSON.parse(data.text);
+            booksJson = booksJson.items;
+        });
+        
+    const results = modifyInput(booksJson);
+    return (await results).searchResult[0];
+}
+
 async function addBooks(userId, newBookList, listName) {
+    console.log('add books is on', newBookList);
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     for (const book of newBookList) {
+
         const foundBook = await Book.findOne({ ISBN: book.ISBN });
-        if (foundBook !== null) return 'book already exists';
-        const newBook = new Book(); // every loop need a newBook
-        newBook.ISBN = book.ISBN;
-        newBook.title = book.title;
-        newBook.subtitle = book.subtitle;
-        // List object
-        newBook.authors = book.authors;
-        newBook.categories = book.categories;
-        newBook.image = book.image;
-        newBook.description = book.description;
-        // accourding to listName update to different lists
-        if (listName === 'BC') {
+        if (foundBook === null) { 
+            const newBook = new Book(); // every loop need a newBook
+            newBook.ISBN = book.ISBN;
+            newBook.title = book.title;
+            newBook.subtitle = book.subtitle;
+            // List object
+            newBook.authors = book.authors;
+            newBook.categories = book.categories;
+            newBook.image = book.image;
+            newBook.description = book.description;
+            // accourding to listName update to different lists
+            if (listName === 'BC') {
             // mark exchangeable problem
-            newBook.ownedByUsers.push(userId);
+                newBook.ownedByUsers.push(userId);
+            }
+            if (listName === 'WS') {
+                newBook.wantedByUsers.push(userId);
+            }
+            await newBook.save();
         }
-        if (listName === 'WS') {
-            newBook.wantedByUsers.push(userId);
-        }
-        await newBook.save();
     }
     return 'book list update success';
 }
 
-export default { searchGbooks, addBooks };
+async function getBookFromDatabase(isbn) {
+    const foundBook = await Book.findOne({ ISBN: isbn });
+    if (foundBook === null) {
+        return null;
+    } 
+    return foundBook;
+}
+
+// returns the list of users(id and name) which owns specified book and want to exchange it 
+async function getBookOwners(isbn) {
+    const foundBook = await getBookFromDatabase(isbn);
+    if (foundBook === null) { // if book isn't in database then it's not in any book collection
+        return [];
+    } 
+    let bookIndex;
+    const exchangeableBookOwners = [];
+    for (const ownerId of foundBook.ownedByUsers) {
+        const user = await User.findById(ownerId);
+        bookIndex = user.bookCollection.indexOf(foundBook._id);
+
+        if (user.exchangeableCollection[bookIndex] === true) {
+            exchangeableBookOwners.push({
+                userId: user._id, firstName: user.firstName ? user.firstName : null, lastName: user.lastName ? user.lastName : null, imageUrl: user.image ? user.image : null, 
+            });
+        }
+    }
+
+    return exchangeableBookOwners;
+}
+
+export default {
+    searchGbooks, addBooks, getBookDetails, getBookOwners, 
+};

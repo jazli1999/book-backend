@@ -64,32 +64,53 @@ async function updateBookList(userId, newBookList, listName) {
     if (listName === 'BC') {
         user.bookCollection = [];
         user.exchangeableCollection = [];
+        user.bmTitles = [];
+        user.bmAuthors = [];
+        user.bmCategories = [];
+        user.bcCover = [];
+        user.matchString = '';
     }
-    if (listName === 'WS') user.wishList = [];
+    if (listName === 'WS') {
+        user.wishList = [];
+        user.wsCover = [];
+    }
     for (const book of newBookList) {
         const foundBook = await Book.findOne({ ISBN: book.ISBN });
         if (foundBook === null) return book.ISBN;
         if (listName === 'BC') {
-            user.bookCollection.push(foundBook._id);
-            if (book.exchangeable === 0) {
-                user.exchangeableCollection.push(0);
+            if (typeof foundBook.subtitle !== 'undefined') {
+                user.bmTitles.push(`${foundBook.title} ${foundBook.subtitle}`);
+                user.matchString = `${user.matchString} ${foundBook.title} ${foundBook.subtitle},`;
             }
             else {
-                user.exchangeableCollection.push(1);
+                user.bmTitles.push(foundBook.title);
+                user.matchString = `${user.matchString} ${foundBook.title},`;
             }
+            user.bmAuthors = user.bmAuthors.concat(foundBook.authors);
+            user.bmCategories = user.bmCategories.concat(foundBook.categories);
+
+            user.bookCollection.push(foundBook._id);
+            user.bcCover.push(foundBook.image);
+            user.exchangeableCollection.push(book.exchangeable);
+            
+            user.bmAuthors = user.bmAuthors.concat(foundBook.authors);
+            user.bmCategories = user.bmCategories.concat(foundBook.categories);
         }
-        if (listName === 'WS') user.wishList.push(foundBook._id);
+        if (listName === 'WS') {
+            user.wishList.push(foundBook._id);
+            user.wsCover.push(foundBook.image);
+        }
     }
     await user.save();
     return 'user list update success';
 }
 
-async function readBookList(userId,  listName){
+async function readBookList(userId, listName) {
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     // Changed it to model.find() to get object info
-    if (listName === 'BC') return { "list": await Book.find({'_id': { $in: user.bookCollection}}), "exchangeable": user.exchangeableCollection}
-    if (listName === 'WS') return { "list": await Book.find({'_id': { $in: user.WishList}}), "exchangeable": user.exchangeableCollection}
+    if (listName === 'BC') return { list: await Book.find({ _id: { $in: user.bookCollection } }), exchangeable: user.exchangeableCollection };
+    if (listName === 'WS') return { list: await Book.find({ _id: { $in: user.WishList } }), exchangeable: [] };
 }
 
 async function get(userId) {
