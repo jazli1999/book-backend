@@ -131,7 +131,7 @@ async function addBooks(userId, newBookList, listName) {
     for (const book of newBookList) {
 
         const foundBook = await Book.findOne({ ISBN: book.ISBN });
-        if (foundBook === null) {
+        if (foundBook === null) { 
             const newBook = new Book(); // every loop need a newBook
             newBook.ISBN = book.ISBN;
             newBook.title = book.title;

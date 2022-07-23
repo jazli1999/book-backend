@@ -7,6 +7,7 @@ async function match(userId) {
     // const matchString = '';
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
+    if (typeof user.matchString === 'undefined') return [];
 
     // const books = await Book.find(
     //     { $text : { $search : "Book" } }, 
