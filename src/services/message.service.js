@@ -2,23 +2,20 @@ import Message from '../models/message.model.js';
 import User from '../models/user.model.js';
 
 
-async function get(params ) {
-    return Message.Find({senderID : params.senderID, receiverID : params.receiverID});
-}
-async function getAllMessagesOfCurrentUser(userId ) {
-    return  Message.Find({$or: [{senderID : userId}, {receiverID : userId}]});
-}
-
-async function getLastMessage(params ) { //returns last message of the specified sender and receiver
-    const messages = Message.Find({senderID : params.senderID, receiverID : params.receiverID});
-    if(messages===null){
-        return null
-    }
-    else{
-        messages.slice(-1)
-    }
+//returns the dialog between specified sender and receiver
+async function getDialog(req) {
+    const { sender } = req.params;
+    const { receiver } = req.params;
+    console.log('get service: sender:', sender, 'receiver', receiver )
+    return await Message.find({$or: [{$and: [{sender : sender}, {receiver : receiver}]},{$and: [{sender : receiver}, {receiver : sender}]}]})
 }
 
+
+//returns all messages (sent or received) of currently logged user
+async function getAllMessagesOfCurrentUser(userId) {
+    const messages = await Message.find({$or: [{sender : userId}, {receiver : userId}]})
+    return await Message.find({$or: [{sender : userId}, {receiver : userId}]})
+}
 
 async function send(params) {
     const sender = await User.findById(params.sender);
@@ -39,7 +36,7 @@ async function send(params) {
 }
 
 export default {
-    get, send
+     send, getAllMessagesOfCurrentUser,getDialog
 };
 
 

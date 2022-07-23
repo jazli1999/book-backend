@@ -4,7 +4,6 @@ async function getMessages(req, res, next){
 }
 
 async function getAllMessagesOfCurrentUser(req, res){
-    console.log('use idddd ',userId)
     MessageService.getAllMessagesOfCurrentUser(req.userId).then((value) =>res.status(200).send(value));
 }
 
@@ -12,4 +11,8 @@ async function sendMessage(req, res, next){
     MessageService.send(req.body).then((value) => value?res.status(200).send(value):res.status(400).send('error occured please validate your message credentials'));
 }
 
-export default {getMessages, sendMessage,getAllMessagesOfCurrentUser}
+async function getDialog(req, res, next){
+    MessageService.getDialog(req).then((value) =>res.status(200).send(value));
+}
+
+export default {getMessages, sendMessage,getAllMessagesOfCurrentUser,getDialog}
