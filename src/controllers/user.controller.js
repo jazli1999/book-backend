@@ -23,9 +23,11 @@ async function getUserInfo(req, res, next) {
         if (queryId !== req.userId) {
             const response = JSON.parse(JSON.stringify(user));
             delete response.password;
-            delete response.address.street;
-            delete response.address.houseNumber;
-            delete response.address.postcode;
+            if (response.address) {
+                delete response.address.street;
+                delete response.address.houseNumber;
+                delete response.address.postcode;
+            }
             delete response.birthday;
             delete response.email;
             delete response.orders;   
