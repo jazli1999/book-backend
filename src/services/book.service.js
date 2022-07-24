@@ -111,16 +111,15 @@ async function searchGbooks(query) {
 }
 
 async function getBookDetails(isbn) {
-    console.log('func is on ');
-    let booksJson;
+    let bookDetails;
     const r = await request
-        .get(`https://www.googleapis.com/books/v1/volumes?q=${isbn}`)
+        .get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
         .then((data) => {
-            booksJson = JSON.parse(data.text);
-            booksJson = booksJson.items;
+            bookDetails = JSON.parse(data.text);
+            bookDetails = bookDetails.items;
         });
-        
-    const results = modifyInput(booksJson);
+    const results = modifyInput(bookDetails);
+
     return (await results).searchResult[0];
 }
 
