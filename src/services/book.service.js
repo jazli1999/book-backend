@@ -112,7 +112,7 @@ async function searchGbooks(query) {
 
 async function getBookDetails(isbn) {
     let bookDetails;
-    const r = await request
+    await request
         .get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
         .then((data) => {
             bookDetails = JSON.parse(data.text);
