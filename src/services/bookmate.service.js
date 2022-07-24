@@ -1,8 +1,7 @@
 import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
-import SubscriptionService from '../services/subscription.service.js';
+import SubscriptionService from './subscription.service.js';
 import SubscriptionController from '../controllers/subscription.controller.js';
-
 
 async function match(userId) {
     const user = await User.findById(userId);
@@ -27,7 +26,7 @@ async function match(userId) {
                 },
             },
             {
-                $limit: 11
+                $limit: 11,
             },
             {
                 $project: {
@@ -48,7 +47,7 @@ async function match(userId) {
     }
 
     if (!isPremium) {
-        users = await User.aggregate([{$sample: {size: 10}}]);
+        users = await User.aggregate([{ $sample: { size: 10 } }]);
     }
 
     // const books = await Book.find(
