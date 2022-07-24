@@ -76,16 +76,18 @@ async function getDetails(userId) {
 }
 
 async function get(userId) {
-    const user = await User.findById(userId);
+    let user = await User.findById(userId);
     if (user === null) return 'no such user';
     if (user.premium !== undefined) {
         const today = new Date();
         if (today > user.premium.endDate) {
             await cancel(userId);
+            return false; // or you will have problem, the user.premium.isPremium is still true
         }
     }
     else {
-        create(userId, 'free');
+        user = await create(userId, 'free');
+        return user.isPremium;
     }
     return user.premium.isPremium;
 }

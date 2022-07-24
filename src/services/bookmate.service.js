@@ -1,13 +1,55 @@
 import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
+import SubscriptionService from '../services/subscription.service.js';
+import SubscriptionController from '../controllers/subscription.controller.js';
+
 
 async function match(userId) {
-    // just for testing framework
-    // for the match, the current user should have a search string
-    // const matchString = '';
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
-    if (typeof user.matchString === 'undefined') return [];
+    if (typeof user.matchString === 'undefined') return []; // if the bookcollection is empty
+
+    const isPremium = await SubscriptionService.get(userId);
+
+    let users;
+
+    if (isPremium) {
+        users = await User.aggregate([        
+            {
+                $search: {
+                    index: 'bm_index', 
+                    text: {
+                        query: user.matchString,
+                        path: {
+                            wildcard: '*',
+                        },
+                    },
+                },
+            },
+            {
+                $limit: 11
+            },
+            {
+                $project: {
+                    // will have _id field by default
+                    firstName: 1,
+                    lastName: 1,
+                    bio: 1,
+                    bookCollection: 1,
+                    bmTitles: 1,
+                    wishList: 1,
+                    exchangeableCollection: 1,
+                    bcCover: 1,
+                    wsCover: 1,
+                    score: { $meta: 'searchScore' },
+                },
+            },
+        ]);
+    }
+
+    if (!isPremium) {
+        users = await User.aggregate([{$sample: {size: 10}}]);
+    }
 
     // const books = await Book.find(
     //     { $text : { $search : "Book" } }, 
@@ -16,36 +58,8 @@ async function match(userId) {
     // .limit(10)
     // .sort({ score : { $meta : 'textScore' } });
 
-    const users = await User.aggregate([        
-        {
-            $search: {
-                index: 'bm_index',
-                text: {
-                    query: user.matchString,
-                    path: {
-                        wildcard: '*',
-                    },
-                },
-            },
-        },
-        {
-            $project: {
-                // will have _id field by default
-                firstName: 1,
-                lastName: 1,
-                bio: 1,
-                bookCollection: 1,
-                bmTitles: 1,
-                wishList: 1,
-                exchangeableCollection: 1,
-                bcCover: 1,
-                wsCover: 1,
-                score: { $meta: 'searchScore' },
-            },
-        },
-    ]).limit(10);
-
     // calculate the intersection here
+    // recalculate the score here
     let userIndex;
     for (const [deleteIndex, bmUser] of users.entries()) {
         if (bmUser._id.toString() === userId) {
