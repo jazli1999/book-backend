@@ -24,6 +24,9 @@ async function create(userId, subsModel) {
             }
         }
     }
+    else if(user.premium.isPremium){
+        await update(userId, subsModel);
+    }
     user.save();
     return user.premium;
 }
