@@ -36,15 +36,20 @@ async function update(userId, subsModel) {
         // need test
         if (user === null) return 'no such user';
         if (user.premium !== undefined || !user.premimum.isPremium) {
-            user.premium.endDate = new Date();
+            const newEndDate = new Date();
+            if( newEndDate < user.premium.endDate){
+               newEndDate = user.premium.endDate
+            }
             if (subsModel !== undefined) {
                 if (subsModel === 'monthly') {
-                    user.premium.endDate.setMonth(user.premium.endDate.getMonth() + 1);
+                     
+                    newEndDate.setMonth(user.premium.endDate.getMonth() + 1);
                 }
                 else if (subsModel === 'yearly') {
-                    user.premium.endDate.setFullYear(user.premium.endDate.getFullYear() + 1);
+                    newEndDate.setFullYear(user.premium.endDate.getFullYear() + 1);
                 }
             }
+            user.premium.endDate = newEndDate;
             user.save();
             return user.premium;
         }
