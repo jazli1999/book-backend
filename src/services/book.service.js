@@ -1,6 +1,8 @@
 import request from 'superagent';
 import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
+import MailService from './mail.service.js';
+
 
 async function modifyInput(json) {
     const books = { searchResult: [] };
@@ -111,6 +113,8 @@ async function searchGbooks(query) {
 }
 
 async function getBookDetails(isbn) {
+    MailService.sendOrderStatusMail(true,"erengulum834@gmail.com");
+
     let bookDetails;
     await request
         .get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)

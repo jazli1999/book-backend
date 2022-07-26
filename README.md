@@ -8,6 +8,10 @@
   `ATLAS_URI=mongodb+srv://{username}:{password}@cluster0.yros1ft.mongodb.net/?retryWrites=true&w=majority`
 - Add JWT_SECRET to `.env`  
   `JWT_SECRET=TopSecret`
+- Add EMAIL_ADRESS to `.env`  
+  `bookex6@gmail.com`
+  - Add EMAIL_PASS to `.env`  
+  `wfszncuqjjiuaiso`
 - To run the project in dev mode (with auto-reload)  
   `npm run dev`
 - To run the project in product mode  

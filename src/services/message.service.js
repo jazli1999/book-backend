@@ -1,6 +1,9 @@
 import Message from '../models/message.model.js';
 import User from '../models/user.model.js';
 
+import MailService from './mail.service.js';
+
+
 // returns the dialog between specified sender and receiver
 async function getDialog(req) {
     const { sender } = req.params;
@@ -31,6 +34,7 @@ async function send(params) {
     message.timestamp = new Date();
     message.isRead = false;
     await message.save();
+    MailService.sendNewMessageNotification(receiver.email)
 
     return 'successfully sent';
 }

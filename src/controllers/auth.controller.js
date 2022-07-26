@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel from '../models/user.model.js';
+import MailService from '../services/mail.service.js';
 
 import { JWT_SECRET, JWT_EXPIRES_IN } from '../config.js';
 
@@ -80,6 +81,8 @@ const register = async (req, res) => {
             message: err.message,
         });
     }
+    MailService.sendRegisterConfirmationMail(req.body.email);
+
 };
 
 export default {
