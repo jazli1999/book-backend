@@ -96,6 +96,12 @@ async function declineOrder(req, res) {
     });
 }
 
+async function updateReview(req, res) {
+    OrderService.updateReview(req.params.id).then((status) => {
+        res.setHeader('content-type', 'text/plain');
+        res.status(status).send('ok');
+    });
+}
 export default {
     createOrder,
     getUserOrders,
@@ -105,4 +111,5 @@ export default {
     updateTrackingCode,
     confirmReceipt,
     declineOrder,
+    updateReview,
 };
