@@ -29,6 +29,9 @@ const getUserOrders = async (req, res) => {
             id: order._id,
             bookmate: `${bookmate.firstName} ${bookmate.lastName}`,
             orderedBooks: listCovers,
+            user_id: userDetail.userId,
+            receiver_id: bookmateId,
+            isReviwed: order.isReviewed,
         });
     }
     res.status(200).json(orders);

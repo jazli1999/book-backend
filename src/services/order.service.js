@@ -106,11 +106,11 @@ const declineOrder = async (orderId, reqId) => {
     return 200;
 };
 
-const updateReview = async(orderId) =>{
+const updateReviewer = async(orderId) =>{
     const order = await Order.findById(orderId);
     order.isReviewed = true;
     await order.save();
-    return 200;
+    return 200
 }
 
 export default {
@@ -121,5 +121,5 @@ export default {
     updateTrackingCode,
     confirmReceipt,
     declineOrder,
-    updateReview
+    updateReviewer,
 };
