@@ -9,7 +9,7 @@ async function getAllReviewsByOrder(req, res,) {
 }
 
 async function sendReview(req, res, next) {
-    ReviewService.sendReview(req.body).then((value) => (value ? res.status(200).send(value) : res.status(400).send('error occured please validate your message credentials')));
+    ReviewService.sendReview(req.body).then((value) => (value ? res.status(200).send(value) : res.status(400).send('error occured please validate your review credentials')));
 }
 
 export default {
