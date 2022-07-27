@@ -21,21 +21,21 @@ async function getAllReviewsByUserId(req) {
 
 
 async function sendReview(params) {
-
     const order = await Order.findById(params.order);
     if(order===null){
         return null
     }
 
+    // I added this part in order service since it fits it more.
     let author;
     let receiver;
-    if(params.author===order.requester.userId && !order.requester.isReviewed){
+    if(params.author===order.requester.userId.toString() && !order.requester.isReviewed){
         author = await User.findById(params.author);
         receiver = await User.findById(order.responder.userId);
         order.requester.isReviewed=true;
 
     }
-    else if(params.author===order.responder.userId && !order.responder.isReviewed){
+    else if(params.author===order.responder.userId.toString() && !order.responder.isReviewed){
         author = await User.findById(params.author);
         receiver = await User.findById(order.requester.userId);
         order.responder.isReviewed=true;
@@ -45,11 +45,11 @@ async function sendReview(params) {
     }
 
     const review = new Review();
-    review.author = author.userId;
-    review.receiver = receiver.userId;
-    review.message = params.content;
+    review.author = author;
+    review.receiver = receiver;
+    review.content = params.content;
     review.timestamp = new Date();
-    review.save();
+    await review.save();
 
     await order.save();
 
