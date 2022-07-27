@@ -94,9 +94,11 @@ async function match(userId) {
 }
 
 async function currentBookmates(userId) {
-    const user = await User.findById(userId).populate('bookmates');
+    const user = await User.findById(userId).populate('bookmates').populate('bmReceived');
     const rawBookmates = user.bookmates;
-    const response = [];
+    const recBookmates = user.bmReceived;
+    const curResponse = [];
+    const recResponse = [];
     for (const rBookmate of rawBookmates) {
         const bookmate = JSON.parse(JSON.stringify(rBookmate));
         delete bookmate.password;
@@ -113,8 +115,35 @@ async function currentBookmates(userId) {
         delete bookmate.email;
         delete bookmate.orders;
         delete bookmate.bookmates;
-        response.push(bookmate);
+        curResponse.push(bookmate);
     }
+
+    for (const recBookmate of recBookmates) {
+        const rcBookmate = JSON.parse(JSON.stringify(recBookmate));
+        delete rcBookmate.password;
+        if (rcBookmate.address) {
+            delete rcBookmate.address.street;
+            delete rcBookmate.address.houseNumber;
+            delete rcBookmate.address.postcode;
+        }
+        if (rcBookmate.premium) {
+            delete rcBookmate.premium.startDate;
+            delete rcBookmate.premium.endDate;
+        }
+        delete rcBookmate.birthday;
+        delete rcBookmate.email;
+        delete rcBookmate.orders;
+        delete rcBookmate.bookmates;
+        recResponse.push(rcBookmate);
+    }
+
+    const response = {
+        Bookmates: curResponse,
+        bmReceived: recResponse,
+    };
+
+    // console.log(response);
+
     return response;
 }
 
@@ -140,6 +169,7 @@ async function acceptRequest(userId, targetId) { // receivingUser accept sending
     if (index !== -1) {
         receivingUser.bmReceived.splice(index, 1);
         receivingUser.bookmates.push(targetId);
+        await receivingUser.save();
     }
     else {
         return 'you did not receive this user\'s request';
@@ -148,15 +178,13 @@ async function acceptRequest(userId, targetId) { // receivingUser accept sending
     if (sendingUser.bmSent.length === 0) return 'this user did not send request to you';
     const sendIndex = sendingUser.bmSent.indexOf(userId);
     if (sendIndex !== -1) {
-        sendingUser.bmSent.splice(index, 1); // delete the user in bmSent
+        sendingUser.bmSent.splice(sendIndex, 1); // delete the user in bmSent
         sendingUser.bookmates.push(userId);
+        await sendingUser.save();
     }
     else {
         return 'this user did not send request to you';
     }
-
-    await sendingUser.save();
-    await receivingUser.save();
     return 'accept bookmate request success';
 }
 
@@ -169,6 +197,7 @@ async function declineRequest(userId, targetId) {
     const index = receivingUser.bmReceived.indexOf(targetId);
     if (index !== -1) {
         receivingUser.bmReceived.splice(index, 1);
+        await receivingUser.save();
     }
     else {
         return 'you did not receive this user\'s request';
@@ -177,53 +206,62 @@ async function declineRequest(userId, targetId) {
     if (sendingUser.bmSent.length === 0) return 'this user did not send request to you';
     const sendIndex = sendingUser.bmSent.indexOf(userId);
     if (sendIndex !== -1) {
-        sendingUser.bmSent.splice(index, 1); // delete the user in bmSent
+        sendingUser.bmSent.splice(sendIndex, 1); // delete the user in bmSent
+        await sendingUser.save();
     }
     else {
         return 'this user did not send request to you';
     }
-
-    await sendingUser.save();
-    await receivingUser.save();
     return 'decline bookmate request success';
 }
 
 async function updateBookmates() {
     // ME.find({ pictures: { $exists: true, $ne: [] } })
-    const users = await User.find({ bookCollection: { $exists: true, $ne: [] } }).select({ bookCollection: 1 }).populate('bookCollection');
+    // update bookmates&bmreceived&bmsent feilds
+    const users = await User.find();
     for (const user of users) {
-        user.bmTitles = [];
-        user.bmAuthors = [];
-        user.bmCategories = [];
-        user.bcCover = [];
-        user.wsCover = [];
-        user.matchString = '';
-        for (const book of user.bookCollection) {
-            if (typeof book.subtitle !== 'undefined') {
-                user.bmTitles.push(`${book.title} ${book.subtitle}`);
-                user.matchString = `${user.matchString} ${book.title} ${book.subtitle}^`;
-            }
-            else {
-                user.bmTitles.push(book.title);
-                user.matchString = `${user.matchString} ${book.title}^`;
-            }
-            user.bmAuthors = user.bmAuthors.concat(book.authors);
-            user.bmCategories = user.bmCategories.concat(book.categories);
-            user.bcCover.push(book.image);
-        }
-        user.save();
+        user.bookmates = [];
+        user.bmSent = [];
+        user.bmReceived = [];
+        await user.save();
     }
+    return 'bookmates&bmreceived&bmsent update success!';
 
-    const wsUsers = await User.find({ wishList: { $exists: true, $ne: [] } }).select({ wishList: 1 }).populate('wishList');
-    for (const wsUser of wsUsers) {
-        wsUser.wsCover = [];
-        for (const book of wsUser.wishList) {
-            wsUser.wsCover.push(book.image);
-        }
-        wsUser.save();
-    }
+    // update matching fields
+    // const users = await User.find({ bookCollection: { $exists: true, $ne: [] } }).select({ bookCollection: 1 }).populate('bookCollection');
+    // for (const user of users) {
+    //     user.bmTitles = [];
+    //     user.bmAuthors = [];
+    //     user.bmCategories = [];
+    //     user.bcCover = [];
+    //     user.wsCover = [];
+    //     user.matchString = '';
+    //     for (const book of user.bookCollection) {
+    //         if (typeof book.subtitle !== 'undefined') {
+    //             user.bmTitles.push(`${book.title} ${book.subtitle}`);
+    //             user.matchString = `${user.matchString} ${book.title} ${book.subtitle}^`;
+    //         }
+    //         else {
+    //             user.bmTitles.push(book.title);
+    //             user.matchString = `${user.matchString} ${book.title}^`;
+    //         }
+    //         user.bmAuthors = user.bmAuthors.concat(book.authors);
+    //         user.bmCategories = user.bmCategories.concat(book.categories);
+    //         user.bcCover.push(book.image);
+    //     }
+    //     user.save();
+    // }
 
-    return 'bookmates matching field update success';
+    // const wsUsers = await User.find({ wishList: { $exists: true, $ne: [] } }).select({ wishList: 1 }).populate('wishList');
+    // for (const wsUser of wsUsers) {
+    //     wsUser.wsCover = [];
+    //     for (const book of wsUser.wishList) {
+    //         wsUser.wsCover.push(book.image);
+    //     }
+    //     wsUser.save();
+    // }
+
+    // return 'bookmates matching field update success';
 }
 
 export default {
