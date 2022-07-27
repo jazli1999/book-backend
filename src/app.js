@@ -14,6 +14,8 @@ import authRouter from './routes/auth.js';
 import orderRouter from './routes/orders.js';
 import bookmateRouter from './routes/bookmates.js';
 import subscriptionRouter from './routes/subscription.js';
+import reviewRouter from './routes/review.js';
+
 
 import messageRouter from './routes/message.js';
 
@@ -39,6 +41,7 @@ app.use('/orders', orderRouter);
 app.use('/bookmates', bookmateRouter);
 
 app.use('/messages', messageRouter);
+app.use('/reviews', reviewRouter);
 
 app.use('/subscription', subscriptionRouter);
 

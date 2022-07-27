@@ -106,6 +106,20 @@ const declineOrder = async (orderId, reqId) => {
     return 200;
 };
 
+const updateReview = async(orderId, userId) =>{
+    const order = await Order.findById(orderId);
+    if( order.requester.userId.toString() === userId){
+        order.requester.isReviewed = true;
+        // console.log("was requester");
+    }
+    else if( order.responder.userId.toString() === userId){
+        order.responder.isReviewed = true;
+        // console.log("was responder");
+    }    
+    await order.save();
+    return 200
+}
+
 export default {
     create,
     read,
@@ -114,4 +128,5 @@ export default {
     updateTrackingCode,
     confirmReceipt,
     declineOrder,
+    updateReview,
 };

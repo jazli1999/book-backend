@@ -14,6 +14,10 @@ const userOrderSchema = new Schema({
     payment: paymentSchema,
     trackingCode: String,
     status: Number,
+    isReviewed: {
+        type: Boolean,
+        default: false
+    },
 }, { _id: false });
 
 const orderSchema = new Schema({

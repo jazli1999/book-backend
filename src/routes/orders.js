@@ -12,5 +12,5 @@ router.put('/payment/:id', Middlewares.checkAuthentication, OrderController.upda
 router.put('/tracking/:id', Middlewares.checkAuthentication, OrderController.updateTrackingCode);
 router.put('/receipt/:id', Middlewares.checkAuthentication, OrderController.confirmReceipt);
 router.put('/decline/:id', Middlewares.checkAuthentication, OrderController.declineOrder);
-
+router.put('/review/:id', Middlewares.checkAuthentication, OrderController.updateReview);
 export default router;

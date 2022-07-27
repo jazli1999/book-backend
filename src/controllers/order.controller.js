@@ -19,6 +19,8 @@ const getUserOrders = async (req, res) => {
             ? order.responder.userId : order.requester.userId;
         const userDetail = order.requester.userId.toString() === req.userId 
             ? order.requester : order.responder;
+        const review_status = order.requester.userId.toString() === req.userId 
+            ? order.requester.isReviewed : order.responder.isReviewed;
         const bookmate = await UserService.get(bookmateId);
         const listCovers = [];
         for (const bookId of userDetail.wishList) {
@@ -29,6 +31,9 @@ const getUserOrders = async (req, res) => {
             id: order._id,
             bookmate: `${bookmate.firstName} ${bookmate.lastName}`,
             orderedBooks: listCovers,
+            user_id: userDetail.userId,
+            receiver_id: bookmateId,
+            isReviewed: review_status,
         });
     }
     res.status(200).json(orders);
@@ -96,6 +101,12 @@ async function declineOrder(req, res) {
     });
 }
 
+async function updateReview(req, res) {
+    OrderService.updateReview(req.params.id, req.userId).then((status) => {
+        res.setHeader('content-type', 'text/plain');
+        res.status(status).send('ok');
+    });
+}
 export default {
     createOrder,
     getUserOrders,
@@ -105,4 +116,5 @@ export default {
     updateTrackingCode,
     confirmReceipt,
     declineOrder,
+    updateReview,
 };
