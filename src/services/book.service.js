@@ -166,11 +166,12 @@ async function getBookOwners(isbn) {
     const foundBook = await getBookFromDatabase(isbn);
     if (foundBook === null) { // if book isn't in database then it's not in any book collection
         return [];
-    } 
+    }
+
     let bookIndex;
     const exchangeableBookOwners = [];
-    for (const ownerId of foundBook.ownedByUsers) {
-        const user = await User.findById(ownerId);
+    const users = await User.find({ bookcollection: foundBook._id });
+    for (const user of users) {
         bookIndex = user.bookCollection.indexOf(foundBook._id);
 
         if (user.exchangeableCollection[bookIndex] === true) {
@@ -179,7 +180,6 @@ async function getBookOwners(isbn) {
             });
         }
     }
-
     return exchangeableBookOwners;
 }
 
