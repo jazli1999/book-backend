@@ -8,7 +8,7 @@ async function matchBookmates(req, res, next) {
 }
 
 async function currentBookmates(req, res, next) {
-    BookmateService.currentBookmates(req.userId).then((value) => res.status(200).send(value));
+    BookmateService.currentBookmates(req.userId).then((value) => res.status(200).json(value));
 }
 
 async function sendRequest(req, res, next) {

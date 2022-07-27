@@ -30,7 +30,7 @@ async function send(params) {
     message.message = params.message;
     message.timestamp = new Date();
     message.isRead = false;
-    message.save();
+    await message.save();
 
     return 'successfully sent';
 }

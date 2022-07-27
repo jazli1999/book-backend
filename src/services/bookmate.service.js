@@ -94,7 +94,28 @@ async function match(userId) {
 }
 
 async function currentBookmates(userId) {
-    return User.findById(userId).populate('bookmates');
+    const user = await User.findById(userId).populate('bookmates');
+    const rawBookmates = user.bookmates;
+    const response = [];
+    for (const rBookmate of rawBookmates) {
+        const bookmate = JSON.parse(JSON.stringify(rBookmate));
+        delete bookmate.password;
+        if (bookmate.address) {
+            delete bookmate.address.street;
+            delete bookmate.address.houseNumber;
+            delete bookmate.address.postcode;
+        }
+        if (bookmate.premium) {
+            delete bookmate.premium.startDate;
+            delete bookmate.premium.endDate;
+        }
+        delete bookmate.birthday;
+        delete bookmate.email;
+        delete bookmate.orders;
+        delete bookmate.bookmates;
+        response.push(bookmate);
+    }
+    return response;
 }
 
 // don't consider the unique problem for now

@@ -1,6 +1,41 @@
 // import mongoose from 'mongoose';
 import User from '../models/user.model.js';
 
+async function update(userId, subsModel) {
+    return User.findById(userId).then((user) => {
+        // need test
+        if (user === null) return 'no such user';
+        if (user.premium !== undefined || !user.premimum.isPremium) {
+            let newEndDate = new Date();
+            if (newEndDate < user.premium.endDate) {
+                newEndDate = user.premium.endDate;
+            }
+            if (subsModel !== undefined) {
+                if (subsModel === 'monthly') {
+                    newEndDate.setMonth(user.premium.endDate.getMonth() + 1);
+                }
+                else if (subsModel === 'yearly') {
+                    newEndDate.setFullYear(user.premium.endDate.getFullYear() + 1);
+                }
+            }
+            user.premium.endDate = newEndDate;
+            user.save();
+            return user.premium;
+        }
+        
+        return 'must be a member first';
+    });
+}
+
+async function cancel(userId) {
+    const user = await User.findById(userId);
+    user.premium.isPremium = false;
+    user.premium.startDate = null;
+    user.premium.endDate = null;
+    user.save();
+    return 'subscription cancelled';
+}
+
 async function create(userId, subsModel) {
     const user = await User.findById(userId);
     // need test
@@ -24,47 +59,11 @@ async function create(userId, subsModel) {
             }
         }
     }
-    else if(user.premium.isPremium){
+    else if (user.premium.isPremium) {
         await update(userId, subsModel);
     }
     user.save();
     return user.premium;
-}
-
-async function update(userId, subsModel) {
-    return User.findById(userId).then((user) => {
-        // need test
-        if (user === null) return 'no such user';
-        if (user.premium !== undefined || !user.premimum.isPremium) {
-            const newEndDate = new Date();
-            if( newEndDate < user.premium.endDate){
-               newEndDate = user.premium.endDate
-            }
-            if (subsModel !== undefined) {
-                if (subsModel === 'monthly') {
-                     
-                    newEndDate.setMonth(user.premium.endDate.getMonth() + 1);
-                }
-                else if (subsModel === 'yearly') {
-                    newEndDate.setFullYear(user.premium.endDate.getFullYear() + 1);
-                }
-            }
-            user.premium.endDate = newEndDate;
-            user.save();
-            return user.premium;
-        }
-        
-        return 'must be a member first';
-    });
-}
-
-async function cancel(userId) {
-    const user = await User.findById(userId);
-    user.premium.isPremium = false;
-    user.premium.startDate = null;
-    user.premium.endDate = null;
-    user.save();
-    return 'subscription cancelled';
 }
 
 async function getDetails(userId) {
