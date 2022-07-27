@@ -66,16 +66,19 @@ async function match(userId) {
             continue;
         }
         bmUser.bcMark = [];
+        bmUser.bcNull = [];
         bmUser.wsMark = [];
+        bmUser.wsNull = [];
         for (const bookId of bmUser.bookCollection) {
             const index = user.wishList.indexOf(bookId);
             if (index !== -1) { // if current user's wish list have this books
                 bmUser.bcMark.push('isFavorite');
             }
             else {
-                bmUser.bcMark.push(null);
+                bmUser.bcNull.push(null);
             }
         }
+        bmUser.bcMark = bmUser.bcMark.concat(bmUser.bcNull);
 
         for (const wsBookId of bmUser.wishList) {
             const wsIndex = user.bookCollection.indexOf(wsBookId);
@@ -84,9 +87,10 @@ async function match(userId) {
                 bmUser.wsMark.push('isAvailable');
             }
             else {
-                bmUser.wsMark.push(null);
+                bmUser.wsNull.push(null);
             }
         }
+        bmUser.wsMark = bmUser.wsMark.concat(bmUser.wsNull);
     }
     users.splice(userIndex, 1);
 
