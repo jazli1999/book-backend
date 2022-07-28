@@ -98,7 +98,7 @@ async function get(userId) {
     }
     else {
         user = await create(userId, 'free');
-        return user.isPremium;
+        return   false ;
     }
     return user.premium.isPremium;
 }

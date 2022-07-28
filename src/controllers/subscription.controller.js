@@ -12,7 +12,7 @@ async function updateSubscription(req, res) {
 
 async function getSubscription(req, res, next) {
     SubscriptionService.get(req.userId).then((value) => {
-        res.status(200).send(({ isPremium: value }));
+        res.status(200).send({ isPremium: value });
     }).catch(next);
 }
 
