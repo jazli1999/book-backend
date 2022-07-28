@@ -16,7 +16,7 @@ const userOrderSchema = new Schema({
     status: Number,
     isReviewed: {
         type: Boolean,
-        default: false
+        default: false,
     },
 }, { _id: false });
 

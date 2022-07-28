@@ -47,7 +47,15 @@ async function match(userId) {
     }
 
     if (!isPremium) {
-        users = await User.aggregate([{ $sample: { size: 10 } }]);
+        users = await User.aggregate([
+            {
+                $match: {
+                    bookCollection: { $exists: true, $ne: [] },
+                    firstName: { $exists: true },
+                }, 
+            },
+            { $sample: { size: 10 } },
+        ]);
     }
 
     // const books = await Book.find(

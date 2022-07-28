@@ -1,10 +1,10 @@
 import ReviewService from '../services/review.service.js';
 
-async function getAllReviews(req, res,) {
+async function getAllReviews(req, res) {
     ReviewService.getAllReviewsByUserId(req).then((value) => res.status(200).send(value));
 }
 
-async function getAllReviewsByOrder(req, res,) {
+async function getAllReviewsByOrder(req, res) {
     ReviewService.getReviewsByOrderId(req).then((value) => res.status(200).send(value));
 }
 
@@ -13,5 +13,5 @@ async function sendReview(req, res, next) {
 }
 
 export default {
-    getAllReviews, getAllReviewsByOrder, sendReview
+    getAllReviews, getAllReviewsByOrder, sendReview,
 };
