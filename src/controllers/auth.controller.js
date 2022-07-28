@@ -82,7 +82,6 @@ const register = async (req, res) => {
         });
     }
     MailService.sendRegisterConfirmationMail(req.body.email);
-
 };
 
 export default {

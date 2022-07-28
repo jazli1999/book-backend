@@ -34,7 +34,7 @@ async function cancel(userId) {
     user.premium.startDate = null;
     user.premium.endDate = null;
     user.save();
-    MailService.sendSubscriptionMail(false,user.email);
+    MailService.sendSubscriptionMail(false, user.email);
 
     return 'subscription cancelled';
 }
@@ -66,7 +66,7 @@ async function create(userId, subsModel) {
         await update(userId, subsModel);
     }
     user.save();
-    MailService.sendSubscriptionMail(true,user.email);
+    MailService.sendSubscriptionMail(true, user.email);
     return user.premium;
 }
 
@@ -98,7 +98,7 @@ async function get(userId) {
     }
     else {
         user = await create(userId, 'free');
-        return   false ;
+        return false;
     }
     return user.premium.isPremium;
 }

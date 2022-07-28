@@ -2,6 +2,7 @@ import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
 import SubscriptionService from './subscription.service.js';
 import SubscriptionController from '../controllers/subscription.controller.js';
+import MailService from './mail.service.js';
 
 async function match(userId) {
     const user = await User.findById(userId);
@@ -168,6 +169,7 @@ async function sendRequest(userId, targetId) { // how to make the array unique
     sendingUser.bmSent.push(receivingUser._id);
     await sendingUser.save();
     await receivingUser.save();
+    MailService.sendBookmateRequestMail(sendingUser.firstName, sendingUser.lastName, 'Received', receivingUser.email);
     return 'bookmates request sent successful';
 }
 
@@ -193,6 +195,7 @@ async function acceptRequest(userId, targetId) { // receivingUser accept sending
         sendingUser.bmSent.splice(sendIndex, 1); // delete the user in bmSent
         sendingUser.bookmates.push(userId);
         await sendingUser.save();
+        MailService.sendBookmateRequestMail(receivingUser.firstName, receivingUser.lastName, 'Accepted', sendingUser.email);
     }
     else {
         return 'this user did not send request to you';
@@ -220,6 +223,7 @@ async function declineRequest(userId, targetId) {
     if (sendIndex !== -1) {
         sendingUser.bmSent.splice(sendIndex, 1); // delete the user in bmSent
         await sendingUser.save();
+        MailService.sendBookmateRequestMail(receivingUser.firstName, receivingUser.lastName, 'Declined', sendingUser.email);
     }
     else {
         return 'this user did not send request to you';

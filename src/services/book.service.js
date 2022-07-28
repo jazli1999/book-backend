@@ -3,7 +3,6 @@ import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
 import MailService from './mail.service.js';
 
-
 async function modifyInput(json) {
     const books = { searchResult: [] };
     if (json === null || json === [] || json === undefined) {
@@ -113,7 +112,7 @@ async function searchGbooks(query) {
 }
 
 async function getBookDetails(isbn) {
-    MailService.sendOrderStatusMail(true,"erengulum834@gmail.com");
+    MailService.sendOrderStatusMail(true, 'erengulum834@gmail.com');
 
     let bookDetails;
     await request
