@@ -2,34 +2,6 @@
 import User from '../models/user.model.js';
 import MailService from './mail.service.js';
 
-async function create(userId, subsModel) {
-    const user = await User.findById(userId);
-    // need test
-    if (user === null) return 'no such user';
-    if (user.premium === undefined || !user.premium.isPremium) {
-        user.premium = {};
-        const start = new Date();
-        const end = new Date(start);
-        if (subsModel !== undefined) {
-            if (subsModel !== 'free') {
-                if (subsModel === 'monthly') {
-                    end.setMonth(end.getMonth() + 1);
-                }
-                else if (subsModel === 'yearly') {
-                    end.setFullYear(end.getFullYear() + 1);
-                }
-                user.premium = { isPremium: true, startDate: start, endDate: end };
-            }
-            else {
-                user.premium = { isPremium: false, startDate: start, endDate: end };
-            }
-        }
-    }
-    user.save();
-    MailService.sendSubscriptionMail(true,user.email);
-    return user.premium;
-}
-
 async function update(userId, subsModel) {
     return User.findById(userId).then((user) => {
         // need test
@@ -94,6 +66,7 @@ async function create(userId, subsModel) {
         await update(userId, subsModel);
     }
     user.save();
+    MailService.sendSubscriptionMail(true,user.email);
     return user.premium;
 }
 
