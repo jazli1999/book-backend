@@ -9,6 +9,5 @@ router.get('/current', Middlewares.checkAuthentication, BookmateController.curre
 router.post('/send', Middlewares.checkAuthentication, BookmateController.sendRequest);
 router.post('/accept', Middlewares.checkAuthentication, BookmateController.acceptRequest);
 router.post('/decline', Middlewares.checkAuthentication, BookmateController.declineRequest);
-router.put('/update', Middlewares.checkAuthentication, BookmateController.updateBooks); // update the user schema for matching, only for developing purpose
 
 export default router;

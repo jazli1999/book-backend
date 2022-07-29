@@ -1,7 +1,5 @@
 import User from '../models/user.model.js';
-import Book from '../models/book.model.js';
 import SubscriptionService from './subscription.service.js';
-import SubscriptionController from '../controllers/subscription.controller.js';
 import MailService from './mail.service.js';
 
 async function match(userId) {
@@ -59,15 +57,6 @@ async function match(userId) {
         ]);
     }
 
-    // const books = await Book.find(
-    //     { $text : { $search : "Book" } }, 
-    //     { score : { $meta: "textScore" } }
-    // )
-    // .limit(10)
-    // .sort({ score : { $meta : 'textScore' } });
-
-    // calculate the intersection here
-    // recalculate the score here
     let userIndex;
     for (const [deleteIndex, bmUser] of users.entries()) {
         if (bmUser._id.toString() === userId) {
@@ -227,17 +216,6 @@ async function declineRequest(userId, targetId) {
     return 'decline bookmate request success';
 }
 
-async function updateBookmates() {
-    const users = await User.find();
-    for (const user of users) {
-        user.bookmates = [];
-        user.bmSent = [];
-        user.bmReceived = [];
-        await user.save();
-    }
-    return 'bookmates&bmreceived&bmsent update success!';
-}
-
 export default {
-    match, currentBookmates, sendRequest, acceptRequest, declineRequest, updateBookmates,
+    match, currentBookmates, sendRequest, acceptRequest, declineRequest, 
 };

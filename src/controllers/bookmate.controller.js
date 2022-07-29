@@ -23,12 +23,6 @@ async function declineRequest(req, res, next) {
     BookmateService.declineRequest(req.userId, req.body.userId).then((value) => res.status(200).send(value));
 }
 
-async function updateBooks(req, res, next) {
-    BookmateService.updateBookmates().then((value) => {
-        res.send(value);
-    }).catch(next);
-}
-
 export default {
-    matchBookmates, currentBookmates, sendRequest, acceptRequest, declineRequest, updateBooks,
+    matchBookmates, currentBookmates, sendRequest, acceptRequest, declineRequest,
 };
