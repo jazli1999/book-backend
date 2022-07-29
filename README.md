@@ -1,20 +1,14 @@
 # README
 
-## Commands
+## Run and Build Instructions
 
 - Before anything else  
-  `npm install`
-- Add MongoDB URI to `.env`  
-  `ATLAS_URI=mongodb+srv://{username}:{password}@cluster0.yros1ft.mongodb.net/?retryWrites=true&w=majority`
-- Add JWT_SECRET to `.env`  
-  `JWT_SECRET=TopSecret`
-- Add EMAIL_ADRESS to `.env`  
-  `bookex6@gmail.com`
-  - Add EMAIL_PASS to `.env`  
-  `wfszncuqjjiuaiso`
+  `npm install`  
+- Replace the MongoDB URI in `.env`  
+  `ATLAS_URI=mongodb+srv://{username}:{password}@cluster0.yros1ft.mongodb.net/?retryWrites=true&w=majority`  
 - To run the project in dev mode (with auto-reload)  
   `npm run dev`
-- To run the project in product mode  
+- To run the project in production mode  
   `npm run start`
 - Before you commit, please run ESlint with the command below and fix the errors  
   `npm run lint`
