@@ -1,17 +1,4 @@
 import UserService from '../services/user.service.js';
-// const userServiceInstance = new userService();
-
-async function createUser(req, res, next) {
-    UserService.create(req.body).then(() => {
-        res.send('save new user success');
-    }).catch(next);
-}
-
-async function loginUser(req, res, next) {
-    UserService.login(req.body).then((value) => {
-        res.send(value);
-    }).catch(next);
-}
 
 async function updateUser(req, res) {
     UserService.update(req.userId, req.body).then((value) => res.status(200).send(value));
@@ -66,8 +53,6 @@ async function readWSList(req, res, next) {
 }
 
 export default {
-    createUser, 
-    loginUser, 
     updateUser, 
     getUserInfo, 
     deleteUser, 

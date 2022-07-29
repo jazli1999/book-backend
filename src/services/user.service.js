@@ -3,16 +3,6 @@ import User from '../models/user.model.js';
 import Book from '../models/book.model.js';
 import BookService from './book.service.js';
 
-async function create(userToCreate) {
-    const user = new User(); // contructor always be sync
-    user.firstName = userToCreate.user.firstName;
-    user.lastName = userToCreate.user.lastName;
-    user.email = userToCreate.user.email;
-    // for now
-    user.password = userToCreate.user.password;
-    return user.save(); // .save is asyn will return a promise
-}
-
 async function update(userId, userInfo) {
     return User.findById(userId).then((user) => {
         // need test
@@ -122,5 +112,5 @@ async function deleteUser(userId) {
 }
 
 export default {
-    create, update, get, deleteUser, updateBookList, readBookList,
+    update, get, deleteUser, updateBookList, readBookList,
 };
