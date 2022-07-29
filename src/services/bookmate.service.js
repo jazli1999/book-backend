@@ -15,7 +15,7 @@ async function match(userId) {
         users = await User.aggregate([        
             {
                 $search: {
-                    index: 'bm_index', 
+                    index: 'bm_index',
                     text: {
                         query: user.matchString,
                         path: {
@@ -63,31 +63,70 @@ async function match(userId) {
             userIndex = deleteIndex;
             continue;
         }
-        bmUser.bcMark = [];
-        bmUser.bcNull = [];
+        bmUser.bcMark = []; // newly added
         bmUser.wsMark = [];
-        bmUser.wsNull = [];
-        for (const bookId of bmUser.bookCollection) {
+
+        // list need modification:
+        // bookCollection, bmTitles, wishList, exchangeableCollection, bcCover, wsCover
+        const bookCollectionMark = [];
+        const bmTitlesMark = []; // related to book collection
+        const exchangeableCollectionMark = [];
+        const bcCoverMark = [];
+
+        const bookCollectionNull = [];
+        const bmTitlesNull = []; // related to book collection
+        const exchangeableCollectionNull = [];
+        const bcCoverNull = [];
+        
+        const wsNull = [];
+        const bcNull = [];
+
+        for (const [markIndex, bookId] of bmUser.bookCollection.entries()) {
             const index = user.wishList.indexOf(bookId);
             if (index !== -1) { // if current user's wish list have this books
                 bmUser.bcMark.push('isFavorite');
+                bookCollectionMark.push(bmUser.bookCollection[markIndex]);
+                bmTitlesMark.push(bmUser.bmTitles[markIndex]);
+                exchangeableCollectionMark.push(bmUser.exchangeableCollection[markIndex]);
+                bcCoverMark.push(bmUser.bcCover[markIndex]);
             }
             else {
-                bmUser.bcNull.push(null);
+                bcNull.push(null);
+                bookCollectionNull.push(bmUser.bookCollection[markIndex]);
+                bmTitlesNull.push(bmUser.bmTitles[markIndex]);
+                exchangeableCollectionNull.push(bmUser.exchangeableCollection[markIndex]);
+                bcCoverNull.push(bmUser.bcCover[markIndex]);
             }
         }
-        bmUser.bcMark = bmUser.bcMark.concat(bmUser.bcNull);
 
-        for (const wsBookId of bmUser.wishList) {
+        bmUser.bookCollection = bookCollectionMark.concat(bookCollectionNull);
+        bmUser.bmTitles = bmTitlesMark.concat(bmTitlesNull);
+        bmUser.exchangeableCollection = exchangeableCollectionMark.concat(exchangeableCollectionNull);
+        bmUser.bcCover = bcCoverMark.concat(bcCoverNull);
+        bmUser.bcMark = bmUser.bcMark.concat(bcNull);
+
+        const wsCoverMark = [];
+        const wishListMark = [];
+        const wsCoverNull = [];
+        const wishListNull = [];
+
+        for (const [wsMarkIndex, wsBookId] of bmUser.wishList.entries()) {
             const wsIndex = user.bookCollection.indexOf(wsBookId);
             if (wsIndex !== -1) {
                 bmUser.wsMark.push('isAvailable');
+                wsCoverMark.push(bmUser.wsCover[wsMarkIndex]);
+                wishListMark.push(bmUser.wishList[wsMarkIndex]);
             }
             else {
-                bmUser.wsNull.push(null);
+                wsNull.push(null);
+                wsCoverNull.push(bmUser.wsCover[wsMarkIndex]);
+                wishListNull.push(bmUser.wishList[wsMarkIndex]);
             }
         }
-        bmUser.wsMark = bmUser.wsMark.concat(bmUser.wsNull);
+
+        bmUser.wsCover = wsCoverMark.concat(wsCoverNull);
+        bmUser.wishList = wishListMark.concat(wishListNull);
+        bmUser.wsMark = bmUser.wsMark.concat(wsNull);
     }
     users.splice(userIndex, 1);
 
