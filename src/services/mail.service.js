@@ -64,21 +64,6 @@ const sendNewMessageNotification = async (receiverMail) => {
     sendMail(mailOptions);
 };
 
-const sendOrderStatusMail = async (receiverMail, orderId, isNewExchangeOffer) => {
-    if (receiverMail === null) {
-        return;
-    }
-    if (isNewExchangeOffer) {
-        mailOptions.html = `Dear User, <br> you just received a new exchange offer! <br><b>Please <a href='http://localhost:3000/app/bookmates/orders/${orderId}'>click here</a> to see offer!</b><br><br><b>BookEx Support</b>`;
-    }
-    else {
-        mailOptions.html = `Dear User, <br> status of your order has been changed! <br><b>Please <a href='http://localhost:3000/app/bookmates/orders/${orderId}'>click here</a> to see last status of your order!</b><br><br><b>BookEx Support</b>`;
-    }
-    mailOptions.subject = 'Your order status has changed!';
-    mailOptions.to = receiverMail;
-    sendMail(mailOptions);
-};
-
 const sendBookmateRequestMail = async (firstName, lastName, requestType, receiverMail) => {
     if (receiverMail === null) {
         return;
@@ -116,7 +101,6 @@ export default {
     sendSubscriptionMail, 
     sendRegisterConfirmationMail, 
     sendNewMessageNotification, 
-    sendOrderStatusMail, 
     sendBookmateRequestMail,
     sendCreateOrderMail,
     sendUpdateOrderMail,
