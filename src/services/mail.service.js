@@ -102,14 +102,14 @@ const sendCreateOrderMail = async (name, email) => {
     mailOptions.to = email;
     mailOptions.subject = 'New Exchange Order Request!';
     sendMail(mailOptions);
-}
+};
 
 const sendUpdateOrderMail = async (name, email, message, nextStep) => {
     mailOptions.html = `${name} ${message}, ${nextStep}  <br><b><a href='http://localhost:3000/app/orders'>Go to our app</a> to view the order detail!</b><br><br><b>BookEx Support</b>`;
     mailOptions.to = email;
     mailOptions.subject = 'Exchange Order Status Update';
     sendMail(mailOptions);
-}
+};
 
 export default {
     sendMail,

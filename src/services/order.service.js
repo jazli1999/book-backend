@@ -1,16 +1,16 @@
 import Order from '../models/order.model.js';
 import User from '../models/user.model.js';
-import MailService from '../services/mail.service.js';
+import MailService from './mail.service.js';
 
 const getUserName = async (userId) => {
     const user = await User.findById(userId);
     return `${user.firstName} ${user.lastName}`;
-}
+};
 
 const getUserEmail = async (userId) => {
     const user = await User.findById(userId);
     return user.email;
-}
+};
 
 const read = async (orderId) => {
     try {
@@ -65,7 +65,7 @@ const updatePayment = async (orderId, isReq, reqId, payment) => {
     await order.save();
     const senderName = await getUserName(isReq ? order.requester.userId : order.responder.userId);
     const receiverEmail = await getUserEmail(isReq ? order.responder.userId : order.requester.userId);
-    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has completed payment', 'you can continue your order now!')
+    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has completed payment', 'you can continue your order now!');
     return 200;
 };
 
@@ -84,7 +84,7 @@ const updateTrackingCode = async (orderId, isReq, reqId, trackingCode) => {
     await order.save();
     const senderName = await getUserName(isReq ? order.requester.userId : order.responder.userId);
     const receiverEmail = await getUserEmail(isReq ? order.responder.userId : order.requester.userId);
-    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has updated tracking code', 'you can track your package now')
+    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has updated tracking code', 'you can track your package now');
     return 200;
 };
 
@@ -101,7 +101,7 @@ const confirmReceipt = async (orderId, isReq, reqId) => {
     await order.save();
     const senderName = await getUserName(isReq ? order.requester.userId : order.responder.userId);
     const receiverEmail = await getUserEmail(isReq ? order.responder.userId : order.requester.userId);
-    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has confirmed receipt of your book(s)', 'tell us how is the exchange!')
+    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has confirmed receipt of your book(s)', 'tell us how is the exchange!');
     return 200;
 };
 
@@ -120,7 +120,7 @@ const pickBooks = async (orderId, isReq, reqId, bookList) => {
     await order.save();
     const senderName = await getUserName(isReq ? order.requester.userId : order.responder.userId);
     const receiverEmail = await getUserEmail(isReq ? order.responder.userId : order.requester.userId);
-    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has accepted your exchange request', 'go to deopsit payment!')
+    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has accepted your exchange request', 'go to deopsit payment!');
     return 200;
 };
 
@@ -129,9 +129,9 @@ const declineOrder = async (orderId, reqId) => {
     if (order.responder.userId.toString() !== reqId) return 401;
     order.orderStatus = 'Declined';
     await order.save();
-    const senderName = await getUserName(isReq ? order.requester.userId : order.responder.userId);
-    const receiverEmail = await getUserEmail(isReq ? order.responder.userId : order.requester.userId);
-    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has declined your exchange request', 'go start new exchanges!')
+    const senderName = await getUserName(order.responder.userId);
+    const receiverEmail = await getUserEmail(reqId);
+    MailService.sendUpdateOrderMail(senderName, receiverEmail, 'has declined your exchange request', 'go start new exchanges!');
     return 200;
 };
 

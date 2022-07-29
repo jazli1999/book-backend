@@ -5,14 +5,15 @@ import Order from '../models/order.model.js';
 // returns review object of given review id
 async function getReviewsByOrderId(req) {
     const { orderId } = req.params;
-    return await Review.find({ order: orderId });
+    const result = await Review.find({ order: orderId });
+    return result;
 }
 
 // returns all reviews that user received
 async function getAllReviewsByUserId(req) {
     const { userId } = req.params;
-
-    return await Review.find({ receiver: userId });
+    const result = await Review.find({ receiver: userId });
+    return result;
 }
 
 async function sendReview(params) {

@@ -19,7 +19,7 @@ const getUserOrders = async (req, res) => {
             ? order.responder.userId : order.requester.userId;
         const userDetail = order.requester.userId.toString() === req.userId 
             ? order.requester : order.responder;
-        const review_status = order.requester.userId.toString() === req.userId 
+        const reviewStatus = order.requester.userId.toString() === req.userId 
             ? order.requester.isReviewed : order.responder.isReviewed;
         const bookmate = await UserService.get(bookmateId);
         const listCovers = [];
@@ -33,7 +33,7 @@ const getUserOrders = async (req, res) => {
             orderedBooks: listCovers,
             user_id: userDetail.userId,
             receiver_id: bookmateId,
-            isReviewed: review_status,
+            isReviewed: reviewStatus,
         });
     }
     res.status(200).json(orders);
