@@ -1,20 +1,16 @@
 import Message from '../models/message.model.js';
 import User from '../models/user.model.js';
 
-import MailService from './mail.service.js';
-
 // returns the dialog between specified sender and receiver
 async function getDialog(req) {
     const { sender } = req.params;
     const { receiver } = req.params;
-    console.log('get service: sender:', sender, 'receiver', receiver);
     const result = await Message.find({ $or: [{ $and: [{ sender }, { receiver }] }, { $and: [{ sender: receiver }, { receiver: sender }] }] });
     return result;
 }
 
 // returns all messages (sent or received) of currently logged user
 async function getAllMessagesOfCurrentUser(userId) {
-    const messages = await Message.find({ $or: [{ sender: userId }, { receiver: userId }] });
     const result = await Message.find({ $or: [{ sender: userId }, { receiver: userId }] });
     return result;
 }
@@ -33,7 +29,6 @@ async function send(params) {
     message.timestamp = new Date();
     message.isRead = false;
     await message.save();
-    MailService.sendNewMessageNotification(receiver.email);
 
     return 'successfully sent';
 }

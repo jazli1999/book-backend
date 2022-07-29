@@ -6,7 +6,7 @@ import Middlewares from '../middlewares.js';
 const router = Router();
 
 router.get('/gbooks/details/:isbn', Middlewares.checkAuthentication, BookController.getBookDetails);
-// default route "/books"
+
 // get data from google
 router.get('/gbooks/:query', BookController.searchGbooks);
 

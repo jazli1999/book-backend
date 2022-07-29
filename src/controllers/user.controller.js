@@ -56,7 +56,6 @@ async function updateWSList(req, res, next) {
 
 // bclist & wslist using the same service function
 async function readBCList(req, res, next) {
-    console.log(req);
     UserService.readBookList(req.userId, 'BC').then((value) => res.status(200).send(value));
 }
 

@@ -49,7 +49,6 @@ async function modifyInput(json) {
             if (Object.prototype.hasOwnProperty.call(x.volumeInfo, 'description')) {
                 currentJson.description = x.volumeInfo.description;
             }
-            // console.log(currentJson);   // commented out because it filles the console           
         }
         // Adds the current book json to result array
         if (Object.keys(currentJson) !== 0) {
@@ -58,7 +57,6 @@ async function modifyInput(json) {
             }
         }
     }
-    // console.log(books)
     const bookList = books;
     return bookList;
 }
@@ -100,13 +98,12 @@ async function searchGbooks(query) {
     // For now I set max results to 30
         .then((data) => {
             // return the results
-            // console.log(data)
+            // (data)
             booksJson = JSON.parse(data.text);
             booksJson = booksJson.items;
         });
     // modifies the input json so that we can access our model
     // parameters much easierPromise.resolve('Success').then( modifyInput(books_json))
-    // I couldn't solve async issue without using await back to back      
     
     return modifyInput(booksJson);
 }
@@ -127,7 +124,6 @@ async function getBookDetails(isbn) {
 }
 
 async function addBooks(userId, newBookList, listName) {
-    console.log('add books is on', newBookList);
     const user = await User.findById(userId);
     if (user === null) return 'no such user';
     for (const book of newBookList) {

@@ -91,7 +91,6 @@ async function match(userId) {
 
         for (const wsBookId of bmUser.wishList) {
             const wsIndex = user.bookCollection.indexOf(wsBookId);
-            // console.log(wsBookId);
             if (wsIndex !== -1) {
                 bmUser.wsMark.push('isAvailable');
             }
@@ -155,13 +154,10 @@ async function currentBookmates(userId) {
         bmReceived: recResponse,
     };
 
-    // console.log(response);
-
     return response;
 }
 
-// don't consider the unique problem for now
-async function sendRequest(userId, targetId) { // how to make the array unique
+async function sendRequest(userId, targetId) {
     const sendingUser = await User.findById(userId);
     const receivingUser = await User.findById(targetId); // the sendingUser should not be in the bookmates already
     if (receivingUser === null) return 'no such user';
@@ -232,8 +228,6 @@ async function declineRequest(userId, targetId) {
 }
 
 async function updateBookmates() {
-    // ME.find({ pictures: { $exists: true, $ne: [] } })
-    // update bookmates&bmreceived&bmsent feilds
     const users = await User.find();
     for (const user of users) {
         user.bookmates = [];
@@ -242,42 +236,6 @@ async function updateBookmates() {
         await user.save();
     }
     return 'bookmates&bmreceived&bmsent update success!';
-
-    // update matching fields
-    // const users = await User.find({ bookCollection: { $exists: true, $ne: [] } }).select({ bookCollection: 1 }).populate('bookCollection');
-    // for (const user of users) {
-    //     user.bmTitles = [];
-    //     user.bmAuthors = [];
-    //     user.bmCategories = [];
-    //     user.bcCover = [];
-    //     user.wsCover = [];
-    //     user.matchString = '';
-    //     for (const book of user.bookCollection) {
-    //         if (typeof book.subtitle !== 'undefined') {
-    //             user.bmTitles.push(`${book.title} ${book.subtitle}`);
-    //             user.matchString = `${user.matchString} ${book.title} ${book.subtitle}^`;
-    //         }
-    //         else {
-    //             user.bmTitles.push(book.title);
-    //             user.matchString = `${user.matchString} ${book.title}^`;
-    //         }
-    //         user.bmAuthors = user.bmAuthors.concat(book.authors);
-    //         user.bmCategories = user.bmCategories.concat(book.categories);
-    //         user.bcCover.push(book.image);
-    //     }
-    //     user.save();
-    // }
-
-    // const wsUsers = await User.find({ wishList: { $exists: true, $ne: [] } }).select({ wishList: 1 }).populate('wishList');
-    // for (const wsUser of wsUsers) {
-    //     wsUser.wsCover = [];
-    //     for (const book of wsUser.wishList) {
-    //         wsUser.wsCover.push(book.image);
-    //     }
-    //     wsUser.save();
-    // }
-
-    // return 'bookmates matching field update success';
 }
 
 export default {

@@ -34,7 +34,6 @@ async function cancel(userId) {
     user.premium.startDate = null;
     user.premium.endDate = null;
     user.save();
-    MailService.sendSubscriptionMail(false, user.email);
 
     return 'subscription cancelled';
 }

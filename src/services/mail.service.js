@@ -33,7 +33,6 @@ const sendSubscriptionMail = async (isActivated, receiverMail) => {
     if (receiverMail === null) {
         return;
     }
-    console.log('receiver mail:', receiverMail);
     mailOptions.subject = 'Your premium subscription';
     mailOptions.to = receiverMail;
     if (isActivated) {
@@ -98,6 +97,27 @@ const sendBookmateRequestMail = async (firstName, lastName, requestType, receive
     sendMail(mailOptions);
 };
 
+const sendCreateOrderMail = async (name, email) => {
+    mailOptions.html = `${name} wants to exchange books with you! <br><b><a href='http://localhost:3000/app/orders'>Go to our app</a> to see the new order!</b><br><br><b>BookEx Support</b>`;
+    mailOptions.to = email;
+    mailOptions.subject = 'New Exchange Order Request!';
+    sendMail(mailOptions);
+}
+
+const sendUpdateOrderMail = async (name, email, message, nextStep) => {
+    mailOptions.html = `${name} ${message}, ${nextStep}  <br><b><a href='http://localhost:3000/app/orders'>Go to our app</a> to view the order detail!</b><br><br><b>BookEx Support</b>`;
+    mailOptions.to = email;
+    mailOptions.subject = 'Exchange Order Status Update';
+    sendMail(mailOptions);
+}
+
 export default {
-    sendMail, sendSubscriptionMail, sendRegisterConfirmationMail, sendNewMessageNotification, sendOrderStatusMail, sendBookmateRequestMail,
+    sendMail,
+    sendSubscriptionMail, 
+    sendRegisterConfirmationMail, 
+    sendNewMessageNotification, 
+    sendOrderStatusMail, 
+    sendBookmateRequestMail,
+    sendCreateOrderMail,
+    sendUpdateOrderMail,
 };
