@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./index.js",
+    "start": "./node_modules/.bin/netlify-lambda serve src",
+    "build": "./node_modules/.bin/netlify-lambda build src",
     "dev": "nodemon ./index.js",
     "lint": "eslint  */**/*.js --quiet --fix"
   },
