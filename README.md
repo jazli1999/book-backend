@@ -24,7 +24,7 @@
 
 ```JSON
 {
-  "email": "ke.samantha.chen.test@tum.de", //email should be unique
+  "email": "ke.samantha.chen.test@tum.de",
   "password": "ke_pw"
 }
 ```
@@ -214,7 +214,7 @@ same json as wslist update:
 `GET /bookmates/current`
 
 
-WARNING: no duplication detection!  
+WARNING: no duplication detection! (Duplication detection is implemented in frontend)    
 **_send request to certain user_**  
 `POST /bookmates/send`
 
@@ -247,14 +247,12 @@ WARNING: no duplication detection!
 
 Test cases:  
 ```JSON
-// USER
 {
   "email": "ke@tum.de", 
   "password": "ke_pw"
 }
 ```
 ```JSON
-// BOOK COLLECTION
 [
   {
     "ISBN": "9780060926083",
@@ -315,7 +313,6 @@ Test cases:
 ]
 ``` 
 ```JSON
-// WISH LIST
 [
   {
   "ISBN": "9780393609295",
@@ -346,14 +343,12 @@ Test cases:
 ```
 
 ```JSON
-// USER
 {
   "email": "samantha@tum.de", 
   "password": "samantha_pw"
 }
 ```
 ```JSON
-// BOOK COLLECTION
 [
   {
     "ISBN": "9780393071344",
@@ -419,7 +414,6 @@ Test cases:
 
 ```
 ```JSON
-// WISH LIST
 [
   {
     "ISBN": "9780060926083",
